@@ -1,0 +1,14 @@
+/****
+isto e um comentario
+***/
+program true
+
+false
+9
+-9
+icaro
+a
+=>
+
+&&
+"string"
