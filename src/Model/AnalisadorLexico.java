@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import Util.ExpressoesRegulares;
 import Util.ComentarioBloco;
 import Util.Token;
@@ -101,7 +102,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                     }
                 }
                 acumulador = "";
-                //n√£o √© espaco
+                //n„o È espaco
                 if (!m.group().matches("\\s+")) {
                     char separador = m.group().charAt(0);
                     int formador = buscadorDeSeparador(separador, entrada, i + 1);
@@ -229,8 +230,8 @@ public class AnalisadorLexico implements ExpressoesRegulares {
     
     
     /**
-     *Com este m√©todo, os coment√°rios em bloco n√£o checam nem a serem analisados
-     * assim como o compilador ignora a an√°lise deles, aqui ele est√° sendo ignorado
+     *Com este mÈtodo, os coment·rios em bloco n„o checam nem a serem analisados
+     * assim como o compilador ignora a an·lise deles, aqui ele est· sendo ignorado
      * na hora de pegar os tokens.      
      */
     public ComentarioBloco analisaComentario(int is, boolean iniciouComentario, String entrada) {
@@ -239,20 +240,20 @@ public class AnalisadorLexico implements ExpressoesRegulares {
         char[] analisar = entrada.toCharArray();
 
         //se estiver esperando fechar comentario e nao existir, retorna logo
-        //esta verifica√ß√£o de cara s√≥ √© poss√≠vel pois d√° para fazer compara√ß√£o com string
+        //esta verificaÁ„o de cara sÛ È possÌvel pois d· para fazer comparaÁ„o com string
         if ((!(entrada.contains("*/"))) && comentario.isIniciouComentario()) {
             
             comentario.setLinha("");
             return comentario;
         }
-
+        
         for (int i = 0; i < analisar.length; i++) {
             //verifica se nao abriu um comentario
             if (!comentario.isIniciouComentario()) {
                 //iniciou comentario e nao eh string
-                /*N√ÉO ALTERAR A ORDEM DOS OPERADORES, COMO √â UMA VERIFICA√á√ÉO &&
-                A PRIMEIRA √â VERIFICADA PARA DEPOIS A PR√ìXIMA, ENT√ÉO ELE VERIFICA
-                SE N√ÉO EST√Å NO LIMITE DO TAMANHO DA LINHA PARA DEPOIS PROCURAR O '*' */
+                /*N√O ALTERAR A ORDEM DOS OPERADORES, COMO … UMA VERIFICA«√O &&
+                A PRIMEIRA … VERIFICADA PARA DEPOIS A PR”XIMA, ENT√O ELE VERIFICA
+                SE N√O EST¡ NO LIMITE DO TAMANHO DA LINHA PARA DEPOIS PROCURAR O '*' */
                 if (analisar[i] == '/' && i < analisar.length - 1 && analisar[i + 1] == '*' && !isString && !isChar) {
                     comentario.setIniciouComentario(true);
 
@@ -290,7 +291,8 @@ public class AnalisadorLexico implements ExpressoesRegulares {
         try {
             File pasta = new File(pastaSaida);
             pasta.mkdir();
-            File n = new File(pasta.getName() + File.separator + arquivo);
+            File n = new File(pasta.getName() + File.separator + arquivo.split("\\.")[0] +
+            		"_out.txt");
             BufferedWriter bw = new BufferedWriter(new FileWriter(n));
             for (Token t : tokens) {
                 bw.write(t.toString());

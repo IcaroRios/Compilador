@@ -1,14 +1,21 @@
 /****
 isto e um comentario
+DSDS
 ***/
 program true
 
 false
-9
+9.
 -9
+.9
 icaro
+_icaro
 a
 =>
-
+!
+||
 &&
-"string"
+"string . \ dok"
+"string dok"
+
+//DSMDOASKDOASK   . / D*DKOOEKD		

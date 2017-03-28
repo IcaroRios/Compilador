@@ -10,7 +10,7 @@ public class Controlador {
         
         File dir = new File("entrada");        
         if (!dir.exists()) {            
-            System.out.println("A pasta 'entrada' n√£o existe.");
+            System.out.println("A pasta 'entrada' n„o existe.");
             System.exit(0);
         } //se conseguir pegar os arquivos, inicia a analise
         else {

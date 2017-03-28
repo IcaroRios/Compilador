@@ -3,18 +3,22 @@ package Util;
 public interface ExpressoesRegulares {
     
     /*
-    PRESTAR ATEN√á√ÉO COM A ORDEM, POIS UM ACABA AFETANDO O OUTRO*/
+    PRESTAR ATEN«√O COM A ORDEM, POIS UM ACABA AFETANDO O OUTRO
+    */
     public enum ESTRUTURALEXICA {
         RESERVADA("(program)|(const)|(var)|(function)|(begin)|(end)|(end)|(if)|"
                 + "(then)|(else)|(while)|(do)|(read)|(write)|(integer)|(real)|"
                 + "(boolean)|(true)|(false)|(string)|(char)"),//feito
-        OPERADORARITMETICO("(\\+)|(\\-)|(\\*)|(\\/)|(\\%)"),//feito
-        OPERADORRELACIONAL("(!=)|(=)|(<)|(<=)|(>)|(>=)"),//feito
-        //COMENTARIOBLOCO("\\/\\*(.*)\\*\\/") // isto foi removido pois agora estou verificando enquanto leio o arquivo
+        OPERADOR_ARITMETICO("(\\+)|(\\-)|(\\*)|(\\/)|(\\%)"),//feito
+        OPERADOR_RELACIONAL("(!=)|(=)|(<)|(<=)|(>)|(>=)"),//feito
+        OPERADOR_LOGICO("(!)|(\\&\\&)|(\\|\\|)"),//feito
+        //COMENTARIOBLOCO("\\/\\*(.*)\\*\\/"), // isto foi removido pois agora estou verificando enquanto leio o arquivo
+        COMENTARIO_LINHA("\\/\\/(.*)"),
         IDENTIFICADOR("([a-zA-Z])([a-zA-Z]|(\\d)|(_))*?"),
         CARACTERE("'([a-zA-Z]|\\d)'"), // verificar
         CADEIA_DE_CARACTERES("\"[a-zA-Z]([a-zA-Z]|\\d|\\p{Blank})*?\""),
-        NUMERO("-?\\d+(\\.\\d+)?"); //  acho que est√° errado.
+        //CADEIA_DE_CARACTERES("[a-zA-Z]([a-zA-Z]|\\d|\\s)*\\/")
+        NUMERO("-?\\d+(\\.\\d+)?"); //  acho que est· errado.
         
         public String valor;
 
@@ -27,9 +31,12 @@ public interface ExpressoesRegulares {
      * Olhar melhor
      */
     public enum ExpressaoErro {
-        NRO_MAL_FORMADO("(\\d+\\.(.+)?)"),
+        NRO_MAL_FORMADO("(\\d+\\.+)"),
+        NRO_MAL_FORMADO_2("(\\.(.\\d+)?)"),
+        //NRO_MAL_FORMADO_3("(\\d+\\.(.+)?)"),
+        //IDENTIFICADOR_MAL_FORMADO("([a-zA-Z])([a-zA-Z]|(\\d)|(_))*?"),
         CARACTERE_MAL_FORMADO("^(')(.+)?");
-
+        
         public String valor;
 
         private ExpressaoErro(String valor) {

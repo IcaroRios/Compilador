@@ -1,0 +1,28 @@
+5 program reservada
+5 true reservada
+7 false reservada
+8 9 numero
+9 -9 numero
+10 9 numero
+11 icaro identificador
+12 icaro identificador
+13 a identificador
+14 = operador_relacional
+14 > operador_relacional
+15 ! operador_logico
+19 "string dok" cadeia_de_caracteres
+21 //DSMDOASKDOASK comentario_linha
+21 / operador_aritmetico
+21 D identificador
+21 * operador_aritmetico
+21 DKOOEKD identificador
+
+8 . nro_mal_formado_2
+10 . nro_mal_formado_2
+12 _ simbolo_invalido
+16 | simbolo_invalido
+16 | simbolo_invalido
+17 & simbolo_invalido
+17 & simbolo_invalido
+18 "string . \ dok" cadeia_errada
+21 . nro_mal_formado_2
