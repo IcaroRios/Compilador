@@ -6,23 +6,25 @@
 10 9 numero
 11 icaro identificador
 12 icaro identificador
-13 a identificador
-14 = operador_relacional
-14 > operador_relacional
-15 ! operador_logico
-19 "string dok" cadeia_de_caracteres
-21 //DSMDOASKDOASK comentario_linha
-21 / operador_aritmetico
-21 D identificador
-21 * operador_aritmetico
-21 DKOOEKD identificador
+13 1 numero
+13 icaro identificador
+14 a identificador
+15 = operador_relacional
+15 > operador_relacional
+16 ! operador_logico
+20 "string dok\" cadeia_de_caracteres
+22 //DSMDOASKDOASK comentario_linha
+22 / operador_aritmetico
+22 D identificador
+22 * operador_aritmetico
+22 DKOOEKD identificador
 
 8 . nro_mal_formado_2
 10 . nro_mal_formado_2
 12 _ simbolo_invalido
-16 | simbolo_invalido
-16 | simbolo_invalido
-17 & simbolo_invalido
-17 & simbolo_invalido
-18 "string . \ dok" cadeia_errada
-21 . nro_mal_formado_2
+17 | simbolo_invalido
+17 | simbolo_invalido
+18 & simbolo_invalido
+18 & simbolo_invalido
+19 "string . \ dok" cadeia_errada
+22 . nro_mal_formado_2

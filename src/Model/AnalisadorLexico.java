@@ -54,7 +54,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                     for (String linha = leitor.readLine(); linha != null; linha = leitor.readLine()) {
                         //verifica se abriu algum comentario
                         pIB = analisaComentario(0, iniciouComentario, linha);
-
+                        //pIB.
                         //System.out.println(linha +"fora do metodo");
                         iniciouComentario = pIB.isIniciouComentario();
 
@@ -167,7 +167,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
             if (isEntradaValida(acumulador) && i + 1 == analisar.length) {
                 verificaRegexCriandoToken(acumulador);
             } else if (!isEntradaValida(acumulador)) {
-                boolean precisaCompensar = false;
+            	boolean precisaCompensar = false;
                 if (acumulador.length() > 1) {
                     acumulador = removeUltimoElemento(acumulador);
                     precisaCompensar = true;
@@ -178,8 +178,8 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                 }
 
                 acumulador = "";
-                if (precisaCompensar) //decrementA o contador para criar a nova sentenca
-                {
+                //decrementA o contador para criar a nova sentenca
+                if (precisaCompensar){
                     i--;
                 }
             }
@@ -230,7 +230,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
     
     
     /**
-     *Com este método, os comentários em bloco não checam nem a serem analisados
+     *Com este método, os comentários em bloco não chegam nem a serem analisados
      * assim como o compilador ignora a análise deles, aqui ele está sendo ignorado
      * na hora de pegar os tokens.      
      */

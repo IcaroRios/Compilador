@@ -11,12 +11,12 @@ public interface ExpressoesRegulares {
                 + "(boolean)|(true)|(false)|(string)|(char)"),//feito
         OPERADOR_ARITMETICO("(\\+)|(\\-)|(\\*)|(\\/)|(\\%)"),//feito
         OPERADOR_RELACIONAL("(!=)|(=)|(<)|(<=)|(>)|(>=)"),//feito
-        OPERADOR_LOGICO("(!)|(\\&\\&)|(\\|\\|)"),//feito
+        OPERADOR_LOGICO("(!)|(\\&)(\\&)|(\\|\\|)"),//feito
         //COMENTARIOBLOCO("\\/\\*(.*)\\*\\/"), // isto foi removido pois agora estou verificando enquanto leio o arquivo
-        COMENTARIO_LINHA("\\/\\/(.*)"),
+        COMENTARIO_LINHA("//((/*)|(.*)|(\\p{Blank}))*$"),
         IDENTIFICADOR("([a-zA-Z])([a-zA-Z]|(\\d)|(_))*?"),
         CARACTERE("'([a-zA-Z]|\\d)'"), // verificar
-        CADEIA_DE_CARACTERES("\"[a-zA-Z]([a-zA-Z]|\\d|\\p{Blank})*?\""),
+        CADEIA_DE_CARACTERES("\"[a-zA-Z]([a-zA-Z]|\\d|\\p{Blank})*?\\\\\""),
         //CADEIA_DE_CARACTERES("[a-zA-Z]([a-zA-Z]|\\d|\\s)*\\/")
         NUMERO("-?\\d+(\\.\\d+)?"); //  acho que está errado.
         
@@ -34,7 +34,7 @@ public interface ExpressoesRegulares {
         NRO_MAL_FORMADO("(\\d+\\.+)"),
         NRO_MAL_FORMADO_2("(\\.(.\\d+)?)"),
         //NRO_MAL_FORMADO_3("(\\d+\\.(.+)?)"),
-        //IDENTIFICADOR_MAL_FORMADO("([a-zA-Z])([a-zA-Z]|(\\d)|(_))*?"),
+        //IDENTIFICADOR_MAL_FORMADO("(((\\d)|(_))([a-zA-Z]))([a-zA-Z]|(\\d)|(_))*?"),
         CARACTERE_MAL_FORMADO("^(')(.+)?");
         
         public String valor;
