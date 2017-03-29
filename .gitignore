@@ -1,1 +1,6 @@
 /bin/
+build/
+nbproject/
+saida/
+build.xml
+manifest.mf
