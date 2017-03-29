@@ -1,12 +1,8 @@
-<<<<<<< HEAD
-/bin/
-.classpath
-.project
-=======
 /bin/
 build/
 nbproject/
 saida/
 build.xml
 manifest.mf
->>>>>>> origin/master
+.classpath
+.project
