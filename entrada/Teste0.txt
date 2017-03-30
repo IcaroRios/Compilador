@@ -19,4 +19,9 @@ a
 "string . \ dok"
 "string dok\"
 
-//DSMDOASKDOASK   . / D*DKOOEKD		
+//DSMDOASKDOASK   . / D*DKOOEKD
+
+dasdphda //dasdda
+
+"vem // tudo"
+mesalva // "nao venha nada"

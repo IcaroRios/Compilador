@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 import Util.ExpressoesRegulares;
 import Util.ComentarioBloco;
 import Util.Token;
-
+import com.sun.xml.internal.ws.util.StringUtils;
 
 public class AnalisadorLexico implements ExpressoesRegulares {
 
@@ -32,7 +32,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
 
     public void Executar(File arquivos) {
         try {
-            
+
             File listaDeArquivos[] = arquivos.listFiles();
 
             //Percorre os arquivos na pasta
@@ -54,8 +54,10 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                     for (String linha = leitor.readLine(); linha != null; linha = leitor.readLine()) {
                         //verifica se abriu algum comentario
                         pIB = analisaComentario(0, iniciouComentario, linha);
+                        pIB.setLinha(removerComentarioLinha(pIB.getLinha()));
+
                         //pIB.
-                        //System.out.println(linha +"fora do metodo");
+                        //System.out.println(pIB.getLinha());
                         iniciouComentario = pIB.isIniciouComentario();
 
                         verificaRegex(pIB.getLinha());
@@ -102,7 +104,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                     }
                 }
                 acumulador = "";
-                //não é espaco
+                //nï¿½o ï¿½ espaco
                 if (!m.group().matches("\\s+")) {
                     char separador = m.group().charAt(0);
                     int formador = buscadorDeSeparador(separador, entrada, i + 1);
@@ -147,7 +149,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                     continue;
                 }
             }
-            
+
             if (Pattern.matches(ExpressaoAuxiliar.CASOESPECIAL.valor, acumulador)) {
                 int proximo = i + 1;
                 if (proximo < analisar.length) {
@@ -163,11 +165,11 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                     }
                 }
             }
-            
+
             if (isEntradaValida(acumulador) && i + 1 == analisar.length) {
                 verificaRegexCriandoToken(acumulador);
             } else if (!isEntradaValida(acumulador)) {
-            	boolean precisaCompensar = false;
+                boolean precisaCompensar = false;
                 if (acumulador.length() > 1) {
                     acumulador = removeUltimoElemento(acumulador);
                     precisaCompensar = true;
@@ -179,7 +181,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
 
                 acumulador = "";
                 //decrementA o contador para criar a nova sentenca
-                if (precisaCompensar){
+                if (precisaCompensar) {
                     i--;
                 }
             }
@@ -207,7 +209,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                         break;
                     }
                 }
-                tokens.add(new Token(regex.ordinal(),entrada, numeroLinha, grupo));
+                tokens.add(new Token(regex.ordinal(), entrada, numeroLinha, grupo));
                 return true;
             }
         }
@@ -227,12 +229,11 @@ public class AnalisadorLexico implements ExpressoesRegulares {
         }
         return -1;
     }
-    
-    
+
     /**
-     *Com este método, os comentários em bloco não chegam nem a serem analisados
-     * assim como o compilador ignora a análise deles, aqui ele está sendo ignorado
-     * na hora de pegar os tokens.      
+     * Com este mï¿½todo, os comentï¿½rios em bloco nï¿½o chegam nem a serem
+     * analisados assim como o compilador ignora a anï¿½lise deles, aqui ele estï¿½
+     * sendo ignorado na hora de pegar os tokens.
      */
     public ComentarioBloco analisaComentario(int is, boolean iniciouComentario, String entrada) {
         ComentarioBloco comentario = new ComentarioBloco(iniciouComentario);
@@ -240,20 +241,20 @@ public class AnalisadorLexico implements ExpressoesRegulares {
         char[] analisar = entrada.toCharArray();
 
         //se estiver esperando fechar comentario e nao existir, retorna logo
-        //esta verificação de cara só é possível pois dá para fazer comparação com string
+        //esta verificaï¿½ï¿½o de cara sï¿½ ï¿½ possï¿½vel pois dï¿½ para fazer comparaï¿½ï¿½o com string
         if ((!(entrada.contains("*/"))) && comentario.isIniciouComentario()) {
-            
+
             comentario.setLinha("");
             return comentario;
         }
-        
+
         for (int i = 0; i < analisar.length; i++) {
             //verifica se nao abriu um comentario
             if (!comentario.isIniciouComentario()) {
                 //iniciou comentario e nao eh string
-                /*NÃO ALTERAR A ORDEM DOS OPERADORES, COMO É UMA VERIFICAÇÃO &&
-                A PRIMEIRA É VERIFICADA PARA DEPOIS A PRÓXIMA, ENTÃO ELE VERIFICA
-                SE NÃO ESTÁ NO LIMITE DO TAMANHO DA LINHA PARA DEPOIS PROCURAR O '*' */
+                /*Nï¿½O ALTERAR A ORDEM DOS OPERADORES, COMO ï¿½ UMA VERIFICAï¿½ï¿½O &&
+                 A PRIMEIRA ï¿½ VERIFICADA PARA DEPOIS A PRï¿½XIMA, ENTï¿½O ELE VERIFICA
+                 SE Nï¿½O ESTï¿½ NO LIMITE DO TAMANHO DA LINHA PARA DEPOIS PROCURAR O '*' */
                 if (analisar[i] == '/' && i < analisar.length - 1 && analisar[i + 1] == '*' && !isString && !isChar) {
                     comentario.setIniciouComentario(true);
 
@@ -273,13 +274,12 @@ public class AnalisadorLexico implements ExpressoesRegulares {
 
                 }
             } //se abriu um comentario, verifica se fechou e nao eh uma string
-            
-            else if (analisar[i] == '*' && i < analisar.length - 1 && analisar[i + 1] == '/' &&!isString && !isChar) {
+            else if (analisar[i] == '*' && i < analisar.length - 1 && analisar[i + 1] == '/' && !isString && !isChar) {
                 //if (i < analisar.length - 1) {
-                  //  if (analisar[i + 1] == '/') {
-                        i++;// duas horas para conseguir consertar esa merda                        
-                        comentario.setIniciouComentario(false);
-                  //  }
+                //  if (analisar[i + 1] == '/') {
+                i++;// duas horas para conseguir consertar esa merda                        
+                comentario.setIniciouComentario(false);
+                //  }
                 //}
             }
         }
@@ -291,8 +291,8 @@ public class AnalisadorLexico implements ExpressoesRegulares {
         try {
             File pasta = new File(pastaSaida);
             pasta.mkdir();
-            File n = new File(pasta.getName() + File.separator + arquivo.split("\\.")[0] +
-            		"_out.txt");
+            File n = new File(pasta.getName() + File.separator + arquivo.split("\\.")[0]
+                    + "_out.txt");
             BufferedWriter bw = new BufferedWriter(new FileWriter(n));
             for (Token t : tokens) {
                 bw.write(t.toString());
@@ -309,9 +309,9 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                     bw.flush();
                 }
             } else if (!tokens.isEmpty()) {
-                
+
                 System.out.println("Analise Lexica para o arquivo: " + arquivo + ": Sucesso.");
-                
+
             } else {
                 /**
                  * Prestar bem
@@ -324,7 +324,63 @@ public class AnalisadorLexico implements ExpressoesRegulares {
             tokensError.clear();
         } catch (IOException ex) {
             System.out.println("Deu merda na escrita do arquivo.");
-        } 
+        }
+    }
+
+    /**
+     * mÃ©todo responsavel por receber uma linha, verificar se ela contem um //
+     * para remover as informaÃ§Ãµes depois dela, mÃ¡s nÃ£o, caso ela esteja entre
+     * \" \"
+     *
+     * @param linha
+     * @return
+     */
+    private String removerComentarioLinha(String linha) {
+        int posicao = linha.indexOf("//");
+
+        if (posicao == 0) {
+            return "";
+        } else if (posicao == -1) {
+            return linha;
+        }
+
+        Matcher matcher = Pattern.compile("\"(.*?)\"").matcher(linha);
+        String acumulador = "";
+        while (matcher.find()) {
+            acumulador = acumulador.concat(matcher.group(1));
+        }
+        if (acumulador.indexOf("//") == -1) {
+            return linha.substring(0, linha.indexOf("//"));
+        }
+        int somatorioTamanho = 0;
+        int inicio = linha.indexOf(acumulador);
+
+        int fim = inicio + acumulador.length();
+        String[] partes = linha.split("//");
+        //System.out.println("partes = " + partes.length);
+
+        for (int i = 0; i < partes.length; i++) {
+            somatorioTamanho += partes[i].length() + 1;
+
+            if (somatorioTamanho >= fim) {
+                break;
+            }
+        }
+
+        linha = linha.substring(0, somatorioTamanho);
+        if (linha.endsWith("/")) {
+
+            char[] letras = linha.toCharArray();
+            char[] novaLinha = new char[letras.length - 2];
+            for (int i = 0; i < novaLinha.length; i++) {
+                novaLinha[i] = letras[i];
+            }
+
+            return new String(novaLinha);
+
+        }
+        return linha;
+
     }
 
 }

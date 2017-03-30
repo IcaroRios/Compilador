@@ -3,7 +3,7 @@ package Util;
 public interface ExpressoesRegulares {
     
     /*
-    PRESTAR ATENÇÃO COM A ORDEM, POIS UM ACABA AFETANDO O OUTRO
+    PRESTAR ATENï¿½ï¿½O COM A ORDEM, POIS UM ACABA AFETANDO O OUTRO
     */
     public enum ESTRUTURALEXICA {
         RESERVADA("(program)|(const)|(var)|(function)|(begin)|(end)|(end)|(if)|"
@@ -13,12 +13,12 @@ public interface ExpressoesRegulares {
         OPERADOR_RELACIONAL("(!=)|(=)|(<)|(<=)|(>)|(>=)"),//feito
         OPERADOR_LOGICO("(!)|(\\&)(\\&)|(\\|\\|)"),//feito
         //COMENTARIOBLOCO("\\/\\*(.*)\\*\\/"), // isto foi removido pois agora estou verificando enquanto leio o arquivo
-        COMENTARIO_LINHA("//((/*)|(.*)|(\\p{Blank}))*$"),
+        //COMENTARIO_LINHA("//((/*)|(.*)|(\\p{Blank}))*$"),
         IDENTIFICADOR("([a-zA-Z])([a-zA-Z]|(\\d)|(_))*?"),
         CARACTERE("'([a-zA-Z]|\\d)'"), // verificar
         CADEIA_DE_CARACTERES("\"[a-zA-Z]([a-zA-Z]|\\d|\\p{Blank})*?\\\\\""),
         //CADEIA_DE_CARACTERES("[a-zA-Z]([a-zA-Z]|\\d|\\s)*\\/")
-        NUMERO("-?\\d+(\\.\\d+)?"); //  acho que está errado.
+        NUMERO("-?\\d+(\\.\\d+)?"); //  acho que estï¿½ errado.
         
         public String valor;
 
