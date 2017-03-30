@@ -9,6 +9,7 @@ public interface ExpressoesRegulares {
         RESERVADA("(program)|(const)|(var)|(function)|(begin)|(end)|(end)|(if)|"
                 + "(then)|(else)|(while)|(do)|(read)|(write)|(integer)|(real)|"
                 + "(boolean)|(true)|(false)|(string)|(char)"),//feito
+        NUMERO("(-)?(\\p{Blank}*)(\\d)+(\\.\\d+)?"),
         OPERADOR_ARITMETICO("(\\+)|(\\-)|(\\*)|(\\/)|(\\%)"),//feito
         OPERADOR_RELACIONAL("(!=)|(=)|(<)|(<=)|(>)|(>=)"),//feito
         OPERADOR_LOGICO("(!)|(\\&)(\\&)|(\\|\\|)"),//feito
@@ -16,9 +17,10 @@ public interface ExpressoesRegulares {
         //COMENTARIO_LINHA("//((/*)|(.*)|(\\p{Blank}))*$"),
         IDENTIFICADOR("([a-zA-Z])([a-zA-Z]|(\\d)|(_))*?"),
         CARACTERE("'([a-zA-Z]|\\d)'"), // verificar
-        CADEIA_DE_CARACTERES("\"[a-zA-Z]([a-zA-Z]|\\d|\\p{Blank})*?\\\\\""),
-        //CADEIA_DE_CARACTERES("[a-zA-Z]([a-zA-Z]|\\d|\\s)*\\/")
-        NUMERO("-?\\d+(\\.\\d+)?"); //  acho que est� errado.
+        CADEIA_DE_CARACTERES("\"[a-zA-Z]([a-zA-Z]|\\d|\\p{Blank})*?\\\\\"")
+
+        
+        ;
         
         public String valor;
 
