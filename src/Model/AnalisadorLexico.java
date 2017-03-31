@@ -66,7 +66,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                     }
                     //se nao fechou comentario gera token de erro de comentario
                     if (iniciouComentario) {
-                        tokensError.add(new Token("{comentario", "COMENTARIO_MAL_FORMADO", numeroLinha, true));
+                        tokensError.add(new Token("comentario", "COMENTARIO_MAL_FORMADO", numeroLinha, true));
                     }
 
                     //gerando saidas
@@ -85,8 +85,35 @@ public class AnalisadorLexico implements ExpressoesRegulares {
     private void verificaRegex(String entrada) {
         char analisar[] = entrada.toCharArray();
         String acumulador = "";
-
+        int inicioOperadorCompostoE = 0;
+        int inicioOperadorCompostoOU = 0;
         for (int i = 0; i < analisar.length; i++) {
+
+            if (analisar[i] == '&') {
+                inicioOperadorCompostoE = i;
+            }
+            if (i < analisar.length - 1 && analisar[inicioOperadorCompostoE + 1] == '&') {
+                tokens.add(new Token(3, "&&", numeroLinha, 3));
+                inicioOperadorCompostoE++;
+                i += 2;
+                if (i >= analisar.length - 1) {
+                    numeroLinha++;
+                    return;                    
+                }
+            }
+            if (analisar[i] == '|') {
+                inicioOperadorCompostoOU = i;
+            }
+            if (i < analisar.length - 1 && analisar[inicioOperadorCompostoOU + 1] == '|') {
+                tokens.add(new Token(3, "||", numeroLinha, 3));
+                inicioOperadorCompostoOU++;
+                i += 2;
+                if (i >= analisar.length - 1) {
+                    numeroLinha++;
+                    return;                    
+                }
+            }
+            
             acumulador += analisar[i];
             String atual = "" + analisar[i];
             Pattern patern = Pattern.compile(ExpressaoAuxiliar.SEPARADORES.valor);
@@ -100,6 +127,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                     //Se passa cria tokenn
                     if (!verificaRegexCriandoToken(acumulador)) {
                         //token de error
+
                         tokensError.add(new Token(acumulador, numeroLinha, true));
                     }
                 }
@@ -122,6 +150,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                                 tokensError.add(new Token(palavra, "CADEIA_ERRADA", numeroLinha, true));
                             } //Outros erros ele auto-identifica na classe Token
                             else {
+
                                 tokensError.add(new Token(palavra, numeroLinha, true));
                             }
                         }
@@ -138,6 +167,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                         if (m.group().equals("\"")) {
                             tokensError.add(new Token(palavra, "CADEIA_ERRADA", numeroLinha, true));
                         } else {
+
                             tokensError.add(new Token(palavra, numeroLinha, true));
                         }
 
@@ -209,6 +239,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                         break;
                     }
                 }
+
                 tokens.add(new Token(regex.ordinal(), entrada, numeroLinha, grupo));
                 return true;
             }

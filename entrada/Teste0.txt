@@ -15,7 +15,10 @@ a
 =>
 !
 ||
-&&
+&& depois &&
+antes && depois
+fim &&
+$ erro
 "string . \ dok"
 "string dok\"
 
