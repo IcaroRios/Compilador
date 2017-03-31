@@ -56,8 +56,6 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                         pIB = analisaComentario(0, iniciouComentario, linha);
                         pIB.setLinha(removerComentarioLinha(pIB.getLinha()));
 
-                        //pIB.
-                        //System.out.println(pIB.getLinha());
                         iniciouComentario = pIB.isIniciouComentario();
 
                         verificaRegex(pIB.getLinha());

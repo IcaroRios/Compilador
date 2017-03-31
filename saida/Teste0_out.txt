@@ -13,11 +13,8 @@
 15 > operador_relacional
 16 ! operador_logico
 20 "string dok\" cadeia_de_caracteres
-22 //DSMDOASKDOASK comentario_linha
-22 / operador_aritmetico
-22 D identificador
-22 * operador_aritmetico
-22 DKOOEKD identificador
+24 dasdphda identificador
+27 mesalva identificador
 
 8 . nro_mal_formado_2
 10 . nro_mal_formado_2
@@ -27,4 +24,4 @@
 18 & simbolo_invalido
 18 & simbolo_invalido
 19 "string . \ dok" cadeia_errada
-22 . nro_mal_formado_2
+26 "vem // tudo" cadeia_errada
