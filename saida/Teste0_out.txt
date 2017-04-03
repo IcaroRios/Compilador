@@ -12,16 +12,23 @@
 15 = operador_relacional
 15 > operador_relacional
 16 ! operador_logico
-20 "string dok\" cadeia_de_caracteres
-24 dasdphda identificador
-27 mesalva identificador
+17 || operador_relacional
+19 && operador_relacional
+19 depois identificador
+19 && operador_relacional
+21 antes identificador
+21 && operador_relacional
+21 depois identificador
+22 fim identificador
+22 && operador_relacional
+24 erro identificador
+26 "string dok\" cadeia_de_caracteres
+30 dasdphda identificador
+33 mesalva identificador
 
 8 . nro_mal_formado_2
 10 . nro_mal_formado_2
 12 _ simbolo_invalido
-17 | simbolo_invalido
-17 | simbolo_invalido
-18 & simbolo_invalido
-18 & simbolo_invalido
-19 "string . \ dok" cadeia_errada
-26 "vem // tudo" cadeia_errada
+24 $ simbolo_invalido
+25 "string . \ dok" cadeia_errada
+32 "vem // tudo" cadeia_errada

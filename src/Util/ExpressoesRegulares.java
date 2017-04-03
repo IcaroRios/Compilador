@@ -12,7 +12,7 @@ public interface ExpressoesRegulares {
         NUMERO("(-)?(\\p{Blank}*)(\\d)+(\\.\\d+)?"),
         OPERADOR_ARITMETICO("(\\+)|(\\-)|(\\*)|(\\/)|(\\%)"),//feito
         OPERADOR_RELACIONAL("(!=)|(=)|(<)|(<=)|(>)|(>=)"),//feito
-        OPERADOR_LOGICO("(!)|(\\&)(\\&)|(\\|\\|)"),//feito
+        OPERADOR_LOGICO("(!)|(\\&\\&)|(\\|\\|)"),//feito
         //COMENTARIOBLOCO("\\/\\*(.*)\\*\\/"), // isto foi removido pois agora estou verificando enquanto leio o arquivo
         //COMENTARIO_LINHA("//((/*)|(.*)|(\\p{Blank}))*$"),
         IDENTIFICADOR("([a-zA-Z])([a-zA-Z]|(\\d)|(_))*?"),
