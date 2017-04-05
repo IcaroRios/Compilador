@@ -9,10 +9,11 @@ public interface ExpressoesRegulares {
         RESERVADA("(program)|(const)|(var)|(function)|(begin)|(end)|(end)|(if)|"
                 + "(then)|(else)|(while)|(do)|(read)|(write)|(integer)|(real)|"
                 + "(boolean)|(true)|(false)|(string)|(char)"),//feito
-        NUMERO("(-)?(\\p{Blank}*)(\\d)+(\\.\\d+)?"),
+        NUMERO("((-)?(\\p{Blank})*[\\d]+(\\.\\d+)?)"),
         OPERADOR_ARITMETICO("(\\+)|(\\-)|(\\*)|(\\/)|(\\%)"),//feito
         OPERADOR_RELACIONAL("(!=)|(=)|(<)|(<=)|(>)|(>=)"),//feito
-        OPERADOR_LOGICO("(!)|(\\&)(\\&)|(\\|\\|)"),//feito
+        OPERADOR_LOGICO("(!)|(\\&\\&)|(\\|\\|)"),//feito
+		DELIMITADOR("(;)|(,)|(\\(|(\\)))|(\\[)|(\\])"),
         //COMENTARIOBLOCO("\\/\\*(.*)\\*\\/"), // isto foi removido pois agora estou verificando enquanto leio o arquivo
         //COMENTARIO_LINHA("//((/*)|(.*)|(\\p{Blank}))*$"),
         IDENTIFICADOR("([a-zA-Z])([a-zA-Z]|(\\d)|(_))*?"),
