@@ -11,7 +11,7 @@ public interface ExpressoesRegulares {
                 + "(boolean)|(true)|(false)|(string)|(char)"),//feito
         NUMERO("((-)?(\\p{Blank})*[\\d]+(\\.\\d+)?)"),
         OPERADOR_ARITMETICO("(\\+)|(\\-)|(\\*)|(\\/)|(\\%)"),//feito
-        OPERADOR_RELACIONAL("(!=)|(=)|(<)|(<=)|(>)|(>=)"),//feito
+        OPERADOR_RELACIONAL("(<=)|(>=)|(!=)|(<)|(>)|(=)"),//feito
         OPERADOR_LOGICO("(!)|(\\&\\&)|(\\|\\|)"),//feito
 		DELIMITADOR("(;)|(,)|(\\(|(\\)))|(\\[)|(\\])"),
         //COMENTARIOBLOCO("\\/\\*(.*)\\*\\/"), // isto foi removido pois agora estou verificando enquanto leio o arquivo
@@ -22,7 +22,7 @@ public interface ExpressoesRegulares {
         //CADEIA_DE_CARACTERES("\"[a-zA-Z]([ -~&&[!\"]]|\\\")*")
         //CADEIA_DE_CARACTERES("(\"[a-zA-Z]([\\s-~&&[!\"]]|(\\\"))*)")
         //CADEIA_DE_CARACTERES("\"[a-zA-Z]([!-~&&[^\\\"]\\s\\\"])*\"")
-        CADEIA_DE_CARACTERES("\"[a-zA-Z]([[!-~&&[^\"]]\\s\\\"])*\"")
+        CADEIA_DE_CARACTERES("\"[a-zA-Z]([[ -~&&[^\"]]\\\"])*\"")
         //CADEIA_DE_CARACTERES("\"[a-zA-Z](.*&&["+(char)1+"-"+(char)31+""+(char)34+"]|\\\")*\"")
         //CADEIA_DE_CARACTERES("\"[a-zA-Z]([!-~&&[^\"]|\\s]|\")*")
         //CADEIA_DE_CARACTERES("\"[a-zA-Z][["+(char)32+"-"+(char)126       		
