@@ -2,8 +2,9 @@
 isto e um comentario
 DSDS
 dsdsd***/
+program()+- /*kappa*/ test+123-if
+a=2 a = 2
 program true
-
 false
 9.
 -9

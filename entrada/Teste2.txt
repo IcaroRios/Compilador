@@ -13,4 +13,8 @@ read write integer real boolean true false string char
 //OPERADORES LÓGICOS
 ! && ||
 //STRINGS
-'S'
+'S' 's' ' ' '9'
+'   2'
+"s"
+"ssdsaddsd"
+"sadkksadisa sdksadasd"

@@ -3,7 +3,7 @@ package Util;
 public interface ExpressoesRegulares {
     
     /*
-    PRESTAR ATENï¿½ï¿½O COM A ORDEM, POIS UM ACABA AFETANDO O OUTRO
+    PRESTAR ATENÇÃO COM A ORDEM, POIS UM ACABA AFETANDO O OUTRO
     */
     public enum ESTRUTURALEXICA {
         RESERVADA("(program)|(const)|(var)|(function)|(begin)|(end)|(end)|(if)|"
@@ -17,10 +17,17 @@ public interface ExpressoesRegulares {
         //COMENTARIOBLOCO("\\/\\*(.*)\\*\\/"), // isto foi removido pois agora estou verificando enquanto leio o arquivo
         //COMENTARIO_LINHA("//((/*)|(.*)|(\\p{Blank}))*$"),
         IDENTIFICADOR("([a-zA-Z])([a-zA-Z]|(\\d)|(_))*?"),
-        CARACTERE("'([a-zA-Z]|\\d)'"), // verificar
-        CADEIA_DE_CARACTERES("\"[a-zA-Z]([a-zA-Z]|\\d|\\p{Blank})*?\\\\\"")
+        CARACTERE("'([[a-zA-Z]\\d ]?)'"), // verificar
+        //CADEIA_DE_CARACTERES("\"[a-zA-Z]([\\s-~&&[!\"]]|\\\")*")
+        //CADEIA_DE_CARACTERES("\"[a-zA-Z]([ -~&&[!\"]]|\\\")*")
+        //CADEIA_DE_CARACTERES("(\"[a-zA-Z]([\\s-~&&[!\"]]|(\\\"))*)")
+        //CADEIA_DE_CARACTERES("\"[a-zA-Z]([!-~&&[^\\\"]\\s\\\"])*\"")
+        CADEIA_DE_CARACTERES("\"[a-zA-Z]([[!-~&&[^\"]]\\s\\\"])*\"")
+        //CADEIA_DE_CARACTERES("\"[a-zA-Z](.*&&["+(char)1+"-"+(char)31+""+(char)34+"]|\\\")*\"")
+        //CADEIA_DE_CARACTERES("\"[a-zA-Z]([!-~&&[^\"]|\\s]|\")*")
+        //CADEIA_DE_CARACTERES("\"[a-zA-Z][["+(char)32+"-"+(char)126       		
+        //		+"&&[!\"]]|\\\"]*")
 
-        
         ;
         
         public String valor;
@@ -38,7 +45,8 @@ public interface ExpressoesRegulares {
         NRO_MAL_FORMADO_2("(\\.(.\\d+)?)"),
         //NRO_MAL_FORMADO_3("(\\d+\\.(.+)?)"),
         //IDENTIFICADOR_MAL_FORMADO("(((\\d)|(_))([a-zA-Z]))([a-zA-Z]|(\\d)|(_))*?"),
-        CARACTERE_MAL_FORMADO("^(')(.+)?");
+        CARACTERE_MAL_FORMADO("^(')(.+)?")
+        ;
         
         public String valor;
 

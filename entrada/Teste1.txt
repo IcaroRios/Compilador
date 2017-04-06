@@ -14,7 +14,7 @@ read write integer real boolean true false string char
 ! && ||
 //STRINGS
 'S' '9' ' '
-"NAWDSND ...;..PDSPDÇ    		SDSADAS /"
+"NAWDSND...;..PDSPDSDSADAS"
 "A/"
 
 /*

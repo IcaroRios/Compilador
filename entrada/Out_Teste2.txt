@@ -1,0 +1,47 @@
+5 1 program reservada
+5 1 const reservada
+5 1 var reservada
+5 1 function reservada
+5 1 begin reservada
+5 1 end reservada
+5 1 if reservada
+5 1 then reservada
+5 1 else reservada
+5 1 while reservada
+5 1 do reservada
+6 1 read reservada
+6 1 write reservada
+6 1 integer reservada
+6 1 real reservada
+6 1 boolean reservada
+6 1 true reservada
+6 1 false reservada
+6 1 string reservada
+6 1 char reservada
+8 1 0.9 numero
+8 1 - operador_aritmetico
+8 1 0.9 numero
+8 1 23333.210212 numero
+10 1 + operador_aritmetico
+10 1 - operador_aritmetico
+10 1 * operador_aritmetico
+10 1 / operador_aritmetico
+10 1 % operador_aritmetico
+12 1 != operador_relacional
+12 1 = operador_relacional
+12 1 < operador_relacional
+12 1 <= operador_relacional
+12 1 > operador_relacional
+12 1 >= operador_relacional
+14 1 ! operador_logico
+14 3 && operador_relacional
+14 6 || operador_relacional
+17 1 'S' caractere
+17 1 's' caractere
+17 1 ' ' caractere
+17 1 '9' caractere
+19 1 "s" cadeia_de_caracteres
+20 1 "ssdsaddsd" cadeia_de_caracteres
+21 1 "sadkksadisa sdksadasd" cadeia_de_caracteres
+
+18 1 '   2' caractere_mal_formado
