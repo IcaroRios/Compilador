@@ -1,0 +1,8 @@
+program programa
+teste
+icaro
+identificador
+
+9.0.9
+"9 string errada"
+[ ) 
