@@ -14,10 +14,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import Util.ExpressoesRegulares;
-import Util.ComentarioBloco;
-import Util.Token;
-
 import com.sun.xml.internal.ws.util.StringUtils;
 
 public class AnalisadorLexico implements ExpressoesRegulares {
@@ -426,7 +422,14 @@ public class AnalisadorLexico implements ExpressoesRegulares {
 
         }
         return linha;
-
     }
 
+    public List<Token> getListTokens(){
+    	return this.tokens;
+    }
+    
+    public List<Token> getListTokensError(){
+    	return this.tokensError;
+    }
+    
 }
