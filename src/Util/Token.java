@@ -9,8 +9,7 @@ public class Token implements ExpressoesRegulares {
     private int tipo;
     private String lexema;
     private String erro;
-    private boolean isError;
-    private int posicao;
+    private boolean isError;    
 
     /**
      * Construtor de Tokens comuns
@@ -21,14 +20,13 @@ public class Token implements ExpressoesRegulares {
      * @param tipo tipo do lexema, para diferenciar lexemas do mesmo
      * identificador. Esta variavel contem o grupo do lexema no regex
      */
-    public Token(int id, String lexema, int nLinha, int tipo, int posicao) {
+    public Token(int id, String lexema, int nLinha, int tipo) {
         this.id = id;
         this.lexema = lexema;
         this.nLinha = nLinha;
         this.isError = false;
         this.erro = "";
-        this.tipo = tipo;
-        this.posicao = posicao;
+        this.tipo = tipo;      
 
     }
 
@@ -39,27 +37,25 @@ public class Token implements ExpressoesRegulares {
      * @param nLinha numero da linha do erro
      * @param error flag de erro
      */
-    public Token(String lexema, int nLinha, boolean error, int posicao) {
+    public Token(String lexema, int nLinha, boolean error) {
         this.lexema = lexema;
         this.nLinha = nLinha;
         isError = error;
         erro = "";
         id = 0;
-        tipo = 0;
-        this.posicao = posicao;
+        tipo = 0;       
         
         if (isError) {
             detectarError(lexema);
         }
     }
 
-    public Token(String lexema, String mensagem, int linha, boolean error, int posicao) {
+    public Token(String lexema, String mensagem, int linha, boolean error) {
         this.lexema = lexema;
         erro = mensagem;
         nLinha = linha;
         isError = error;
-        tipo = 0;
-        this.posicao = posicao;
+        tipo = 0;       
         
     }
 
@@ -86,18 +82,13 @@ public class Token implements ExpressoesRegulares {
     public int getTipo() {
         return tipo;
     }
-
-    public int getPosicao() {
-        return this.posicao;
-    }
     
     @Override
     public String toString() {
         if (isError) {
-            return nLinha + " " + posicao + " " + lexema + " " + erro.toLowerCase();
+			return "Erro na linha: "+ nLinha + " <" + erro.toLowerCase() + " - " + lexema +">";
         }
-
-        return nLinha + " " + posicao + " " + lexema + " " + ESTRUTURALEXICA.values()[id].name().toLowerCase();
+		return "<"+ ESTRUTURALEXICA.values()[id].name().toLowerCase() + " - " + lexema+">";
 
     }
 

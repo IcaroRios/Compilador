@@ -1,0 +1,49 @@
+<reservada - program>
+<reservada - const>
+<reservada - var>
+<reservada - function>
+<reservada - begin>
+<reservada - end>
+<reservada - if>
+<reservada - then>
+<reservada - else>
+<reservada - while>
+<reservada - do>
+<reservada - read>
+<reservada - write>
+<reservada - integer>
+<reservada - real>
+<reservada - boolean>
+<reservada - true>
+<reservada - false>
+<reservada - string>
+<reservada - char>
+<numero - 0.9>
+<operador_aritmetico - ->
+<numero - 0.9>
+<numero - 23333.210212>
+<operador_aritmetico - +>
+<operador_aritmetico - ->
+<operador_aritmetico - *>
+<operador_aritmetico - />
+<operador_aritmetico - %>
+<operador_relacional - !=>
+<operador_relacional - =>
+<operador_relacional - <>
+<operador_relacional - <=>
+<operador_relacional - >>
+<operador_relacional - >=>
+<operador_logico - !>
+<operador_relacional - &&>
+<operador_relacional - ||>
+<caractere - 'S'>
+<caractere - 's'>
+<caractere - ' '>
+<caractere - '9'>
+<cadeia_de_caracteres - "s">
+<cadeia_de_caracteres - "ssdsaddsd">
+<cadeia_de_caracteres - "sadkksadisa sdksadasd">
+
+
+------------------------------ERROS LÉXICOS IENTIFICADOS------------------------------
+Erro na linha: 18 <caractere_mal_formado - '   2'>

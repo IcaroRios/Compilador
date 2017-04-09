@@ -3,9 +3,11 @@ package Model;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,11 +17,13 @@ import java.util.regex.Pattern;
 import Util.ExpressoesRegulares;
 import Util.ComentarioBloco;
 import Util.Token;
+
 import com.sun.xml.internal.ws.util.StringUtils;
 
 public class AnalisadorLexico implements ExpressoesRegulares {
 
     private final String pastaSaida = "entrada";
+    private final String extensaoArquivosLex = ".oLex";
     private final List<Token> tokens;
     private final List<Token> tokensError;
     private int numeroLinha;
@@ -33,7 +37,17 @@ public class AnalisadorLexico implements ExpressoesRegulares {
     public void Executar(File arquivos) {
         try {
 
-            File listaDeArquivos[] = arquivos.listFiles();
+            File listaDeArquivos[] = arquivos.listFiles(
+            	new FilenameFilter() { 
+                public boolean accept(File dir, String filename)
+                { return filename.endsWith(".txt"); }
+            } );
+
+            System.out.println("Arquivos carregaos para teste:");
+            for(int cont = 0; cont < listaDeArquivos.length; cont++){
+            	
+            	System.out.println("\t"+listaDeArquivos[cont]);
+            }
 
             //Percorre os arquivos na pasta
             for (int i = 0; i < listaDeArquivos.length; i++) {
@@ -41,7 +55,6 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                 if (listaDeArquivos[i].isDirectory()) {
                     continue;
                 }
-
                 //verificando se o arquivo existe para comecar a analisar
                 if (listaDeArquivos[i].exists()) {
                     BufferedReader leitor = new BufferedReader(new FileReader(listaDeArquivos[i]));
@@ -64,7 +77,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                     }
                     //se nao fechou comentario gera token de erro de comentario
                     if (iniciouComentario) {
-                        tokensError.add(new Token("comentario", "COMENTARIO_MAL_FORMADO", numeroLinha, true, 1));
+                        tokensError.add(new Token("comentario", "COMENTARIO_MAL_FORMADO", numeroLinha, true));
                     }
 
                     //gerando saidas
@@ -86,12 +99,12 @@ public class AnalisadorLexico implements ExpressoesRegulares {
         int inicioOperadorCompostoE = 0;
         int inicioOperadorCompostoOU = 0;
         for (int i = 0; i < analisar.length; i++) {
-
+        	
             if (analisar[i] == '&') {
                 inicioOperadorCompostoE = i;
             }
             if (i < analisar.length - 1 && analisar[inicioOperadorCompostoE + 1] == '&') {
-                tokens.add(new Token(3, "&&", numeroLinha, 3, inicioOperadorCompostoE + 1));
+                tokens.add(new Token(3, "&&", numeroLinha, 3));
                 inicioOperadorCompostoE++;
                 i += 2;
                 if (i >= analisar.length - 1) {
@@ -103,7 +116,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                 inicioOperadorCompostoOU = i;
             }
             if (i < analisar.length - 1 && analisar[inicioOperadorCompostoOU + 1] == '|') {
-                tokens.add(new Token(3, "||", numeroLinha, 3, inicioOperadorCompostoOU + 1));
+                tokens.add(new Token(3, "||", numeroLinha, 3));
                 inicioOperadorCompostoOU++;
                 i += 2;
                 if (i >= analisar.length - 1) {
@@ -126,7 +139,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                     if (!verificaRegexCriandoToken(acumulador)) {
                         //token de error
 
-                        tokensError.add(new Token(acumulador, numeroLinha, true, m.regionStart()+1));
+                        tokensError.add(new Token(acumulador, numeroLinha, true));
                     }
                 }
                 acumulador = "";
@@ -145,11 +158,11 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                         if (!verificaRegexCriandoToken(palavra)) {
                             //Se deu erro em string
                             if (m.group().equals("\"")) {
-                                tokensError.add(new Token(palavra, "CADEIA_ERRADA", numeroLinha, true, m.regionStart()+1));
+                                tokensError.add(new Token(palavra, "CADEIA_ERRADA", numeroLinha, true));
                             } //Outros erros ele auto-identifica na classe Token
                             else {
 
-                                tokensError.add(new Token(palavra, numeroLinha, true, m.regionStart()+1));
+                                tokensError.add(new Token(palavra, numeroLinha, true));
                             }
                         }
                         i = formador;
@@ -163,10 +176,10 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                         }
                         //Se deu erro em string
                         if (m.group().equals("\"")) {
-                            tokensError.add(new Token(palavra, "CADEIA_ERRADA", numeroLinha, true, m.regionStart()+1));
+                            tokensError.add(new Token(palavra, "CADEIA_ERRADA", numeroLinha, true));
                         } else {
 
-                            tokensError.add(new Token(palavra, numeroLinha, true, m.regionStart()+1));
+                            tokensError.add(new Token(palavra, numeroLinha, true));
                         }
 
                         i = analisar.length;
@@ -187,7 +200,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                         acumulador += temp;
                         i = proximo;
                     } catch (NumberFormatException e) {
-                        tokensError.add(new Token(acumulador, numeroLinha, true, m.regionStart()+1));
+                        tokensError.add(new Token(acumulador, numeroLinha, true));
                         acumulador = "";
                         continue;
                     }
@@ -204,7 +217,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                 }
 
                 if (!verificaRegexCriandoToken(acumulador)) {
-                    tokensError.add(new Token(acumulador, numeroLinha, true, m.regionStart()+1));
+                    tokensError.add(new Token(acumulador, numeroLinha, true));
                 }
 
                 acumulador = "";
@@ -237,10 +250,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                         break;
                     }
                 }
-                //System.out.println("linha:   "+numeroLinha);
-                //System.out.println("padrão:  "+m.pattern());
-                //System.out.println("começou: "+m.regionStart());
-                tokens.add(new Token(regex.ordinal(), entrada, numeroLinha, grupo, m.regionStart() + 1));
+                tokens.add(new Token(regex.ordinal(), entrada, numeroLinha, grupo));
                 return true;
             }
         }
@@ -322,9 +332,10 @@ public class AnalisadorLexico implements ExpressoesRegulares {
         try {
             File pasta = new File(pastaSaida);
             pasta.mkdir();
-            //File n = new File(pasta.getName() + File.separator + arquivo.split("\\.")[0]+ "_out.txt");
-            File n = new File(pasta.getName() + File.separator +"Out_" +arquivo);
+            File n = new File(pasta.getName() + File.separator + "Out_"+arquivo.split("\\.")[0]+ this.extensaoArquivosLex);
+            //File n = new File(pasta.getName() + File.separator +"Out_" +arquivo);
             BufferedWriter bw = new BufferedWriter(new FileWriter(n));
+            //escreveno os tokens identificados
             for (Token t : tokens) {
                 bw.write(t.toString());
                 bw.newLine();
@@ -333,13 +344,17 @@ public class AnalisadorLexico implements ExpressoesRegulares {
             //se possui erros, escreve eles
             if (!tokensError.isEmpty()) {
                 bw.newLine();
+                bw.newLine();
+                bw.write("------------------------------ERROS LÉXICOS IENTIFICADOS------------------------------");
+                bw.newLine();
                 bw.flush();
                 for (Token t : tokensError) {
                     bw.write(t.toString());
                     bw.newLine();
                     bw.flush();
                 }
-            } else if (!tokens.isEmpty()) {            	
+            //} else if (!tokens.isEmpty()) {
+            } else if (tokensError.isEmpty()) {
                 bw.newLine();
                 bw.flush();
             	bw.write("SUCESSO NA ANÁLISE LÉXICA DO ARQUIVO: "+arquivo);
