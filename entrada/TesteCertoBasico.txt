@@ -5,7 +5,7 @@ TEM QUE DAR CERTO
 program const var function begin end if then else while do 
 read write integer real boolean true false string char
 //NÚMEROS
-0.9  - 0.9    23333.210212
+0.9  -0.9    - 0.9   -    0.09   23333.210212
 //OPERADORES ARITMÉTICOS
 + - * / %
 //OPERADORES RELACIONAIS
@@ -14,7 +14,6 @@ read write integer real boolean true false string char
 ! && ||
 //STRINGS
 'S' 's' ' ' '9'
-'   2'
 "s"
 "ssdsaddsd"
-"sadkksadisa sdksadasd"
+"sadkksadisa sdksadasddsdaxcxccsa~~s-2-8329743879=ã][´~"

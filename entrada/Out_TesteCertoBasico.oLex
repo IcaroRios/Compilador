@@ -21,6 +21,10 @@
 <numero - 0.9>
 <operador_aritmetico - ->
 <numero - 0.9>
+<operador_aritmetico - ->
+<numero - 0.9>
+<operador_aritmetico - ->
+<numero - 0.09>
 <numero - 23333.210212>
 <operador_aritmetico - +>
 <operador_aritmetico - ->
@@ -42,8 +46,7 @@
 <caractere - '9'>
 <cadeia_de_caracteres - "s">
 <cadeia_de_caracteres - "ssdsaddsd">
-<cadeia_de_caracteres - "sadkksadisa sdksadasd">
 
 
 ------------------------------ERROS LÉXICOS IENTIFICADOS------------------------------
-Erro na linha: 18 <caractere_mal_formado - '   2'>
+Erro na linha: 20 <cadeia_errada - "sadkksadisa sdksadasddsdaxcxccsa~~s-2-8329743879=ã][´~">

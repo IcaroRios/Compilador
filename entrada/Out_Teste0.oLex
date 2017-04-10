@@ -18,7 +18,8 @@
 <reservada - true>
 <reservada - false>
 <numero - 9>
-<numero - -9>
+<operador_aritmetico - ->
+<numero - 9>
 <numero - 9>
 <identificador - icaro>
 <identificador - icaro>

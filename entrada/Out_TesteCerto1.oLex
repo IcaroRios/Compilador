@@ -26,7 +26,8 @@
 <identificador - num>
 <operador_relacional - =>
 <identificador - num>
-<numero - -1>
+<operador_aritmetico - ->
+<numero - 1>
 <delimitador - ;>
 <reservada - end>
 <reservada - write>
