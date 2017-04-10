@@ -7,5 +7,5 @@ ou 9 = 3*3
 comentario em bloco
 
 */
-/ || && => != //comentario de linha na linha dos operadores
+/ || && >= != //comentario de linha na linha dos operadores
 

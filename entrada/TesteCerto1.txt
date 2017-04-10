@@ -1,0 +1,27 @@
+/*****
+COMENTÁRIO DE BLOCO PODE TER QUAQUER COISA....,/30139~´	''"]~[~[´´ ]
+*/
+//PROGRAMA PRA CALCULAR FATORIAL
+begin function fatorial(int num)
+	int cont = 1;
+	//laço pra calculo do fatorial
+	while(num>1) begin
+		cont=cont*num;
+		num=num-1;
+	end
+	write("valor de fatorial de "+num+"eh: "+cont);
+end function fatorial
+
+begin program
+	int num;
+	write("Programa calcula valor de fatorial. Digite um numero: ");
+	read(num);
+	while(num<1) begin
+		write("fatorial so pode ser calculado para numeros maiores que 1");
+		write("Digite um numero maior que 1 para ser calculado seu fatorial: ");
+		read(num);
+	end
+	fatorial(num);
+end program
+
+

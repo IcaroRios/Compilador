@@ -1,0 +1,19 @@
+/*
+TEM QUE DAR CERTO
+*/
+//PALAVRAS RESERVADAS
+program const var function begin end if then else while do 
+read write integer real boolean true false string char
+//NÚMEROS
+0.9  -0.9    - 0.9   -    0.09   23333.210212
+//OPERADORES ARITMÉTICOS
++ - * / %
+//OPERADORES RELACIONAIS
+!= = < <= > >=
+//OPERADORES LÓGICOS
+! && ||
+//STRINGS
+'S' 's' ' ' '9'
+"s"
+"ssdsaddsd"
+"sadkksadisa sdksadasddsdaxcxccsa~~s-2-8329743879=ã][´~"

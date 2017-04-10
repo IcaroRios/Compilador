@@ -1,4 +1,4 @@
-package Util;
+package Model;
 
 public interface ExpressoesRegulares {
     
@@ -9,25 +9,14 @@ public interface ExpressoesRegulares {
         RESERVADA("(program)|(const)|(var)|(function)|(begin)|(end)|(end)|(if)|"
                 + "(then)|(else)|(while)|(do)|(read)|(write)|(integer)|(real)|"
                 + "(boolean)|(true)|(false)|(string)|(char)"),//feito
-        NUMERO("((-)?(\\p{Blank})*[\\d]+(\\.\\d+)?)"),
+        NUMERO("(((-)?(\\s))?(\\d)+(\\.\\d+)?)"),
         OPERADOR_ARITMETICO("(\\+)|(\\-)|(\\*)|(\\/)|(\\%)"),//feito
-        OPERADOR_RELACIONAL("(!=)|(=)|(<)|(<=)|(>)|(>=)"),//feito
+        OPERADOR_RELACIONAL("(<=)|(>=)|(!=)|(<)|(>)|(=)"),//feito
         OPERADOR_LOGICO("(!)|(\\&\\&)|(\\|\\|)"),//feito
-		DELIMITADOR("(;)|(,)|(\\(|(\\)))|(\\[)|(\\])"),
-        //COMENTARIOBLOCO("\\/\\*(.*)\\*\\/"), // isto foi removido pois agora estou verificando enquanto leio o arquivo
-        //COMENTARIO_LINHA("//((/*)|(.*)|(\\p{Blank}))*$"),
+		DELIMITADOR("(;)|(,)|(\\(|(\\)))|(\\[)|(\\])"),        
         IDENTIFICADOR("([a-zA-Z])([a-zA-Z]|(\\d)|(_))*?"),
         CARACTERE("'([[a-zA-Z]\\d ]?)'"), // verificar
-        //CADEIA_DE_CARACTERES("\"[a-zA-Z]([\\s-~&&[!\"]]|\\\")*")
-        //CADEIA_DE_CARACTERES("\"[a-zA-Z]([ -~&&[!\"]]|\\\")*")
-        //CADEIA_DE_CARACTERES("(\"[a-zA-Z]([\\s-~&&[!\"]]|(\\\"))*)")
-        //CADEIA_DE_CARACTERES("\"[a-zA-Z]([!-~&&[^\\\"]\\s\\\"])*\"")
-        CADEIA_DE_CARACTERES("\"[a-zA-Z]([[!-~&&[^\"]]\\s\\\"])*\"")
-        //CADEIA_DE_CARACTERES("\"[a-zA-Z](.*&&["+(char)1+"-"+(char)31+""+(char)34+"]|\\\")*\"")
-        //CADEIA_DE_CARACTERES("\"[a-zA-Z]([!-~&&[^\"]|\\s]|\")*")
-        //CADEIA_DE_CARACTERES("\"[a-zA-Z][["+(char)32+"-"+(char)126       		
-        //		+"&&[!\"]]|\\\"]*")
-
+        CADEIA_DE_CARACTERES("\"[a-zA-Z]([[ -~&&[^\"]]\\\"])*\"")
         ;
         
         public String valor;
@@ -43,8 +32,6 @@ public interface ExpressoesRegulares {
     public enum ExpressaoErro {
         NRO_MAL_FORMADO("(\\d+\\.+)"),
         NRO_MAL_FORMADO_2("(\\.(.\\d+)?)"),
-        //NRO_MAL_FORMADO_3("(\\d+\\.(.+)?)"),
-        //IDENTIFICADOR_MAL_FORMADO("(((\\d)|(_))([a-zA-Z]))([a-zA-Z]|(\\d)|(_))*?"),
         CARACTERE_MAL_FORMADO("^(')(.+)?")
         ;
         
