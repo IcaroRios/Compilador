@@ -1,3 +1,4 @@
+<<<<<<< HEAD:entrada/TesteCerto0.txt
 program programa "string"
 'c'
 9= 1+8 
@@ -9,3 +10,16 @@ comentario em bloco
 */
 / || && >= != //comentario de linha na linha dos operadores
 
+=======
+program programa "string"
+'c'
+9= 1+8 
+ou 9 = 3*3
+/*
+
+comentario em bloco
+
+*/
+/ || && >= != //comentario de linha na linha dos operadores
+
+>>>>>>> 1973b33c5741ee27e14770b6345974376e807fe7:entrada/TesteCerto0.txt

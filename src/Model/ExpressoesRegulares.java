@@ -3,7 +3,7 @@ package Model;
 public interface ExpressoesRegulares {
     
     /*
-    PRESTAR ATENÇÃO COM A ORDEM, POIS UM ACABA AFETANDO O OUTRO
+    PRESTAR ATENï¿½ï¿½O COM A ORDEM, POIS UM ACABA AFETANDO O OUTRO
     */
     public enum ESTRUTURALEXICA {
         RESERVADA("(program)|(const)|(var)|(function)|(begin)|(end)|(end)|(if)|"
@@ -55,5 +55,4 @@ public interface ExpressoesRegulares {
             this.valor = valor;
         }
     }
-
 }
