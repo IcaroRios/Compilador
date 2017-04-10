@@ -53,4 +53,4 @@
 20 1 end reservada
 22 1 end reservada
 
-SUCESSO NA ANÁLISE LÉXICA DO ARQUIVO: input01.txt
+SUCESSO NA ANï¿½LISE Lï¿½XICA DO ARQUIVO: input01.txt

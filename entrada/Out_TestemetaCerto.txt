@@ -1,0 +1,23 @@
+1 1 program reservada
+1 1 programa identificador
+1 1 "string" cadeia_de_caracteres
+2 1 'c' caractere
+3 1 9 numero
+3 1 = operador_relacional
+3 1 1 numero
+3 1 + operador_aritmetico
+3 1 8 numero
+4 1 ou identificador
+4 1 9 numero
+4 1 = operador_relacional
+4 1 3 numero
+4 1 * operador_aritmetico
+4 1 3 numero
+10 1 / operador_aritmetico
+10 3 || operador_relacional
+10 6 && operador_relacional
+10 1 = operador_relacional
+10 1 > operador_relacional
+10 1 != operador_relacional
+
+SUCESSO NA AN�LISE L�XICA DO ARQUIVO: TestemetaCerto.txt
