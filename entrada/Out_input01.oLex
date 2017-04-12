@@ -1,56 +1,56 @@
-<reservada - program>
-<identificador - name01>
-<delimitador - ;>
-<reservada - var>
-<identificador - nome>
-<reservada - string>
-<delimitador - ;>
-<identificador - idade>
-<reservada - integer>
-<delimitador - ;>
-<reservada - begin>
-<reservada - write>
-<delimitador - (>
-<cadeia_de_caracteres - "Entre com seu nome: ">
-<delimitador - )>
-<delimitador - ;>
-<reservada - read>
-<delimitador - (>
-<identificador - nome>
-<delimitador - )>
-<delimitador - ;>
-<reservada - write>
-<delimitador - (>
-<cadeia_de_caracteres - "Entre com sua idade: ">
-<delimitador - )>
-<delimitador - ;>
-<reservada - read>
-<delimitador - (>
-<identificador - idade>
-<delimitador - )>
-<delimitador - ;>
-<reservada - if>
-<delimitador - (>
-<identificador - idade>
-<operador_relacional - >=>
-<numero - 18>
-<delimitador - )>
-<reservada - then>
-<reservada - begin>
-<reservada - write>
-<delimitador - (>
-<cadeia_de_caracteres - "Voce e maior de idade.">
-<delimitador - )>
-<delimitador - ;>
-<reservada - end>
-<reservada - else>
-<reservada - begin>
-<reservada - write>
-<delimitador - (>
-<cadeia_de_caracteres - "Voce e menor de idade">
-<delimitador - )>
-<delimitador - ;>
-<reservada - end>
-<reservada - end>
+1<reservada - program>
+1<identificador - name01>
+1<delimitador - ;>
+3<reservada - var>
+1<identificador - nome>
+20<reservada - string>
+1<delimitador - ;>
+1<identificador - idade>
+15<reservada - integer>
+1<delimitador - ;>
+5<reservada - begin>
+14<reservada - write>
+3<delimitador - (>
+1<cadeia_de_caracteres - "Entre com seu nome: ">
+3<delimitador - )>
+1<delimitador - ;>
+13<reservada - read>
+3<delimitador - (>
+1<identificador - nome>
+3<delimitador - )>
+1<delimitador - ;>
+14<reservada - write>
+3<delimitador - (>
+1<cadeia_de_caracteres - "Entre com sua idade: ">
+3<delimitador - )>
+1<delimitador - ;>
+13<reservada - read>
+3<delimitador - (>
+1<identificador - idade>
+3<delimitador - )>
+1<delimitador - ;>
+8<reservada - if>
+3<delimitador - (>
+1<identificador - idade>
+2<operador_relacional - >=>
+1<numero - 18>
+3<delimitador - )>
+9<reservada - then>
+5<reservada - begin>
+14<reservada - write>
+3<delimitador - (>
+1<cadeia_de_caracteres - "Voce e maior de idade.">
+3<delimitador - )>
+1<delimitador - ;>
+6<reservada - end>
+10<reservada - else>
+5<reservada - begin>
+14<reservada - write>
+3<delimitador - (>
+1<cadeia_de_caracteres - "Voce e menor de idade">
+3<delimitador - )>
+1<delimitador - ;>
+6<reservada - end>
+6<reservada - end>
 
 SUCESSO NA ANÁLISE LÉXICA DO ARQUIVO: input01.txt

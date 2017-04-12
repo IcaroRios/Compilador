@@ -13,7 +13,6 @@ public class Token implements ExpressoesRegulares {
 
     /**
      * Construtor de Tokens comuns
-     *
      * @param id identificador do token
      * @param lexema lexema do token
      * @param nLinha numero da linha em que foi criado
@@ -32,7 +31,6 @@ public class Token implements ExpressoesRegulares {
 
     /**
      * Construtor de erro auto-detectavel
-     *
      * @param lexema lexema do erro
      * @param nLinha numero da linha do erro
      * @param error flag de erro
@@ -88,7 +86,7 @@ public class Token implements ExpressoesRegulares {
         if (isError) {
 			return "Erro na linha: "+ nLinha + " <" + erro.toLowerCase() + " - " + lexema +">";
         }
-		return "<"+ ESTRUTURALEXICA.values()[id].name().toLowerCase() + " - " + lexema+">";
+		return tipo+"<"+ ESTRUTURALEXICA.values()[id].name().toLowerCase() + " - " + lexema+">";
 
     }
 

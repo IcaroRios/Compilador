@@ -1,12 +1,12 @@
-<reservada - program>
-<identificador - programa>
-<identificador - teste>
-<identificador - icaro>
-<identificador - identificador>
-<numero - 9.0>
-<numero - 9>
-<delimitador - [>
-<delimitador - )>
+1<reservada - program>
+1<identificador - programa>
+1<identificador - teste>
+1<identificador - icaro>
+1<identificador - identificador>
+1<numero - 9.0>
+1<numero - 9>
+5<delimitador - [>
+3<delimitador - )>
 
 
 ------------------------------ERROS LÉXICOS IENTIFICADOS------------------------------
