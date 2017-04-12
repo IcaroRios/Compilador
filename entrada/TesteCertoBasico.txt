@@ -1,45 +1,19 @@
-<<<<<<< HEAD
-/*
-=======
-/*
->>>>>>> origin/master
-TEM QUE DAR CERTO
-*/
-//PALAVRAS RESERVADAS
-program const var function begin end if then else while do
-read write integer real boolean true false string char
-//Nï¿½MEROS
-0.9  -0.9    - 0.9   -    0.09   23333.210212
-//OPERADORES ARITMï¿½TICOS
-+ - * / %
-//OPERADORES RELACIONAIS
-!= = < <= > >=
-//OPERADORES Lï¿½GICOS
-! && ||
-//STRINGS
-'S' 's' ' ' '9'
-"s"
-"ssdsaddsd"
-<<<<<<< HEAD
-=======
 /*
 TEM QUE DAR CERTO
 */
 //PALAVRAS RESERVADAS
 program const var function begin end if then else while do 
 read write integer real boolean true false string char
-//NÚMEROS
+//NÃšMEROS
 0.9  -0.9    - 0.9   -    0.09   23333.210212
-//OPERADORES ARITMÉTICOS
+//OPERADORES ARITMÃ‰TICOS
 + - * / %
 //OPERADORES RELACIONAIS
 != = < <= > >=
-//OPERADORES LÓGICOS
+//OPERADORES LÃ“GICOS
 ! && ||
 //STRINGS
 'S' 's' ' ' '9'
 "s"
 "ssdsaddsd"
-"sadkksadisa sdksadasddsdaxcxccsa~~s-2-8329743879 =][´~"
-=======
->>>>>>> origin/master
+"sadkksadisa sdksadasddsdaxcxccsa~~s-2-8329743879 =][dd3e~"
