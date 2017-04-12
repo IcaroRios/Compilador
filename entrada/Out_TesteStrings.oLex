@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 1<reservada - program>
 1<identificador - programa>
 1<cadeia_de_caracteres - "string">
@@ -20,3 +21,27 @@
 3<operador_relacional - !=>
 
 SUCESSO NA ANÁLISE LÉXICA DO ARQUIVO: TesteStrings.txt
+=======
+<reservada - program>
+<identificador - programa>
+<cadeia_de_caracteres - "string">
+<caractere - 'c'>
+<numero - 9>
+<operador_relacional - =>
+<numero - 1>
+<operador_aritmetico - +>
+<numero - 8>
+<identificador - ou>
+<numero - 9>
+<operador_relacional - =>
+<numero - 3>
+<operador_aritmetico - *>
+<numero - 3>
+<operador_aritmetico - />
+<operador_relacional - ||>
+<operador_relacional - &&>
+<operador_relacional - >=>
+<operador_relacional - !=>
+
+SUCESSO NA ANï¿½LISE Lï¿½XICA DO ARQUIVO: TesteStrings.txt
+>>>>>>> origin/master

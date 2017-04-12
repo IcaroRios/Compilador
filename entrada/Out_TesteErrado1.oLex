@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 4<operador_aritmetico - />
 1<identificador - COMENTARIO>
 1<identificador - DE>
@@ -26,3 +27,33 @@ Erro na linha: 7 <cadeia_errada - " ">
 Erro na linha: 8 <cadeia_errada - "2">
 Erro na linha: 9 <cadeia_errada - "		>
 Erro na linha: 25 <comentario_mal_formado - comentario>
+=======
+<operador_aritmetico - />
+<identificador - COMENTARIO>
+<identificador - DE>
+<identificador - LINHA>
+<identificador - TEM>
+<identificador - QUE>
+<identificador - TER>
+<numero - 2>
+<operador_aritmetico - />
+<identificador - TBM>
+<identificador - DA>
+<identificador - MERDA>
+<identificador - begi>
+<numero - 0>
+<cadeia_de_caracteres - "EE">
+
+
+------------------------------ERROS L�XICOS IENTIFICADOS------------------------------
+Erro na linha: 2 <simbolo_invalido - {>
+Erro na linha: 2 <simbolo_invalido - }>
+Erro na linha: 3 <nro_mal_formado - 0.>
+Erro na linha: 4 <nro_mal_formado_2 - .>
+Erro na linha: 5 <caractere_mal_formado - 'EDEDE'>
+Erro na linha: 6 <cadeia_errada - "">
+Erro na linha: 7 <cadeia_errada - " ">
+Erro na linha: 8 <cadeia_errada - "2">
+Erro na linha: 9 <cadeia_errada - "		>
+Erro na linha: 25 <comentario_mal_formado - comentario>
+>>>>>>> origin/master

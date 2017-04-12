@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 4<operador_relacional - <>
 4<operador_relacional - <>
 4<operador_relacional - <>
@@ -77,3 +78,27 @@ Erro na linha: 1 <simbolo_invalido - :>
 Erro na linha: 1 <nro_mal_formado_2 - .>
 Erro na linha: 25 <simbolo_invalido - :>
 Erro na linha: 25 <nro_mal_formado_2 - .>
+=======
+<reservada - program>
+<identificador - programa>
+<cadeia_de_caracteres - "string">
+<caractere - 'c'>
+<numero - 9>
+<operador_relacional - =>
+<numero - 1>
+<operador_aritmetico - +>
+<numero - 8>
+<identificador - ou>
+<numero - 9>
+<operador_relacional - =>
+<numero - 3>
+<operador_aritmetico - *>
+<numero - 3>
+<operador_aritmetico - />
+<operador_relacional - ||>
+<operador_relacional - &&>
+<operador_relacional - >=>
+<operador_relacional - !=>
+
+SUCESSO NA AN�LISE L�XICA DO ARQUIVO: TesteCerto0.txt
+>>>>>>> origin/master

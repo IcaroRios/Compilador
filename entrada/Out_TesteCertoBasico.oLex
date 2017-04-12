@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 4<operador_relacional - <>
 4<operador_relacional - <>
 4<operador_relacional - <>
@@ -134,3 +135,55 @@ Erro na linha: 1 <nro_mal_formado_2 - .>
 Erro na linha: 41 <simbolo_invalido - :>
 Erro na linha: 41 <nro_mal_formado_2 - .>
 Erro na linha: 42 <cadeia_errada - "sadkksadisa sdksadasddsdaxcxccsa~~s-2-8329743879=ã][´~">
+=======
+<reservada - program>
+<reservada - const>
+<reservada - var>
+<reservada - function>
+<reservada - begin>
+<reservada - end>
+<reservada - if>
+<reservada - then>
+<reservada - else>
+<reservada - while>
+<reservada - do>
+<reservada - read>
+<reservada - write>
+<reservada - integer>
+<reservada - real>
+<reservada - boolean>
+<reservada - true>
+<reservada - false>
+<reservada - string>
+<reservada - char>
+<numero - 0.9>
+<operador_aritmetico - ->
+<numero - 0.9>
+<operador_aritmetico - ->
+<numero - 0.9>
+<operador_aritmetico - ->
+<numero - 0.09>
+<numero - 23333.210212>
+<operador_aritmetico - +>
+<operador_aritmetico - ->
+<operador_aritmetico - *>
+<operador_aritmetico - />
+<operador_aritmetico - %>
+<operador_relacional - !=>
+<operador_relacional - =>
+<operador_relacional - <>
+<operador_relacional - <=>
+<operador_relacional - >>
+<operador_relacional - >=>
+<operador_logico - !>
+<operador_relacional - &&>
+<operador_relacional - ||>
+<caractere - 'S'>
+<caractere - 's'>
+<caractere - ' '>
+<caractere - '9'>
+<cadeia_de_caracteres - "s">
+<cadeia_de_caracteres - "ssdsaddsd">
+
+SUCESSO NA ANï¿½LISE Lï¿½XICA DO ARQUIVO: TesteCertoBasico.txt
+>>>>>>> origin/master

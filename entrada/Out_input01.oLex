@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 1<reservada - program>
 1<identificador - name01>
 1<delimitador - ;>
@@ -54,3 +55,61 @@
 6<reservada - end>
 
 SUCESSO NA ANÁLISE LÉXICA DO ARQUIVO: input01.txt
+=======
+<reservada - program>
+<identificador - name01>
+<delimitador - ;>
+<reservada - var>
+<identificador - nome>
+<reservada - string>
+<delimitador - ;>
+<identificador - idade>
+<reservada - integer>
+<delimitador - ;>
+<reservada - begin>
+<reservada - write>
+<delimitador - (>
+<cadeia_de_caracteres - "Entre com seu nome: ">
+<delimitador - )>
+<delimitador - ;>
+<reservada - read>
+<delimitador - (>
+<identificador - nome>
+<delimitador - )>
+<delimitador - ;>
+<reservada - write>
+<delimitador - (>
+<cadeia_de_caracteres - "Entre com sua idade: ">
+<delimitador - )>
+<delimitador - ;>
+<reservada - read>
+<delimitador - (>
+<identificador - idade>
+<delimitador - )>
+<delimitador - ;>
+<reservada - if>
+<delimitador - (>
+<identificador - idade>
+<operador_relacional - >=>
+<numero - 18>
+<delimitador - )>
+<reservada - then>
+<reservada - begin>
+<reservada - write>
+<delimitador - (>
+<cadeia_de_caracteres - "Voce e maior de idade.">
+<delimitador - )>
+<delimitador - ;>
+<reservada - end>
+<reservada - else>
+<reservada - begin>
+<reservada - write>
+<delimitador - (>
+<cadeia_de_caracteres - "Voce e menor de idade">
+<delimitador - )>
+<delimitador - ;>
+<reservada - end>
+<reservada - end>
+
+SUCESSO NA ANï¿½LISE Lï¿½XICA DO ARQUIVO: input01.txt
+>>>>>>> origin/master

@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 program programa "string"
+=======
+program programa "string"
+>>>>>>> origin/master
 'c'
-9= 1+8 
+9= 1+8
 ou 9 = 3*3
 /*
 
@@ -8,6 +12,7 @@ comentario em bloco
 
 */
 / || && >= != //comentario de linha na linha dos operadores
+<<<<<<< HEAD
 
 =======
 program programa "string"
@@ -21,3 +26,5 @@ comentario em bloco
 */
 / || && >= != //comentario de linha na linha dos operadores
 
+=======
+>>>>>>> origin/master
