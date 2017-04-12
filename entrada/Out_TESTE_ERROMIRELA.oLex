@@ -81,7 +81,7 @@
 <cadeia_de_caracteres - "cofoi de merma $$$$$$ dollaaaaaarzzzz">
 
 
-------------------------------ERROS LÉXICOS IENTIFICADOS------------------------------
+------------------------------ERROS Lï¿½XICOS IENTIFICADOS------------------------------
 Erro na linha: 9 <cadeia_errada - "ops esqueci a outra aspa :c>
 Erro na linha: 14 <simbolo_invalido - \>
 Erro na linha: 21 <cadeia_errada - "vocÃª reconhece acentos?">
@@ -89,11 +89,9 @@ Erro na linha: 23 <simbolo_invalido - `>
 Erro na linha: 23 <simbolo_invalido - ~>
 Erro na linha: 23 <caractere_mal_formado - ' :D>
 Erro na linha: 25 <caractere_mal_formado - 'iso aqi gera erro?>
-Erro na linha: 27 <simbolo_invalido - Ã>
-Erro na linha: 27 <simbolo_invalido - §>
+Erro na linha: 27 <simbolo_invalido - Ã§>
 Erro na linha: 27 <simbolo_invalido - ?>
-Erro na linha: 29 <simbolo_invalido - Ã>
-Erro na linha: 29 <simbolo_invalido - ©>
+Erro na linha: 29 <simbolo_invalido - Ã©>
 Erro na linha: 40 <simbolo_invalido - _>
 Erro na linha: 40 <simbolo_invalido - $>
 Erro na linha: 41 <simbolo_invalido - _>
