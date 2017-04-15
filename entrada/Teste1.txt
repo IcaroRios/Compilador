@@ -2,8 +2,9 @@
 TEM QUE DAR CERTO
 */
 //PALAVRAS RESERVADAS
-program const var function begin end if then else while do 
-read write integer real boolean true false string char
+program char
+real
+boolean
 //NÚMEROS
 0.9  -0.9    23333.210212
 //OPERADORES ARITMÉTICOS
@@ -17,12 +18,12 @@ read write integer real boolean true false string char
 "NAWDSND...;..PDSPDSDSADAS"
 "A/"
 
+''
+
 /*
 TEM QUE DAR ERRADO
 */
+__a
 .0 -9. --9.3
-+--
-
-''
 "/ DSDS"
 "/"

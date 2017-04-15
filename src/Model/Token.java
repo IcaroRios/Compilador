@@ -87,6 +87,7 @@ public class Token implements ExpressoesRegulares {
 			return "Erro na linha: "+ nLinha +" <" + erro.toLowerCase() + " - " + lexema +">";
         }
 		//return tipo+"<"+ ESTRUTURALEXICA.values()[id].name().toLowerCase() + " - " + lexema+">";
+		//return this.nLinha+"<"+ ESTRUTURALEXICA.values()[id].name().toLowerCase() + " - " + lexema+">";
 		return "<"+ ESTRUTURALEXICA.values()[id].name().toLowerCase() + " - " + lexema+">";
     }
 

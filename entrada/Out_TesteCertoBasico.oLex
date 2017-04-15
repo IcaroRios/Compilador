@@ -38,8 +38,8 @@
 <operador_relacional - >>
 <operador_relacional - >=>
 <operador_logico - !>
-<operador_relacional - &&>
-<operador_relacional - ||>
+<operador_logico - &&>
+<operador_logico - ||>
 <caractere - 'S'>
 <caractere - 's'>
 <caractere - ' '>

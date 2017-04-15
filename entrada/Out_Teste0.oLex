@@ -29,15 +29,15 @@
 <operador_relacional - =>
 <operador_relacional - >>
 <operador_logico - !>
-<operador_relacional - ||>
-<operador_relacional - &&>
+<operador_logico - ||>
+<operador_logico - &&>
 <identificador - depois>
-<operador_relacional - &&>
+<operador_logico - &&>
 <identificador - antes>
-<operador_relacional - &&>
+<operador_logico - &&>
 <identificador - depois>
 <identificador - fim>
-<operador_relacional - &&>
+<operador_logico - &&>
 <identificador - erro>
 <cadeia_de_caracteres - "string . \ dok">
 <cadeia_de_caracteres - "string dok\">
@@ -50,4 +50,4 @@
 Erro na linha: 9 <nro_mal_formado_2 - .>
 Erro na linha: 11 <nro_mal_formado_2 - .>
 Erro na linha: 13 <simbolo_invalido - _>
-Erro na linha: 25 <simbolo_invalido - $>
+Erro na linha: 22 <simbolo_invalido - $>

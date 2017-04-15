@@ -1,23 +1,7 @@
 <reservada - program>
-<reservada - const>
-<reservada - var>
-<reservada - function>
-<reservada - begin>
-<reservada - end>
-<reservada - if>
-<reservada - then>
-<reservada - else>
-<reservada - while>
-<reservada - do>
-<reservada - read>
-<reservada - write>
-<reservada - integer>
+<reservada - char>
 <reservada - real>
 <reservada - boolean>
-<reservada - true>
-<reservada - false>
-<reservada - string>
-<reservada - char>
 <numero - 0.9>
 <operador_aritmetico - ->
 <numero - 0.9>
@@ -34,26 +18,26 @@
 <operador_relacional - >>
 <operador_relacional - >=>
 <operador_logico - !>
-<operador_relacional - &&>
-<operador_relacional - ||>
+<operador_logico - &&>
+<operador_logico - ||>
 <caractere - 'S'>
 <caractere - '9'>
 <caractere - ' '>
 <cadeia_de_caracteres - "NAWDSND...;..PDSPDSDSADAS">
 <cadeia_de_caracteres - "A/">
+<caractere - ''>
+<identificador - a>
 <numero - 0>
 <operador_aritmetico - ->
 <operador_aritmetico - ->
 <operador_aritmetico - ->
 <numero - 9.3>
-<operador_aritmetico - +>
-<operador_aritmetico - ->
-<operador_aritmetico - ->
-<caractere - ''>
 
 
 ------------------------------ERROS LÉXICOS IENTIFICADOS------------------------------
-Erro na linha: 24 <nro_mal_formado_2 - .>
-Erro na linha: 24 <nro_mal_formado - 9.>
+Erro na linha: 26 <simbolo_invalido - _>
+Erro na linha: 26 <simbolo_invalido - _>
+Erro na linha: 27 <nro_mal_formado_2 - .>
+Erro na linha: 27 <nro_mal_formado - 9.>
 Erro na linha: 28 <cadeia_errada - "/ DSDS">
 Erro na linha: 29 <cadeia_errada - "/">

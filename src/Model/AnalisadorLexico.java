@@ -100,11 +100,11 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                 inicioOperadorCompostoE = i;
             }
             if (i < analisar.length - 1 && analisar[inicioOperadorCompostoE + 1] == '&') {
-                tokens.add(new Token(3, "&&", numeroLinha, 3));
+                tokens.add(new Token(Constants.TIPO_OPERADOR_LOGICO, "&&", numeroLinha, 2));
                 inicioOperadorCompostoE++;
                 i += 2;
                 if (i >= analisar.length - 1) {
-                    numeroLinha++;
+                    //numeroLinha++;
                     return;                    
                 }
             }
@@ -112,11 +112,11 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                 inicioOperadorCompostoOU = i;
             }
             if (i < analisar.length - 1 && analisar[inicioOperadorCompostoOU + 1] == '|') {
-                tokens.add(new Token(3, "||", numeroLinha, 3));
+                tokens.add(new Token(Constants.TIPO_OPERADOR_LOGICO, "||", numeroLinha, 3));
                 inicioOperadorCompostoOU++;
                 i += 2;
                 if (i >= analisar.length - 1) {
-                    numeroLinha++;
+                    //numeroLinha++;
                     return;                    
                 }
             }
@@ -235,11 +235,14 @@ public class AnalisadorLexico implements ExpressoesRegulares {
     }
 
     private boolean verificaRegexCriandoToken(String entrada) {
-        for (ESTRUTURALEXICA regex : ESTRUTURALEXICA.values()) {
+        //ARMENGUE PRA SABER QUAL O TIPO DO TOKEN
+    	//int type = 0;
+        for (ESTRUTURALEXICA regex : ESTRUTURALEXICA.values()) {        	
             Pattern patern = Pattern.compile(regex.valor);
             Matcher m = patern.matcher(entrada);
             if (m.matches()) {
-                int grupo = 0;
+            	///*
+            	int grupo = 0;
                 for (int i = 1; i <= m.groupCount(); i++) {
                     if (m.group(i) != null) {
                         grupo = i;
@@ -247,8 +250,12 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                     }
                 }
                 tokens.add(new Token(regex.ordinal(), entrada, numeroLinha, grupo));
+                //*/                
+                //tokens.add(new Token(regex.ordinal(), entrada, numeroLinha, type));                
                 return true;
             }
+            //ARMENGUE PRA SABER QUAL O TIPO DO TOKEN
+            //type++;
         }
         return false;
     }
@@ -348,9 +355,10 @@ public class AnalisadorLexico implements ExpressoesRegulares {
                     bw.write(t.toString());
                     bw.newLine();
                     bw.flush();
-                }
-            //} else if (!tokens.isEmpty()) {
-            } else if (tokensError.isEmpty()) {
+                }            
+            }
+            //conferindo se houve erros
+            else if (tokensError.isEmpty()) {
                 bw.newLine();
                 bw.flush();
             	bw.write("SUCESSO NA ANÁLISE LÉXICA DO ARQUIVO: "+arquivo);
@@ -371,9 +379,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
 
     /**
      * mÃ©todo responsavel por receber uma linha, verificar se ela contem um //
-     * para remover as informaÃ§Ãµes depois dela, mÃ¡s nÃ£o, caso ela esteja entre
-     * \" \"
-     *
+     * para remover as informações depois dela, mas não, caso ela esteja entre \" \"
      * @param linha
      * @return
      */

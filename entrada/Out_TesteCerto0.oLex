@@ -24,8 +24,8 @@
 <operador_aritmetico - *>
 <numero - 3>
 <operador_aritmetico - />
-<operador_relacional - ||>
-<operador_relacional - &&>
+<operador_logico - ||>
+<operador_logico - &&>
 <operador_relacional - >=>
 <operador_relacional - !=>
 <reservada - program>
@@ -44,8 +44,8 @@
 <operador_aritmetico - *>
 <numero - 3>
 <operador_aritmetico - />
-<operador_relacional - ||>
-<operador_relacional - &&>
+<operador_logico - ||>
+<operador_logico - &&>
 <operador_relacional - >=>
 <operador_relacional - !=>
 
