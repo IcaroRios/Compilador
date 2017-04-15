@@ -84,10 +84,10 @@ public class Token implements ExpressoesRegulares {
     @Override
     public String toString() {
         if (isError) {
-			return "Erro na linha: "+ nLinha + " <" + erro.toLowerCase() + " - " + lexema +">";
+			return "Erro na linha: "+ nLinha +" <" + erro.toLowerCase() + " - " + lexema +">";
         }
-		return tipo+"<"+ ESTRUTURALEXICA.values()[id].name().toLowerCase() + " - " + lexema+">";
-
+		//return tipo+"<"+ ESTRUTURALEXICA.values()[id].name().toLowerCase() + " - " + lexema+">";
+		return "<"+ ESTRUTURALEXICA.values()[id].name().toLowerCase() + " - " + lexema+">";
     }
 
     @Override

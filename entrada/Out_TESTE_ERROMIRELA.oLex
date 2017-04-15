@@ -1,0 +1,99 @@
+<reservada - program>
+<delimitador - [>
+<identificador - relou>
+<identificador - my>
+<identificador - firneds>
+<delimitador - ]>
+<identificador - a>
+<operador_aritmetico - +>
+<identificador - b>
+<operador_relacional - =>
+<identificador - abc>
+<delimitador - ;>
+<cadeia_de_caracteres - "pq?">
+<cadeia_de_caracteres - "pq sim HSIAUHSOIAHSOIA">
+<identificador - meu>
+<identificador - teclado>
+<identificador - n>
+<identificador - tem>
+<identificador - barra>
+<identificador - ao>
+<identificador - contrario>
+<delimitador - ;>
+<delimitador - (>
+<identificador - achei>
+<operador_aritmetico - *>
+<operador_aritmetico - *>
+<operador_aritmetico - />
+<identificador - gosto>
+<identificador - de>
+<identificador - usar>
+<identificador - espacos>
+<identificador - que>
+<identificador - tal>
+<identificador - assim>
+<identificador - e>
+<identificador - se>
+<identificador - eu>
+<identificador - escrever>
+<identificador - um>
+<identificador - identificador>
+<identificador - a>
+<identificador - im>
+<identificador - RIAIRAIRIAIRAIIRAI>
+<identificador - meu>
+<operador_aritmetico - %>
+<identificador - codigo>
+<operador_aritmetico - %>
+<identificador - o>
+<identificador - melhor>
+<operador_aritmetico - *>
+<operador_aritmetico - ->
+<operador_aritmetico - *>
+<reservada - var>
+<reservada - var>
+<identificador - variaveis>
+<reservada - if>
+<reservada - then>
+<reservada - else>
+<cadeia_de_caracteres - "sim sim, porque nao?">
+<reservada - while>
+<reservada - read>
+<operador_aritmetico - %>
+<operador_logico - !>
+<operador_logico - !>
+<operador_logico - !>
+<operador_logico - !>
+<operador_logico - !>
+<operador_logico - !>
+<operador_relacional - !=>
+<identificador - vamo>
+<identificador - bugar>
+<identificador - os>
+<identificador - codigos>
+<identificador - writ>
+<identificador - e>
+<reservada - true>
+<identificador - seligue>
+<reservada - false>
+<identificador - a>
+<reservada - string>
+<cadeia_de_caracteres - "cofoi de merma $$$$$$ dollaaaaaarzzzz">
+
+
+------------------------------ERROS LÉXICOS IENTIFICADOS------------------------------
+Erro na linha: 9 <cadeia_errada - "ops esqueci a outra aspa :c>
+Erro na linha: 14 <simbolo_invalido - \>
+Erro na linha: 21 <cadeia_errada - "vocÃª reconhece acentos?">
+Erro na linha: 23 <simbolo_invalido - `>
+Erro na linha: 23 <simbolo_invalido - ~>
+Erro na linha: 23 <caractere_mal_formado - ' :D>
+Erro na linha: 25 <caractere_mal_formado - 'iso aqi gera erro?>
+Erro na linha: 27 <simbolo_invalido - Ã>
+Erro na linha: 27 <simbolo_invalido - §>
+Erro na linha: 27 <simbolo_invalido - ?>
+Erro na linha: 29 <simbolo_invalido - Ã>
+Erro na linha: 29 <simbolo_invalido - ©>
+Erro na linha: 40 <simbolo_invalido - _>
+Erro na linha: 40 <simbolo_invalido - $>
+Erro na linha: 41 <simbolo_invalido - _>
