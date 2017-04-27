@@ -7,7 +7,7 @@
 <delimitador - )>
 <identificador - int>
 <identificador - cont>
-<operador_relacional - =>
+<operador_de_atribuicao - =>
 <numero - 1>
 <delimitador - ;>
 <reservada - while>
@@ -18,13 +18,13 @@
 <delimitador - )>
 <reservada - begin>
 <identificador - cont>
-<operador_relacional - =>
+<operador_de_atribuicao - =>
 <identificador - cont>
 <operador_aritmetico - *>
 <identificador - num>
 <delimitador - ;>
 <identificador - num>
-<operador_relacional - =>
+<operador_de_atribuicao - =>
 <identificador - num>
 <operador_aritmetico - ->
 <numero - 1>

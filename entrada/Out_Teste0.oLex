@@ -9,10 +9,10 @@
 <operador_aritmetico - ->
 <reservada - if>
 <identificador - a>
-<operador_relacional - =>
+<operador_de_atribuicao - =>
 <numero - 2>
 <identificador - a>
-<operador_relacional - =>
+<operador_de_atribuicao - =>
 <numero - 2>
 <reservada - program>
 <reservada - true>
@@ -26,7 +26,7 @@
 <numero - 1>
 <identificador - icaro>
 <identificador - a>
-<operador_relacional - =>
+<operador_de_atribuicao - =>
 <operador_relacional - >>
 <operador_logico - !>
 <operador_logico - ||>

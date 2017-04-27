@@ -5,6 +5,7 @@
 <identificador - identificador>
 <numero - 9.0>
 <numero - 9>
+<delimitador - :>
 <operador_aritmetico - %>
 <operador_aritmetico - ->
 
@@ -12,7 +13,6 @@
 ------------------------------ERROS LÉXICOS IENTIFICADOS------------------------------
 Erro na linha: 6 <nro_mal_formado_2 - .>
 Erro na linha: 7 <cadeia_errada - "9 string errada">
-Erro na linha: 8 <simbolo_invalido - :>
 Erro na linha: 8 <nro_mal_formado_2 - .>
 Erro na linha: 8 <simbolo_invalido - ?>
 Erro na linha: 8 <simbolo_invalido - \>

@@ -12,7 +12,7 @@
 <operador_aritmetico - />
 <operador_aritmetico - %>
 <operador_relacional - !=>
-<operador_relacional - =>
+<operador_de_atribuicao - =>
 <operador_relacional - <>
 <operador_relacional - <=>
 <operador_relacional - >>

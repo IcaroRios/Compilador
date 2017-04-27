@@ -32,14 +32,22 @@
 <operador_aritmetico - />
 <operador_aritmetico - %>
 <operador_relacional - !=>
-<operador_relacional - =>
+<operador_de_atribuicao - =>
 <operador_relacional - <>
 <operador_relacional - <=>
 <operador_relacional - >>
 <operador_relacional - >=>
+<operador_relacional - ==>
 <operador_logico - !>
 <operador_logico - &&>
 <operador_logico - ||>
+<delimitador - ;>
+<delimitador - ,>
+<delimitador - (>
+<delimitador - )>
+<delimitador - [>
+<delimitador - ]>
+<delimitador - :>
 <caractere - 'S'>
 <caractere - 's'>
 <caractere - ' '>

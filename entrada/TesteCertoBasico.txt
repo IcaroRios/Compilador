@@ -10,8 +10,12 @@ read write integer real boolean true false string char
 + - * / %
 //OPERADORES RELACIONAIS
 != = < <= > >=
+//OPERADORES ATRIBUIÇÃO
+==
 //OPERADORES LÓGICOS
 ! && ||
+//TIPO DELIMITADOR
+; , () [] :
 //STRINGS
 'S' 's' ' ' '9'
 "s"
