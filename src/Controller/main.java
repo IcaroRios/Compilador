@@ -8,7 +8,7 @@ public class main {
 
 	public static void main(String[] args) {
 		String entrada = "entrada";
-		String gramatica = "gramatica//gramatica.txt";
+		String gramatica = "gramatica//grammar.txt";
 		Controlador controlador = new Controlador(entrada, gramatica);
 		controlador.analisar();
 	}

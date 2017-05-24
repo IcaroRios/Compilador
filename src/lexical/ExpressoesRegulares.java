@@ -3,7 +3,7 @@ package lexical;
 public interface ExpressoesRegulares {
     
     /*
-    PRESTAR ATENï¿½ï¿½O COM A ORDEM, POIS UM ACABA AFETANDO O OUTRO
+    PRESTAR ATENÇÃO COM A ORDEM, POIS UM ACABA AFETANDO O OUTRO
     */
     public enum ESTRUTURALEXICA {
         RESERVADA("(program)|(const)|(var)|(function)|(begin)|(end)|(if)|"

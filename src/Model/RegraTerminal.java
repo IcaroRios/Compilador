@@ -28,5 +28,5 @@ public class RegraTerminal extends RegraGramatica{
 	public String toString(){
 		return this.simbolo;
 	}
-
+	
 }
