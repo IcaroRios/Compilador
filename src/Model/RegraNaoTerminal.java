@@ -19,8 +19,8 @@ public class RegraNaoTerminal extends RegraGramatica{
 		this.follow = new HashMap<>();
 	} 
 	
-	public void setRegra(LinkedList<LinkedList<RegraGramatica>> regra){
-		this.regra = regra;
+	public void addRegra(LinkedList<LinkedList<RegraGramatica>> lista){
+		this.regra.addAll(lista);
 	}
 	
 	public LinkedList<LinkedList<RegraGramatica>> getRegra(){
@@ -46,20 +46,19 @@ public class RegraNaoTerminal extends RegraGramatica{
 		int tamanho = regra.size();
 		//percorrendo uma regra
 		for(int cont = 0; cont < tamanho; cont++){
-			if(cont == tamanho-1){
-				//para as produções de uma regra
-				for(RegraGramatica a : regra.get(cont)){
-					producao = producao + a.getSimbolo();
+			LinkedList<RegraGramatica> r = regra.get(cont);
+			//para as produções de uma regra
+			for(int cont1 = 0; cont1 < r.size(); cont1++){
+				if(cont != 0 && cont1 == 0){
+					producao = producao +" | "+ r.get(cont1).getSimbolo();
 				}
-				//producao= producao + regra.get(cont).getSimbolo();
-			}
-			else{
-				//producao= producao + regra.get(cont).getSimbolo()+" | ";
-				producao= producao + " | ";
+				else{
+					producao = producao +" "+ r.get(cont1).getSimbolo();
+				}				
 			}			
 		}
-		//return producao;
-		return ""+regra.size();
+		return producao;
+		//return ""+regra.size();
 	}
 
 }

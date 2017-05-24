@@ -1,3 +1,4 @@
+!GRAMÁTICA UTILIZADA PELO GRUPO
 <Program> ::= 'program' <VarDeclaration> <ConstDeclaration> <Functions> 'begin' <Commands> 'end'
 
 <VarDeclaration> ::= 'var' 'begin' <TypeList> 'end' | 
@@ -24,7 +25,7 @@
 <MatrixDeclarationOrId> ::= Id <MatrixDeclarationOrIdAux>
 <MatrixDeclarationOrIdAux> ::= '[' ']' <MatrixDeclarationOrIdAux> | 
 
-<Commands> ::= <CommandIf> <Commands> | <CommandWhile> <Commands> | <CommandRead> <Commands> | <CommandWrite> <Commands> | <CommandAssignment> <Commands> | id <Parameters> ';' | 
+<Commands> ::= <CommandIf> <Commands> | <CommandWhile> <Commands> | <CommandRead> <Commands> | <CommandWrite> <Commands> | <CommandAssignment> <Commands> | Id <Parameters> ';' | 
 <CommandIf> ::= 'if' '(' <Expression> ')' 'then' 'begin' <Commands> 'end' <CommandElse>
 <CommandElse> ::= 'else' 'begin' <Commands> 'end' | 
 <CommandWhile> ::= 'while' '(' <Expression> ')' 'begin' <Commands> 'end'
@@ -58,7 +59,7 @@
 <ExpressionLevel8> ::= LogicOpSimple <DeniableTerminals> | <Terminals>
 <ExpressionLevel8Aux> ::= LogicOpSimple <DeniableTerminals> | <TerminalsNoNegative>
 
-<Terminals> ::= '(' <Expression> ')' | Number | AritmeticOpSum <Negative> | Char | CharChain | Boolean | id <Parameters> | <Matrix>
+<Terminals> ::= '(' <Expression> ')' | Number | AritmeticOpSum <Negative> | Char | CharChain | Boolean | Id <Parameters> | <Matrix>
 <TerminalsNoNegative> ::= '(' <Expression> ')' | Number | Char | CharChain | Boolean | Id <Parameters> | <Matrix>
 <DeniableTerminals> ::= '(' <Expression> ')' Boolean | Id <Parameters> | <Matrix>
 <Negative> ::= Id <Parameters> | Number | <Matrix>

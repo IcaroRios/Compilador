@@ -16,9 +16,10 @@ public abstract class RegraGramatica {
 		return simbolo;
 	}
 		
-	public boolean equals(RegraGramatica other){
+	public boolean equals(Object other){
 		if(other instanceof RegraGramatica){
-			return ( other.getSimbolo().equals( this.getSimbolo()) );
+			RegraGramatica a = (RegraGramatica) other;
+			return a.getSimbolo().equals( this.simbolo);
 		}
 		return false;
 	}
