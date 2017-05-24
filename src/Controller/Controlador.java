@@ -15,7 +15,7 @@ public class Controlador {
 		this.dir = new File(diretorioEntrada);        
 		//se conseguir pegar os arquivos, inicia a analise
 		if(!dir.exists()) {
-            System.out.println("A pasta "+diretorioEntrada+" não existe.");
+            System.out.println("A pasta "+diretorioEntrada+" nï¿½o existe.");
             System.exit(0);
         }
 		gramatica = new Gramatica(arquivoGramatica);

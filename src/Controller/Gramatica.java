@@ -6,9 +6,9 @@ public class Gramatica {
 		this.arquivoGramatica = arquivoGramatica;
 	}
 	
-	//TODO ler o arquivo de gramática
+	//TODO ler o arquivo de gramï¿½tica
 	public void LerGramatica(){
-		
+
 	}
 	
 	//TODO criar os firsts para cada n terminal
