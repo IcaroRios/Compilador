@@ -1,5 +1,6 @@
 package Controller;
 
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,10 +11,11 @@ import Model.RegraGramatica;
 import Model.RegraNaoTerminal;
 import Model.RegraTerminal;
 
+
 public class Gramatica {
 	private String arquivoGramatica;
 	LinkedList<RegraNaoTerminal> regras;
-	LinkedList<RegraTerminal> terminais;	
+	LinkedList<RegraTerminal> terminais;
 	public Gramatica(String arquivoGramatica){
 		this.arquivoGramatica = arquivoGramatica;
 		regras = new LinkedList<>();
@@ -22,6 +24,7 @@ public class Gramatica {
 	
 	//TODO ler o arquivo de gramática
 	public void LerGramatica(){
+
 		BufferedReader br = null;
 		FileReader fr = null;
 		try {
@@ -110,6 +113,7 @@ public class Gramatica {
 				ex.printStackTrace();
 			}
 		}
+
 	}
 	
 	//TODO criar os firsts para cada n terminal
@@ -121,7 +125,6 @@ public class Gramatica {
 	public void CriarFollows(){
 		
 	}
-
 	public void printGramatica() {
 		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		System.out.println("Gramática lida do arquivo: "+arquivoGramatica);
