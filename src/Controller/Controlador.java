@@ -1,17 +1,18 @@
-
 package Controller;
 
 import java.io.File;
 
+import syntactic.AnalisadorSintatico;
 import lexical.AnalisadorLexico;
 
 public class Controlador {
 
-	AnalisadorLexico lexico = new AnalisadorLexico();
+	AnalisadorLexico lexico;
+	AnalisadorSintatico sintatico;
 	Gramatica gramatica;
 	File dir;
 	
-	public Controlador(String diretorioEntrada, String arquivoGramatica){		 
+	public Controlador(String diretorioEntrada, String arquivoGramatica){	 
 		this.dir = new File(diretorioEntrada);        
 		//se conseguir pegar os arquivos, inicia a analise
 		if(!dir.exists()) {
@@ -19,11 +20,19 @@ public class Controlador {
             System.exit(0);
         }
 		gramatica = new Gramatica(arquivoGramatica);
+		lexico = new AnalisadorLexico();
+		sintatico = new AnalisadorSintatico();
 	}
 	
 	public void analisar(){
-		analiseLexica();
+		analiseGramatica();
+		//analiseLexica();
 		//analiseSintatica();
+	}
+	
+	public void analiseGramatica(){
+		gramatica.LerGramatica();
+		gramatica.printGramatica();
 	}
 	
 	public void analiseLexica(){
