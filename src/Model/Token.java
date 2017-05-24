@@ -2,6 +2,8 @@ package Model;
 
 import java.util.regex.Pattern;
 
+import lexical.ExpressoesRegulares;
+
 public class Token implements ExpressoesRegulares {
 
     private int id;
@@ -89,6 +91,7 @@ public class Token implements ExpressoesRegulares {
 		//return tipo+"<"+ ESTRUTURALEXICA.values()[id].name().toLowerCase() + " - " + lexema+">";
 		//return this.nLinha+"<"+ ESTRUTURALEXICA.values()[id].name().toLowerCase() + " - " + lexema+">";
 		return "<"+ ESTRUTURALEXICA.values()[id].name().toLowerCase() + " - " + lexema+">";
+		
     }
 
     @Override

@@ -1,26 +1,38 @@
 
 package Controller;
 
-import Model.AnalisadorLexico;
-
 import java.io.File;
+
+import lexical.AnalisadorLexico;
 
 public class Controlador {
 
-	AnalisadorLexico lexico = new AnalisadorLexico(); 
+	AnalisadorLexico lexico = new AnalisadorLexico();
+	Gramatica gramatica;
 	File dir;
 	
-	public Controlador(String diretorioEntrada){		 
+	public Controlador(String diretorioEntrada, String arquivoGramatica){		 
 		this.dir = new File(diretorioEntrada);        
-        if (!dir.exists()) {
+		//se conseguir pegar os arquivos, inicia a analise
+		if(!dir.exists()) {
             System.out.println("A pasta "+diretorioEntrada+" não existe.");
             System.exit(0);
-        } //se conseguir pegar os arquivos, inicia a analise
-        analiseLexica();
+        }
+		gramatica = new Gramatica(arquivoGramatica);
+	}
+	
+	public void analisar(){
+		analiseLexica();
+		//analiseSintatica();
 	}
 	
 	public void analiseLexica(){
 		lexico.Executar(dir);
 		System.exit(0);
 	}
+	
+	public void analiseSintatica(){
+		
+	}
+	
 }

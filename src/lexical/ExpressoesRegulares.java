@@ -1,4 +1,4 @@
-package Model;
+package lexical;
 
 public interface ExpressoesRegulares {
     
@@ -6,7 +6,7 @@ public interface ExpressoesRegulares {
     PRESTAR ATEN��O COM A ORDEM, POIS UM ACABA AFETANDO O OUTRO
     */
     public enum ESTRUTURALEXICA {
-        RESERVADA("(program)|(const)|(var)|(function)|(begin)|(end)|(end)|(if)|"
+        RESERVADA("(program)|(const)|(var)|(function)|(begin)|(end)|(if)|"
                 + "(then)|(else)|(while)|(do)|(read)|(write)|(integer)|(real)|"
                 + "(boolean)|(true)|(false)|(string)|(char)"),//feito
         NUMERO("(((\\s))?(\\d)+(\\.\\d+)?)"),

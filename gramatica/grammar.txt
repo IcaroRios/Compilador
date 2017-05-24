@@ -1,0 +1,69 @@
+<Program> ::= 'program' <VarDeclaration> <ConstDeclaration> <Functions> 'begin' <Commands> 'end'
+
+<VarDeclaration> ::= 'var' 'begin' <TypeList> 'end' | 
+<TypeList> ::= Type <IdList> ';' <TypeList> | 
+<IdList> ::= <Declaration> <IdListAux>
+<IdListAux> ::= ',' <IdList> | 
+<Declaration> ::= Id <DeclarationAux>
+<DeclarationAux> ::= '=' <Expression> | '[' <DeclarationAux2> | 
+<DeclarationAux2> ::= ']' <MatrixAux> '=' '[' <ExpressionList> ']' | <Expression> ']' <MatrixAux> <AssignmentOrEmpty>
+<AssignmentOrEmpty> ::= '=' '[' <ExpressionList> ']' | 
+
+<ConstDeclaration> ::= 'const' 'begin' <TypeList2> 'end' | 
+<TypeList2> ::= Type <IdList2> ';' <TypeList2> | 
+<IdList2> ::= <Declaration2> <IdListAux2>
+<IdListAux2> ::= ',' <IdList2> | 
+<Declaration2> ::= Id <Declaration2Aux>
+<Declaration2Aux> ::= '=' <Expression> | '[' <Declaration2Aux2>
+<Declaration2Aux2> ::= ']' <MatrixAux> '=' '[' <ExpressionList> ']' | <Expression> ']' <MatrixAux> '=' '[' <ExpressionList> ']'
+
+<Functions> ::= 'function' Id '(' <ParameterList> ')' <Return> 'begin' <VarDeclaration> <Commands> 'end' <Functions> | 
+<Return> ::= ':' Type <MatrixDeclarationOrIdAux> | 
+<ParameterList> ::= Type <MatrixDeclarationOrId> <ParameterListAux> | 
+<ParameterListAux> ::= ',' <ParameterList> | 
+<MatrixDeclarationOrId> ::= Id <MatrixDeclarationOrIdAux>
+<MatrixDeclarationOrIdAux> ::= '[' ']' <MatrixDeclarationOrIdAux> | 
+
+<Commands> ::= <CommandIf> <Commands> | <CommandWhile> <Commands> | <CommandRead> <Commands> | <CommandWrite> <Commands> | <CommandAssignment> <Commands> | id <Parameters> ';' | 
+<CommandIf> ::= 'if' '(' <Expression> ')' 'then' 'begin' <Commands> 'end' <CommandElse>
+<CommandElse> ::= 'else' 'begin' <Commands> 'end' | 
+<CommandWhile> ::= 'while' '(' <Expression> ')' 'begin' <Commands> 'end'
+
+<CommandRead> ::= 'read' '(' <IdList2> ')' ';'
+<IdList2> ::= <Matrix> <IdList2Aux>
+<IdList2Aux> ::= ',' <Matrix> <IdList2Aux> | 
+
+<CommandWrite> ::= 'write' '(' <ExpressionList> ')' ';'
+<ExpressionList> ::= <Expression> <ExpressionListAux>
+<ExpressionListOrEmpty> ::= <Expression> <ExpressionListAux> | 
+<ExpressionListAux> ::= ',' <Expression> <ExpressionListAux> | 
+
+<CommandAssignment> ::= <Matrix> '=' <Expression> ';'
+
+<Expression> ::= <Matrix> '=' <Expression> | <ExpressionLevel2>
+<ExpressionLevel2> ::= <ExpressionLevel3> <ExpressionLevel2NoLeftRec>
+<ExpressionLevel2NoLeftRec> ::= '||' <ExpressionLevel3> <ExpressionLevel2NoLeftRec> | 
+<ExpressionLevel3> ::= <ExpressionLevel4> <ExpressionLevel3NoLeftRec>
+<ExpressionLevel3NoLeftRec> ::= '&&' <ExpressionLevel4> <ExpressionLevel3NoLeftRec> | 
+<ExpressionLevel4> ::= <ExpressionLevel5> <ExpressionLevel4NoLeftRec>
+<ExpressionLevel4NoLeftRec> ::= RelationalOpEqual <ExpressionLevel5> <ExpressionLevel4NoLeftRec> | 
+<ExpressionLevel5> ::= <ExpressionLevel6> <ExpressionLevel5NoLeftRec>
+<ExpressionLevel5NoLeftRec> ::= RelationalOpComp <ExpressionLevel6> <ExpressionLevel5NoLeftRec> | 
+<ExpressionLevel6> ::= <ExpressionLevel7> <ExpressionLevel6NoLeftRec>
+<ExpressionLevel6NoLeftRec> ::= AritmeticOpSum <ExpressionLevel7Aux> <ExpressionLevel6NoLeftRec> | 
+<ExpressionLevel7> ::= <ExpressionLevel8> <ExpressionLevel7NoLeftRec>
+<ExpressionLevel7NoLeftRec> ::= AritmeticOpMult <ExpressionLevel8> <ExpressionLevel7NoLeftRec> | 
+<ExpressionLevel7Aux> ::= <ExpressionLevel8Aux> <ExpressionLevel7AuxNoLeftRec>
+<ExpressionLevel7AuxNoLeftRec> ::= AritmeticOpMult <ExpressionLevel8> <ExpressionLevel7AuxNoLeftRec> | 
+<ExpressionLevel8> ::= LogicOpSimple <DeniableTerminals> | <Terminals>
+<ExpressionLevel8Aux> ::= LogicOpSimple <DeniableTerminals> | <TerminalsNoNegative>
+
+<Terminals> ::= '(' <Expression> ')' | Number | AritmeticOpSum <Negative> | Char | CharChain | Boolean | id <Parameters> | <Matrix>
+<TerminalsNoNegative> ::= '(' <Expression> ')' | Number | Char | CharChain | Boolean | Id <Parameters> | <Matrix>
+<DeniableTerminals> ::= '(' <Expression> ')' Boolean | Id <Parameters> | <Matrix>
+<Negative> ::= Id <Parameters> | Number | <Matrix>
+
+<Parameters> ::= '(' <ExpressionListOrEmpty> ')'
+
+<Matrix> ::= Id <MatrixAux>
+<MatrixAux> ::= '['<Expression>']' <MatrixAux> | 
