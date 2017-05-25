@@ -67,4 +67,4 @@
 <Parameters> ::= '(' <ExpressionListOrEmpty> ')'
 
 <Matrix> ::= Id <MatrixAux>
-<MatrixAux> ::= '['<Expression>']' <MatrixAux> | 
+<MatrixAux> ::= '[' <Expression> ']' <MatrixAux> | 

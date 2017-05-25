@@ -25,14 +25,15 @@ public class Controlador {
 	}
 	
 	public void analisar(){
-		analiseGramatica();
+		analiseGramatica();		
 		//analiseLexica();
 		//analiseSintatica();
 	}
 	
 	public void analiseGramatica(){
 		gramatica.LerGramatica();
-		gramatica.printGramatica();
+		gramatica.CriarFirsts();
+		//gramatica.printGramatica();
 	}
 	
 	public void analiseLexica(){
