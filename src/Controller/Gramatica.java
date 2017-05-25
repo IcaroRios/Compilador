@@ -19,7 +19,7 @@ public class Gramatica {
 	LinkedList<RegraNaoTerminal> regras;
 	HashMap<String, RegraNaoTerminal> regrasHM;
 	LinkedList<RegraTerminal> terminais;
-	
+
 	public Gramatica(String arquivoGramatica){		
 		this.arquivoGramatica = arquivoGramatica;
 		this.regras = new LinkedList<>();
@@ -101,7 +101,7 @@ public class Gramatica {
 						for(RegraGramatica a2 : a1)
 							System.out.println(a2.getSimbolo());
 					}
-					*/
+					 */
 					//adicionando as regras de produÃ§Ã£o de um nÃ£o terminal
 					nTerminal.addRegra(regra);
 					if(geraVazio){
@@ -109,11 +109,7 @@ public class Gramatica {
 						nTerminal.setGeraVazio();
 					}
 					regras.add(nTerminal);
-<<<<<<< HEAD
 					regrasHM.put(nTerminal.getSimbolo(), nTerminal);
-=======
-
->>>>>>> origin/master
 				}
 
 			}
@@ -153,8 +149,7 @@ public class Gramatica {
 		/*se X-> Y1 Y2 Y3 ... YK; 1Â° ed Y1 estÃ¡ em 1Â° de X, se 1Â° Y1 possuir vazio entÃ£o 1Â° Y2
 		tambÃ©m estÃ¡ em 1Â° de X e assim por diante*/
 		for(RegraNaoTerminal regraNT : regras){
-<<<<<<< HEAD
-			for(LinkedList<RegraGramatica> producoes: regraNT.getRegra()){				
+			for(LinkedList<RegraGramatica> producoes: regraNT.getRegra()){
 				for (int i = 0; i < producoes.size(); i++) {				
 					//se a produção é um não terminal e gera vazio 
 					if(producoes.get(i).isTerminal()== false &&
@@ -162,36 +157,32 @@ public class Gramatica {
 						//adicione a próxima produção ao conjunto 1°
 						if(i+1 < producoes.size()){//se n estourar a regra
 							RegraNaoTerminal aux = (RegraNaoTerminal) producoes.get(i+1);
-							regraNT.addPrimeiro(aux);
+							//regraNT.addPrimeiro(aux);
 							//TODO REVER REGRA DE FIRST, OU TIPO TA ERRADO OU CALCULO DE FIRST
 						}
-						
+
 					}
 				}
-=======
+				/*
 			for(LinkedList<RegraGramatica> producoes: regraNT.getRegra()){
->>>>>>> origin/master
 				for(RegraGramatica producao : producoes){
 
 				}
 			}
+				 */
+			}
+
+
+			/*se X -> a ALPHA; a faz parte do conjunto 1Â° de X*/
 		}
-
-
-		/*se X -> a ALPHA; a faz parte do conjunto 1Â° de X*/
 	}
-
 	public void inserirFirst(RegraNaoTerminal regra, String key, LinkedList<RegraTerminal> firsts){
 		HashMap<String, LinkedList<RegraTerminal>> f;
 		f = new HashMap<>();
 		f.put(key, firsts);
 		regra.setFirsts(f);
 	}
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> origin/master
 	//TODO criar os follows para cada n terminal
 	public void CriarFollows(){
 
