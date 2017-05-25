@@ -17,11 +17,14 @@ import Model.RegraTerminal;
 public class Gramatica {
 	private String arquivoGramatica;
 	LinkedList<RegraNaoTerminal> regras;
+	HashMap<String, RegraNaoTerminal> regrasHM;
 	LinkedList<RegraTerminal> terminais;
-	public Gramatica(String arquivoGramatica){
+	
+	public Gramatica(String arquivoGramatica){		
 		this.arquivoGramatica = arquivoGramatica;
-		regras = new LinkedList<>();
-		terminais = new LinkedList<>();
+		this.regras = new LinkedList<>();
+		this.terminais = new LinkedList<>();
+		this.regrasHM = new HashMap<>();
 	}
 	
 	//TODO ler o arquivo de gramática
@@ -106,7 +109,7 @@ public class Gramatica {
 						nTerminal.setGeraVazio();
 					}					
 					regras.add(nTerminal);
-					
+					regrasHM.put(nTerminal.getSimbolo(), nTerminal);
 				}
 				
 			}
@@ -147,8 +150,21 @@ public class Gramatica {
 		também está em 1° de X e assim por diante*/
 		for(RegraNaoTerminal regraNT : regras){
 			for(LinkedList<RegraGramatica> producoes: regraNT.getRegra()){				
+				for (int i = 0; i < producoes.size(); i++) {				
+					//se a produção é um não terminal e gera vazio 
+					if(producoes.get(i).isTerminal()== false &&
+							regrasHM.get(producoes.get(i).getSimbolo()).getGeraVazio()){
+						//adicione a próxima produção ao conjunto 1°
+						if(i+1 < producoes.size()){//se n estourar a regra
+							RegraNaoTerminal aux = (RegraNaoTerminal) producoes.get(i+1);
+							regraNT.addPrimeiro(aux);
+							//TODO REVER REGRA DE FIRST, OU TIPO TA ERRADO OU CALCULO DE FIRST
+						}
+						
+					}
+				}
 				for(RegraGramatica producao : producoes){
-					
+
 				}
 			}
 		}
@@ -163,7 +179,7 @@ public class Gramatica {
 		f.put(key, firsts);
 		regra.setFirsts(f);
 	}
-		
+	
 	//TODO criar os follows para cada n terminal
 	public void CriarFollows(){
 		
