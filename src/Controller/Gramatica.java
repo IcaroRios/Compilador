@@ -26,8 +26,8 @@ public class Gramatica {
 		this.terminais = new LinkedList<>();
 		this.regrasHM = new HashMap<>();
 	}
-	
-	//TODO ler o arquivo de gramática
+
+	//TODO ler o arquivo de gramÃ¡tica
 	public void LerGramatica(){
 
 		BufferedReader br = null;
@@ -40,45 +40,45 @@ public class Gramatica {
 			//Para cada linha
 			while ((linha = br.readLine()) != null) {
 				if(linha.equals("") || linha.charAt(0)=='!'){
-					//se for linha vazia ou comentário n fazer nada
+					//se for linha vazia ou comentÃ¡rio n fazer nada
 				}
 				else{
 					//System.out.println("linha: "+linha);
 					String[] aux = linha.split("::=");
-					
-					//1° parte da regra, n terminal a ser derivado, 2° parte regras de derivação
+
+					//1Â° parte da regra, n terminal a ser derivado, 2Â° parte regras de derivaÃ§Ã£o
 					String simbolo = aux[0].trim();
 					//System.out.println("tam aux:"+aux.length);
-					//System.out.println("símbolo: "+simbolo);					
+					//System.out.println("sÃ­mbolo: "+simbolo);
 					//criando o nTerminal da regra
 					RegraNaoTerminal nTerminal = new RegraNaoTerminal(simbolo);
 					LinkedList<LinkedList<RegraGramatica>> regra = new LinkedList<>();
 					LinkedList<RegraGramatica> r = null;
-					//obtendo as produções geradas pela regra
-					String[] producoes = aux[1].split(" (\\|)"); 		
-					//System.out.println("Qtd produções: "+producoes.length);
+					//obtendo as produÃ§Ãµes geradas pela regra
+					String[] producoes = aux[1].split(" (\\|)");
+					//System.out.println("Qtd produÃ§Ãµes: "+producoes.length);
 					for(int cont1 = 0; cont1 < producoes.length; cont1++){
 						r = new LinkedList<>();
-						//se for produção vazia
+						//se for produÃ§Ã£o vazia
 						if(producoes[cont1].equals(" ")){
-							//System.out.println("\tProdução vazia!!!!!!");
+							//System.out.println("\tProduÃ§Ã£o vazia!!!!!!");
 							r.add(new RegraTerminal(Constants.PRODUCAO_VAZIA));
 							geraVazio = true;
 						}
 						else{
-							//System.out.println("\tProdução: "+producoes[cont1]);
-							//adicionando uma produção
+							//System.out.println("\tProduÃ§Ã£o: "+producoes[cont1]);
+							//adicionando uma produÃ§Ã£o
 							String[] producao = (producoes[cont1].trim()).split(" ");
-												
+
 							for(int cont = 0; cont < producao.length; cont++){
-								//se começar com < e terminar com > é nTerminal 
-								if(producao[cont].charAt(0)=='<' && 
+								//se comeÃ§ar com < e terminar com > Ã© nTerminal
+								if(producao[cont].charAt(0)=='<' &&
 										producao[cont].charAt(producao[cont].length()-1)=='>' ){
-									//System.out.println("\t\tprodução nTerminal "+cont+" - "+producao[cont]);
-									//adicionando a nova regra nTerminal							
+									//System.out.println("\t\tproduÃ§Ã£o nTerminal "+cont+" - "+producao[cont]);
+									//adicionando a nova regra nTerminal
 									r.add(new RegraNaoTerminal(producao[cont].trim()));
 								}
-								//é terminal
+								//Ã© terminal
 								else{
 									RegraTerminal novoTerminal = new RegraTerminal(producao[cont].trim());
 									//adicionando na lista de terminais caso n contenha
@@ -87,13 +87,13 @@ public class Gramatica {
 									}
 									//adicionando a nova regra terminal
 									r.add(novoTerminal);
-									//System.out.println("\t\tprodução Terminal "+cont+" - "+producao[cont]);
+									//System.out.println("\t\tproduÃ§Ã£o Terminal "+cont+" - "+producao[cont]);
 								}
-							}												
+							}
 						}
 						//System.out.println("REGRA "+regra.size());
 						regra.add(r);
-						
+
 					}
 					/*
 					for(LinkedList<RegraGramatica> a1 : regra){
@@ -102,19 +102,23 @@ public class Gramatica {
 							System.out.println(a2.getSimbolo());
 					}
 					*/
-					//adicionando as regras de produção de um não terminal
+					//adicionando as regras de produÃ§Ã£o de um nÃ£o terminal
 					nTerminal.addRegra(regra);
 					if(geraVazio){
 						geraVazio = false;
 						nTerminal.setGeraVazio();
-					}					
+					}
 					regras.add(nTerminal);
+<<<<<<< HEAD
 					regrasHM.put(nTerminal.getSimbolo(), nTerminal);
+=======
+
+>>>>>>> origin/master
 				}
-				
+
 			}
 		} catch (IOException e){//se der merda na leitura
-			e.printStackTrace();		
+			e.printStackTrace();
 		} finally {//vamos fechar?
 			try {
 				if (br != null)	br.close();
@@ -124,31 +128,32 @@ public class Gramatica {
 			}
 		}
 	}
-	
+
 	//TODO criar os firsts para cada n terminal
 	public void CriarFirsts(){
 		System.out.println("FIRSTS");
-		/*Se o 1° elemento derivado é um nTerminal, este faz parte do conjunto First
-		Também pega a regra: se a regra deriva vazio, então vazio faz parte do conjunto 1°*/
+		/*Se o 1Â° elemento derivado Ã© um nTerminal, este faz parte do conjunto First
+		TambÃ©m pega a regra: se a regra deriva vazio, entÃ£o vazio faz parte do conjunto 1Â°*/
 		for (RegraNaoTerminal regraNT : regras) {
 			for(LinkedList<RegraGramatica> producoes: regraNT.getRegra()){
-				if(producoes.getFirst() instanceof RegraTerminal){//se o 1° é um nTerminal
-					RegraTerminal aux = (RegraTerminal) producoes.getFirst(); 
-					System.out.println("1° é: "+aux.getSimbolo());
+				if(producoes.getFirst() instanceof RegraTerminal){//se o 1Â° Ã© um nTerminal
+					RegraTerminal aux = (RegraTerminal) producoes.getFirst();
+					System.out.println("1Â° Ã©: "+aux.getSimbolo());
 					regraNT.addPrimeiro(aux);
 					if(!aux.getSimbolo().equals(Constants.PRODUCAO_VAZIA)){
 						System.out.println(regraNT.getSimbolo()+" - "+regraNT.getRegra());
 					}
 					else{
-						System.out.println(regraNT.getSimbolo()+" -  PRODUÇÃO VAZIA");
+						System.out.println(regraNT.getSimbolo()+" -  PRODUÃ‡ÃƒO VAZIA");
 					}
 				}
 			}
 		}
-		
-		/*se X-> Y1 Y2 Y3 ... YK; 1° ed Y1 está em 1° de X, se 1° Y1 possuir vazio então 1° Y2
-		também está em 1° de X e assim por diante*/
+
+		/*se X-> Y1 Y2 Y3 ... YK; 1Â° ed Y1 estÃ¡ em 1Â° de X, se 1Â° Y1 possuir vazio entÃ£o 1Â° Y2
+		tambÃ©m estÃ¡ em 1Â° de X e assim por diante*/
 		for(RegraNaoTerminal regraNT : regras){
+<<<<<<< HEAD
 			for(LinkedList<RegraGramatica> producoes: regraNT.getRegra()){				
 				for (int i = 0; i < producoes.size(); i++) {				
 					//se a produção é um não terminal e gera vazio 
@@ -163,31 +168,38 @@ public class Gramatica {
 						
 					}
 				}
+=======
+			for(LinkedList<RegraGramatica> producoes: regraNT.getRegra()){
+>>>>>>> origin/master
 				for(RegraGramatica producao : producoes){
 
 				}
 			}
 		}
-		
-		
-		/*se X -> a ALPHA; a faz parte do conjunto 1° de X*/
+
+
+		/*se X -> a ALPHA; a faz parte do conjunto 1Â° de X*/
 	}
-	
+
 	public void inserirFirst(RegraNaoTerminal regra, String key, LinkedList<RegraTerminal> firsts){
 		HashMap<String, LinkedList<RegraTerminal>> f;
 		f = new HashMap<>();
 		f.put(key, firsts);
 		regra.setFirsts(f);
 	}
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> origin/master
 	//TODO criar os follows para cada n terminal
 	public void CriarFollows(){
-		
+
 	}
 	public void printGramatica() {
 		System.out.println("-----------------------------------------------------------------");
-		System.out.println("Gramática lida do arquivo: "+arquivoGramatica);
-		System.out.println("Não Terminais:");
+		System.out.println("GramÃ¡tica lida do arquivo: "+arquivoGramatica);
+		System.out.println("NÃ£o Terminais:");
 		for(RegraNaoTerminal nTerminal : regras){
 			if(nTerminal.getGeraVazio())
 				System.out.println("\t"+nTerminal.getSimbolo()+"\t\t\t\t\tGERA VAZIO");
@@ -200,7 +212,7 @@ public class Gramatica {
 			System.out.println("\t"+terminal.getSimbolo());
 		}
 		System.out.println("----------------------------------------------------");
-		System.out.println("Regras de Produção:");
+		System.out.println("Regras de ProduÃ§Ã£o:");
 		for(RegraNaoTerminal nTerminal : regras){
 			System.out.println("\t"+nTerminal.toString());
 		}
