@@ -35,5 +35,6 @@ public final class Constants {
 							PALAVRA_RESERVADA_STRING 		= 19,
 							PALAVRA_RESERVADA_CHAR 			= 20							
 							;	
-
+	public static final String PRODUCAO_VAZIA	= "$"
+							;
 }
