@@ -8,6 +8,7 @@ public abstract class RegraGramatica {
 
 	public abstract boolean isTerminal();
 	
+	public abstract boolean getFirstEstaPronto();
 	
 	public void setSimbolo(String simbolo){
 		this.simbolo = simbolo;

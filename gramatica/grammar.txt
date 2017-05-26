@@ -12,7 +12,7 @@
 
 <ConstDeclaration> ::= 'const' 'begin' <TypeList2> 'end' | 
 <TypeList2> ::= Type <IdList2> ';' <TypeList2> | 
-<IdList2> ::= <Declaration2> <IdListAux2>
+<IdList2> ::= <Declaration2> <IdListAux2> | <Matrix> <IdList2Aux>
 <IdListAux2> ::= ',' <IdList2> | 
 <Declaration2> ::= Id <Declaration2Aux>
 <Declaration2Aux> ::= '=' <Expression> | '[' <Declaration2Aux2>
@@ -31,7 +31,6 @@
 <CommandWhile> ::= 'while' '(' <Expression> ')' 'begin' <Commands> 'end'
 
 <CommandRead> ::= 'read' '(' <IdList2> ')' ';'
-<IdList2> ::= <Matrix> <IdList2Aux>
 <IdList2Aux> ::= ',' <Matrix> <IdList2Aux> | 
 
 <CommandWrite> ::= 'write' '(' <ExpressionList> ')' ';'
