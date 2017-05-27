@@ -151,10 +151,10 @@ public class Gramatica {
 		for(RegraNaoTerminal regraNT : regras){
 			for(LinkedList<RegraGramatica> producoes: regraNT.getRegra()){
 				for (int i = 0; i < producoes.size(); i++) {				
-					//se a produção é um não terminal e gera vazio 
+					//se a produï¿½ï¿½o ï¿½ um nï¿½o terminal e gera vazio 
 					if(producoes.get(i).isTerminal()== false &&
 							regrasHM.get(producoes.get(i).getSimbolo()).getGeraVazio()){
-						//adicione a próxima produção ao conjunto 1°
+						//adicione a prï¿½xima produï¿½ï¿½o ao conjunto 1ï¿½
 						if(i+1 < producoes.size()){//se n estourar a regra
 							RegraNaoTerminal aux = (RegraNaoTerminal) producoes.get(i+1);
 							//regraNT.addPrimeiro(aux);
@@ -208,4 +208,17 @@ public class Gramatica {
 			System.out.println("\t"+nTerminal.toString());
 		}
 	}
+
+    public LinkedList<RegraNaoTerminal> getRegras() {
+        return regras;
+    }
+
+    public LinkedList<RegraTerminal> getTerminais() {
+        return terminais;
+    }
+
+    public HashMap<String, RegraNaoTerminal> getRegrasHM() {
+        return regrasHM;
+    }
+    
 }

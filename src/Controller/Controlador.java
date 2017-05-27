@@ -2,13 +2,11 @@ package Controller;
 
 import java.io.File;
 
-import syntactic.AnalisadorSintatico;
 import lexical.AnalisadorLexico;
 
 public class Controlador {
 
-	AnalisadorLexico lexico;
-	AnalisadorSintatico sintatico;
+	AnalisadorLexico lexico;	
 	Gramatica gramatica;
 	File dir;
 	
@@ -20,29 +18,23 @@ public class Controlador {
             System.exit(0);
         }
 		gramatica = new Gramatica(arquivoGramatica);
-		lexico = new AnalisadorLexico();
-		sintatico = new AnalisadorSintatico();
+		lexico = new AnalisadorLexico();		
 	}
 	
 	public void analisar(){
-		analiseGramatica();		
-		//analiseLexica();
-		//analiseSintatica();
+		//analiseGramatica();		
+		analiseLexica();
 	}
 	
 	public void analiseGramatica(){
 		gramatica.LerGramatica();
-		gramatica.CriarFirsts();
-		//gramatica.printGramatica();
+		//gramatica.CriarFirsts();
+		gramatica.printGramatica();
 	}
 	
 	public void analiseLexica(){
 		lexico.Executar(dir);
 		System.exit(0);
 	}
-	
-	public void analiseSintatica(){
 		
-	}
-	
 }

@@ -20,6 +20,7 @@ import Model.Constants;
 import Model.Token;
 
 import com.sun.xml.internal.ws.util.StringUtils;
+import syntactic.AnalisadorSintatico;
 
 public class AnalisadorLexico implements ExpressoesRegulares {
 
@@ -353,7 +354,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
             if (!tokensError.isEmpty()) {
                 bw.newLine();
                 bw.newLine();
-                bw.write("------------------------------ERROS LÉXICOS IENTIFICADOS------------------------------");
+                bw.write("------------------------------ERROS Lï¿½XICOS IENTIFICADOS------------------------------");
                 bw.newLine();
                 bw.flush();
                 for (Token t : tokensError) {
@@ -366,7 +367,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
             else if (tokensError.isEmpty()) {
                 bw.newLine();
                 bw.flush();
-            	bw.write("SUCESSO NA ANÁLISE LÉXICA DO ARQUIVO: "+arquivo);
+            	bw.write("SUCESSO NA ANï¿½LISE Lï¿½XICA DO ARQUIVO: "+arquivo);
                 System.out.println("Analise Lexica para o arquivo: " + arquivo + ": Sucesso.");
 
             } else {
@@ -375,6 +376,10 @@ public class AnalisadorLexico implements ExpressoesRegulares {
             }
 
             bw.close();
+            if(tokensError.isEmpty()){
+                AnalisadorSintatico sintatico = new AnalisadorSintatico(tokens);
+                sintatico.executar(sintatico.getPrimeiraRegra());
+            }
             tokens.clear();
             tokensError.clear();
         } catch (IOException ex) {
@@ -384,7 +389,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
 
     /**
      * mÃ©todo responsavel por receber uma linha, verificar se ela contem um //
-     * para remover as informações depois dela, mas não, caso ela esteja entre \" \"
+     * para remover as informaï¿½ï¿½es depois dela, mas nï¿½o, caso ela esteja entre \" \"
      * @param linha
      * @return
      */
