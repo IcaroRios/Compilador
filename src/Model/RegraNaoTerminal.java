@@ -14,6 +14,7 @@ public class RegraNaoTerminal extends RegraGramatica{
 	private LinkedList<RegraTerminal> seguinte;
 	//se a regra gera produção vazia
 	private boolean geraVazio;
+	private boolean firstEstaPronto;
 		
 	public RegraNaoTerminal(String simbolo) {
 		super();
@@ -24,6 +25,7 @@ public class RegraNaoTerminal extends RegraGramatica{
 		this.follow = new HashMap<>();
 		this.seguinte = new LinkedList<>();
 		this.geraVazio = false;
+		this.firstEstaPronto = false;
 	} 
 	
 	public void addRegra(LinkedList<LinkedList<RegraGramatica>> lista){
@@ -39,7 +41,9 @@ public class RegraNaoTerminal extends RegraGramatica{
 	}
 	
 	public void addPrimeiro(RegraTerminal f){
-		this.primeiro.add(f);
+		if(!this.primeiro.contains(f)){
+			this.primeiro.add(f);
+		}				
 	}
 	
 	public LinkedList<RegraTerminal> getPrimeiro(){
@@ -59,7 +63,9 @@ public class RegraNaoTerminal extends RegraGramatica{
 	}
 	
 	public void addSeguinte(RegraTerminal f){
-		this.seguinte.add(f);
+		if(!this.seguinte.contains(f)){
+			this.seguinte.add(f);
+		}
 	}
 	
 	public LinkedList<RegraTerminal> getSeguinte(){
@@ -83,8 +89,18 @@ public class RegraNaoTerminal extends RegraGramatica{
 		this.geraVazio = true;
 	}
 	
+	@Override
 	public boolean getGeraVazio(){
 		return this.geraVazio;
+	}
+	
+	public void setfirstEstaPronto(){
+		this.firstEstaPronto = true;
+	}
+	
+	@Override
+	public boolean getFirstEstaPronto(){
+		return this.firstEstaPronto;
 	}
 	
 	@Override

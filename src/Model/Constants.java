@@ -35,6 +35,7 @@ public final class Constants {
 							PALAVRA_RESERVADA_STRING 		= 19,
 							PALAVRA_RESERVADA_CHAR 			= 20							
 							;	
-	public static final String PRODUCAO_VAZIA	= "$"
+	public static final String  PRODUCAO_VAZIA				= "#",
+								PRODUCAO_FIM_DO_ARQUIVO		= "$"
 							;
 }

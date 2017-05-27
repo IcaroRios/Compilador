@@ -28,5 +28,14 @@ public class RegraTerminal extends RegraGramatica{
 	public String toString(){
 		return this.simbolo;
 	}
+
+	@Override
+	public boolean getFirstEstaPronto() {		
+		return true;
+	}
 	
+	@Override
+	public boolean getGeraVazio(){
+		return false;
+	}
 }
