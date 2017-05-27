@@ -8,6 +8,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import com.sun.org.apache.bcel.internal.classfile.ConstantObject;
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
+import exceptions.RuleHasNoFirstException;
+import exceptions.RuleHasNoFollowException;
 import Model.Constants;
 import Model.RegraGramatica;
 import Model.RegraNaoTerminal;
@@ -19,17 +24,17 @@ public class Gramatica {
 	LinkedList<RegraNaoTerminal> regras;
 	HashMap<String, RegraNaoTerminal> regrasHM;
 	LinkedList<RegraTerminal> terminais;	
-
+	RegraTerminal fimDeLinha;
+	
 	public Gramatica(String arquivoGramatica){		
 		this.arquivoGramatica = arquivoGramatica;
 		this.regras = new LinkedList<>();
 		this.terminais = new LinkedList<>();
 		this.regrasHM = new HashMap<>();
+		this.fimDeLinha = new RegraTerminal(Constants.PRODUCAO_FIM_DO_ARQUIVO);
 	}
 
-	//TODO ler o arquivo de gram√°tica
 	public void LerGramatica(){
-
 		BufferedReader br = null;
 		FileReader fr = null;
 		////////////////////////////////ADICIONANDO TERMINAIS E NTERMINAIS
@@ -244,24 +249,16 @@ public class Gramatica {
 		 */
 	}
 
-	//TODO criar os firsts para cada n terminal
-	public void CriarFirsts(){
-		System.out.println("FIRSTS");
+
+	public void CriarFirsts() throws RuleHasNoFirstException{
+		
 		/*Se o 1 elemento derivado eh um nTerminal, este faz parte do conjunto First
 		Tambem pega a regra: se a regra deriva vazio, entao vazio faz parte do conjunto 1*/
 		for (RegraNaoTerminal regraNT : regras) {
 			for(LinkedList<RegraGramatica> producoes: regraNT.getRegra()){
 				if(producoes.getFirst() instanceof RegraTerminal){//se o 1 eh  um nTerminal
 					RegraTerminal aux = (RegraTerminal) producoes.getFirst();
-					regraNT.addPrimeiro(aux);
-
-					System.out.println("1∞ : "+aux.getSimbolo());					
-					if(!aux.getSimbolo().equals(Constants.PRODUCAO_VAZIA)){
-						System.out.println(regraNT.getSimbolo()+" - "+regraNT.getRegra());
-					}
-					else{
-						System.out.println(regraNT.getSimbolo()+" -  PRODUCAO VAZIA");
-					}
+					regraNT.addPrimeiro(aux);		
 				}
 			}
 		}
@@ -279,23 +276,14 @@ public class Gramatica {
 			}
 		}
 
-		for(RegraNaoTerminal regraNT : regras){
-			System.out.println("1: "+regraNT.getSimbolo() +" - "+regraNT.getFirstEstaPronto());
-			System.out.println("	1: "+regraNT.getSimbolo() +" - "+regraNT.getPrimeiro());
-		}
-
 		//atualizando os firsts
 		this.atualizarFirsts();
-		
-		for(RegraNaoTerminal regraNT : regras){
-			System.out.println("2: "+regraNT.getSimbolo() +" - "+regraNT.getFirstEstaPronto());
-			System.out.println("	2: "+regraNT.getSimbolo() +" - "+regraNT.getPrimeiro());
-		}
-		
+				
+		//atualiza firsts e os recalcula atÈ que n hajam mais alteraÁıes nos conjuntos
 		boolean houveAtualizacao = false;
 		int c = 0;
 		do {
-			System.out.println("AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII: "+c);
+			//System.out.println("AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII: "+c);
 			houveAtualizacao = false;
 			//atualizarFirsts();
 			//assinalando quem esta com o 1 pronto
@@ -309,9 +297,9 @@ public class Gramatica {
 				}
 				//todos os 1 estao prontos, o 1 ja esta calculado. E seu 1 n esta calculado
 				if(todosProntos && (regraNT.getFirstEstaPronto() == false)){
-					System.out.println(c);
-					System.out.println(regraNT);
-					System.out.println("\t"+regraNT.getPrimeiro());
+					//System.out.println(c);
+					//System.out.println(regraNT);
+					//System.out.println("\t"+regraNT.getPrimeiro());
 					atualizarFirsts();
 					regraNT.setfirstEstaPronto();
 					houveAtualizacao = true;
@@ -319,29 +307,12 @@ public class Gramatica {
 			}
 			c++;
 		} while(houveAtualizacao);
-		
+				
 		for(RegraNaoTerminal regraNT : regras){
-			System.out.println(regraNT.getSimbolo()+" - "+regraNT.getFirstEstaPronto());
-			System.out.println("\t"+regraNT.getPrimeiro());
+			if(!regraNT.getFirstEstaPronto() || regraNT.getPrimeiro().isEmpty())
+				throw new RuleHasNoFirstException(regraNT.getSimbolo());
 		}
-		for(RegraNaoTerminal regraNT : regras){
-			if(!regraNT.getFirstEstaPronto())
-				System.out.println("FALTA->"+regraNT.getSimbolo());		
-		}
-		for(RegraNaoTerminal regraNT : regras){
-			if(regraNT.getPrimeiro().isEmpty())
-				System.out.println("FALTA->"+regraNT.getSimbolo());		
-		}
-		/*
-		for (RegraNaoTerminal regraNaoTerminal : regras) {
-			System.out.println(regraNaoTerminal.getSimbolo()+"-"+System.identityHashCode(regraNaoTerminal));
-			for (LinkedList<RegraGramatica> a : regraNaoTerminal.getRegra()) {
-				for (RegraGramatica regraGramatica : a){
-					System.out.println("\t"+regraGramatica.getSimbolo()+"-"+System.identityHashCode(regraGramatica));
-				}
-			}
-		}
-		*/		
+				
 	}
 
 	private void atualizarFirsts() {
@@ -370,27 +341,35 @@ public class Gramatica {
 		for(RegraNaoTerminal regraNT : regras){//para cada regra			
 			for(int c = 0; c < regraNT.getRegra().size(); c++){
 				LinkedList<RegraGramatica> producoes = regraNT.getRegra().get(c); 
-				//se o 1∞ da producao for um nTerminal
-				if(producoes.getFirst() instanceof RegraNaoTerminal && producoes.size()>1){					
-					//se o 1 nTerminal gera vazio, ent„o a regra[2] faz parte do conjunto 1
-					//se o 2 nTerminal gera vazio, ent„o o regra[3] faz parte do conjunto 1
-					//e assim por diante
-					int cont = 1;					
-					boolean addNext = true;
-					while(addNext ){
-						//se o elemento n-1 gera vazio, add o elemento n
-						addPrimeiro(regraNT, producoes.get(cont));
-						cont++;
-						addNext = false;
-						if(cont < producoes.size()){
-							if(producoes.get(cont) instanceof RegraNaoTerminal){
-								RegraNaoTerminal aux = (RegraNaoTerminal) producoes.get(cont);
-								if(aux.getGeraVazio()){
-									addNext = true;
-								}								
-							}							
+				//se tem mais de uma producao e o 1∞ da producao for um nTerminal
+				if(producoes.size() > 1 && producoes.getFirst() instanceof RegraNaoTerminal){					
+					RegraNaoTerminal f = (RegraNaoTerminal) producoes.getFirst();
+					//se o 1 gerar vazio entra na regra
+					if(f.getGeraVazio()){
+						int cont = 1;
+						boolean addNext = true;
+						while(addNext ){
+							//se o elemento n-1 gera vazio, add o elemento n
+							addPrimeiro(regraNT, producoes.get(cont));
+							cont++;
+							addNext = false;
+							if(cont < producoes.size()){
+								if(producoes.get(cont) instanceof RegraNaoTerminal){
+									RegraNaoTerminal aux = (RegraNaoTerminal) producoes.get(cont);
+									if(aux.getGeraVazio()){
+										addNext = true;
+									}								
+								}
+								//se o elemento n-1 e nTerminal e o elemento n terminal
+								else if(producoes.get(cont) instanceof RegraTerminal){
+									//add como 1 e termina o ciclo
+									RegraTerminal aux = (RegraTerminal) producoes.get(cont);
+									regraNT.addPrimeiro(aux);
+									addNext = false;
+								}
+							}
 						}
-					}
+					}					
 				}
 			}
 		}
@@ -418,29 +397,104 @@ public class Gramatica {
 		regra.setFirsts(f);
 	}
 
-	//TODO criar os follows para cada n terminal
-	public void CriarFollows(){
 
+	public void CriarFollows() throws RuleHasNoFollowException{
+		//Marcar o fim do arquivo de entrada no nTerminal da regra inicial
+		regras.getFirst().addSeguinte(this.fimDeLinha);
+		
+		//A -> BCD, tudo em First(C), exceto vazio, esta em Follow(B)
+		//se First(C) tem vazio, entao add First(D) em Follow(B), e assim por diante
+		for (RegraNaoTerminal regraNT : regras) {
+			System.out.println(regraNT.getSimbolo());
+			 for (LinkedList<RegraGramatica> regra : regraNT.getRegra()) {
+				for(int c = 0; c < regra.size(); c++){					
+					//caso seja um nTerminal
+					if(!regra.get(c).isTerminal()){
+						//nTerminal a ser analisado agora
+						RegraNaoTerminal producao = (RegraNaoTerminal) regra.get(c);
+						//comece do proximo e va ate o final
+						for(int i = 1; c+i < regra.size(); i++){
+							this.addSeguinte(producao, regra.get(c+i));							
+							//se esta producao n gerar vazio quebra esse laÁo
+							if(!regra.get(c+i).getGeraVazio()){
+								break;
+							}
+							//A -> BC, entao Follow(A) esta em Follow(C)
+							//se chegou na ultima producao da regra
+							if(c+i == regra.size()-1){
+								this.addSeguinte(producao, regraNT);
+							}
+						}
+					}
+					//System.out.println("\t"+regra.get(c));
+				}
+			}
+		}				
+		
+		//A -> BC, entao Follow(A) esta em Follow(C)
+		for(RegraNaoTerminal regraNT : regras){
+			for(LinkedList<RegraGramatica> regra : regraNT.getRegra()){
+				if(!regra.getLast().isTerminal()){
+					RegraNaoTerminal producao = (RegraNaoTerminal)regra.getLast();
+					this.addSeguinte(producao,regraNT);
+				}				
+			}
+		}
+		
+		for(RegraNaoTerminal regraNT : regras){
+			if(regraNT.getSeguinte().size() == 0){
+				throw new RuleHasNoFollowException(regraNT.getSimbolo());				
+			}
+			if(regraNT.getSeguinte().contains(new RegraTerminal(Constants.PRODUCAO_VAZIA))){
+				throw new RuleHasNoFollowException(regraNT.getSimbolo());
+			}				
+		}
 	}
-	public void printGramatica() {
+	
+	public void addSeguinte(RegraNaoTerminal regra, RegraGramatica r){
+		if(r instanceof RegraTerminal){
+			RegraTerminal regraT = (RegraTerminal) r;
+			if(regraT.equals(new RegraTerminal(Constants.PRODUCAO_VAZIA))){
+				
+			}else{
+				regra.addSeguinte(regraT);
+			}			
+		}
+		else if(r instanceof RegraNaoTerminal){
+			RegraNaoTerminal regraNT = (RegraNaoTerminal) r;
+			for(RegraTerminal regraT : regraNT.getPrimeiro()){
+				if(regraT.equals(new RegraTerminal(Constants.PRODUCAO_VAZIA))){
+					
+				}else{
+					regra.addSeguinte(regraT);
+				}				
+			}
+		}
+	}
+	
+	public void printGramatica(){
 		System.out.println("-----------------------------------------------------------------");
 		System.out.println("Gramatica lida do arquivo: "+arquivoGramatica);
-		System.out.println("Nao Terminais:");
+		System.out.println("----------------------------------------------------");
+		
+		System.out.println("Regras de Producao:");
 		for(RegraNaoTerminal nTerminal : regras){
-			if(nTerminal.getGeraVazio())
-				System.out.println("\t"+nTerminal.getSimbolo()+"\t\t\t\t\tGERA VAZIO");
-			else
-				System.out.println("\t"+nTerminal.getSimbolo());
+			System.out.println("\t"+nTerminal.toString());
 		}
+		
 		System.out.println("----------------------------------------------------");
 		System.out.println("Terminais:");
 		for(RegraTerminal terminal : terminais){
 			System.out.println("\t"+terminal.getSimbolo());
 		}
+
 		System.out.println("----------------------------------------------------");
-		System.out.println("Regras de Producao:");
-		for(RegraNaoTerminal nTerminal : regras){
-			System.out.println("\t"+nTerminal.toString());
+		System.out.println("Nao Terminais:");
+		for(RegraNaoTerminal regraNT : regras){
+			System.out.println(regraNT.getSimbolo());
+			System.out.println("\tConjunto Primeiro:"+regraNT.getPrimeiro());
+			System.out.println("\tConjunto Seguinte:"+regraNT.getSeguinte());
 		}
+		
 	}
 }

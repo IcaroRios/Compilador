@@ -1,4 +1,6 @@
 !GRAMÁTICA UTILIZADA PELO GRUPO
+!O ARQUIVO PODE CONTER COMENTÁRIOS
+!A PRIMEIRA REGRA LIDA É CONSIDERADA COMO A REGRA INICIAL DA LINGUAGEM
 <Program> ::= 'program' <VarDeclaration> <ConstDeclaration> <Functions> 'begin' <Commands> 'end'
 
 <VarDeclaration> ::= 'var' 'begin' <TypeList> 'end' | 

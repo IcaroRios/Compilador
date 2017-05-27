@@ -34,4 +34,8 @@ public class RegraTerminal extends RegraGramatica{
 		return true;
 	}
 	
+	@Override
+	public boolean getGeraVazio(){
+		return false;
+	}
 }

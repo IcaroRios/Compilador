@@ -89,6 +89,7 @@ public class RegraNaoTerminal extends RegraGramatica{
 		this.geraVazio = true;
 	}
 	
+	@Override
 	public boolean getGeraVazio(){
 		return this.geraVazio;
 	}
