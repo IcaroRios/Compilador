@@ -1,38 +1,85 @@
 package syntactic;
 
+import Controller.Gramatica;
+import Model.CompareToken;
+import Model.RegraGramatica;
+import Model.RegraNaoTerminal;
+import Model.RegraTerminal;
+import Model.Token;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Stack;
 
 public class AnalisadorSintatico {
-	//A PILHA VAI SER A PRÓPRIA PILHA DE EXECUÇÃO DO CÓDIGO
-	private Stack<String> stack;
-	
-	public AnalisadorSintatico(){
-		this.stack = new Stack<>(); 
-	}
-	
-	public void Executar(){
+
+    //A PILHA VAI SER A PRï¿½PRIA PILHA DE EXECUï¿½ï¿½O DO Cï¿½DIGO
+    private List<Token> tokens;
+    private List<RegraGramatica> primeiraRegra;
+    private LinkedList<RegraNaoTerminal> regras;
+    private Gramatica gramatica;
+
+    public AnalisadorSintatico(List<Token> tokens) {
+        this.tokens = tokens;
+        this.gramatica = new Gramatica("gramatica//grammar.txt");
+        gramatica.LerGramatica();
+        this.regras = gramatica.getRegras();
+        this.primeiraRegra = regras.get(0).getRegra().get(0);// pega a primeira regra
+        //System.out.println(regras.get(0).getRegra().get(0));
+    }
+
+    public void executar(List<RegraGramatica> regra) {
+
+        CompareToken comparador = new CompareToken();
+
+        //System.out.println(regra);
+        for (RegraGramatica atual : regra) {
+
+            if (atual.isTerminal()) {
+                //System.out.println( tokens.get(0).getLexema()+ " aaa " + atual.toString());
+                //System.out.println( atual.toString().substring(1, atual.toString().length()-1));
+                if (comparador.compare(tokens.get(0), atual.getSimbolo()) == 1) {
+                    if(!tokens.isEmpty())
+                        tokens.remove(0);
+                } else {
+                    System.out.println("Erro sintÃ¡tico na linha: " + tokens.get(0).getnLinha());
+                }
+
+            } else {
+                
+                    System.out.println("expression encontrada "+gramatica.getRegrasHM().get(atual.getSimbolo()));
+                    System.out.println("enviando para a regra dele.");
+                    System.out.println(gramatica.getRegrasHM().get(atual.getSimbolo()).getRegra().get(0));
+                    
+                    executar(gramatica.getRegrasHM().get(atual.getSimbolo()).getRegra().get(0));
+                    
+                
+
+            }
+        }
+
 		//TODO
 		/*
-		se o que tem no topo da pilha é um terminal --- consome
+         se o que tem no topo da pilha ï¿½ um terminal --- consome
 		
-		se o que tem no topo da pilha é um n terminal --- vai pra matriz e gera a produção dele
+         se o que tem no topo da pilha ï¿½ um n terminal --- vai pra matriz e gera a produï¿½ï¿½o dele
 		
-		segue até a lista de tokens acabar
+         segue atï¿½ a lista de tokens acabar
 		
-		lista de tokens acabou e a pilha está vazia o código está correto sintaticamente,
-		se não está errado
-		*/
-		
-		
-		//TODO
+         lista de tokens acabou e a pilha estï¿½ vazia o cï¿½digo estï¿½ correto sintaticamente,
+         se nï¿½o estï¿½ errado
+         */
+        //TODO
 		/*TRATAMENTO DE ERROS
-		pegue todos os follows da sua produção e de todos os seus antecessores                        
-		se for um não terminal: ignore tokens até chegar em um follow desses                        
+         pegue todos os follows da sua produï¿½ï¿½o e de todos os seus antecessores                        
+         se for um nï¿½o terminal: ignore tokens atï¿½ chegar em um follow desses                        
 		                       
-		se for um terminal: assuma que o token foi inserido.                        
-		e continua
-		*/
-		
-	}
-	
+         se for um terminal: assuma que o token foi inserido.                        
+         e continua
+         */
+    }
+
+    public List<RegraGramatica> getPrimeiraRegra() {
+        return primeiraRegra;
+    }
+
 }

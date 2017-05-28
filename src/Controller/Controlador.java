@@ -1,17 +1,16 @@
 package Controller;
 
 import java.io.File;
-
 import exceptions.RuleHasEmptyFollowException;
 import exceptions.RuleHasNoFirstException;
 import exceptions.RuleHasNoFollowException;
 import syntactic.AnalisadorSintatico;
+
 import lexical.AnalisadorLexico;
 
 public class Controlador {
 
-	AnalisadorLexico lexico;
-	AnalisadorSintatico sintatico;
+	AnalisadorLexico lexico;	
 	Gramatica gramatica;
 	File dir;
 	
@@ -23,10 +22,10 @@ public class Controlador {
             System.exit(0);
         }
 		gramatica = new Gramatica(arquivoGramatica);
-		lexico = new AnalisadorLexico();
-		sintatico = new AnalisadorSintatico();
+		lexico = new AnalisadorLexico();		
 	}
 	
+
 	public void analisar() throws RuleHasNoFirstException, RuleHasNoFollowException,
 		RuleHasEmptyFollowException{
 		analiseGramatica();		
@@ -46,9 +45,5 @@ public class Controlador {
 		lexico.Executar(dir);
 		System.exit(0);
 	}
-	
-	public void analiseSintatica(){
 		
-	}
-	
 }
