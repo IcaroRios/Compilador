@@ -2,6 +2,7 @@ package Controller;
 
 import java.io.File;
 
+import exceptions.RuleHasEmptyFollowException;
 import exceptions.RuleHasNoFirstException;
 import exceptions.RuleHasNoFollowException;
 import syntactic.AnalisadorSintatico;
@@ -26,13 +27,15 @@ public class Controlador {
 		sintatico = new AnalisadorSintatico();
 	}
 	
-	public void analisar() throws RuleHasNoFirstException, RuleHasNoFollowException{
+	public void analisar() throws RuleHasNoFirstException, RuleHasNoFollowException,
+		RuleHasEmptyFollowException{
 		analiseGramatica();		
 		//analiseLexica();
 		//analiseSintatica();
 	}
 	
-	public void analiseGramatica() throws RuleHasNoFirstException, RuleHasNoFollowException{
+	public void analiseGramatica() throws RuleHasNoFirstException, RuleHasNoFollowException,
+		RuleHasEmptyFollowException{
 		gramatica.LerGramatica();
 		gramatica.CriarFirsts();
 		gramatica.CriarFollows();
