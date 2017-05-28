@@ -12,7 +12,7 @@ import java.util.Stack;
 
 public class AnalisadorSintatico {
 
-    //A PILHA VAI SER A PR�PRIA PILHA DE EXECU��O DO C�DIGO
+    //A PILHA VAI SER A PROPRIA PILHA DE EXECUCAO DO CODIGO
     private List<Token> tokens;
     private List<RegraGramatica> primeiraRegra;
     private LinkedList<RegraNaoTerminal> regras;
