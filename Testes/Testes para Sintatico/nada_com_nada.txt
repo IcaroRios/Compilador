@@ -1,0 +1,28 @@
+program
+var begin
+    integer result, var1, dragao = 543, i;
+    real var2, manteiga = -4.5;
+    char c = 'e';
+    string bla;
+end
+const begin
+    string hw = "HelloWorld";
+end
+function soma (integer a, integer b) : integer begin
+    soma = a + b;
+end
+begin
+    if (dragao >= 500 && (var1 = 54) != 100)
+    then begin
+        result = soma(dragao, var1);
+        write("result:", result);
+    end else begin
+        read(bla);
+        write("var lida:", bla);
+    end
+    i = 0;
+    while (i < 10) begin
+        write (i);
+        i = i + 1;
+    end
+end

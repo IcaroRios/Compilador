@@ -24,18 +24,19 @@ import syntactic.AnalisadorSintatico;
 
 public class AnalisadorLexico implements ExpressoesRegulares {
 
-    private final String pastaSaida = "entrada";
-    private final String extensaoArquivosLex = ".oLex";
-    private final List<Token> tokens;
-    private final List<Token> tokensError;
-    private int numeroLinha;
+	private final String pastaSaida = "entrada";
+	private final String extensaoArquivosLex = ".oLex";
+	private final List<Token> tokens;
+	private final List<Token> tokensError;
+	private int numeroLinha;
 
-    public AnalisadorLexico() {
-        tokens = new LinkedList<>();
-        tokensError = new LinkedList<>();
-        numeroLinha = 1;
-    }
+	public AnalisadorLexico() {
+		tokens = new LinkedList<>();
+		tokensError = new LinkedList<>();
+		numeroLinha = 1;
+	}
 
+	/*
     public void Executar(File arquivos) {
         try {
 
@@ -47,7 +48,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
 
             System.out.println("Arquivos carregaos para teste:");
             for(int cont = 0; cont < listaDeArquivos.length; cont++){
-            	
+
             	System.out.println("\t"+listaDeArquivos[cont]);
             }
 
@@ -94,358 +95,398 @@ public class AnalisadorLexico implements ExpressoesRegulares {
             ex.printStackTrace();
         }
     }
+	 */
 
-    private void verificaRegex(String entrada) {
-        char analisar[] = entrada.toCharArray();
-        String acumulador = "";
-        int inicioOperadorCompostoE = 0;
-        int inicioOperadorCompostoOU = 0;
-        for (int i = 0; i < analisar.length; i++) {
-        	
-            if (analisar[i] == '&') {
-                inicioOperadorCompostoE = i;
-            }
-            if (i < analisar.length - 1 && analisar[inicioOperadorCompostoE + 1] == '&') {
-                tokens.add(new Token(Constants.TIPO_OPERADOR_LOGICO, "&&", numeroLinha, 2));
-                inicioOperadorCompostoE++;
-                i += 2;
-                if (i >= analisar.length - 1) {
-                    //numeroLinha++;
-                    return;                    
-                }
-            }
-            if (analisar[i] == '|') {
-                inicioOperadorCompostoOU = i;
-            }
-            if (i < analisar.length - 1 && analisar[inicioOperadorCompostoOU + 1] == '|') {
-                tokens.add(new Token(Constants.TIPO_OPERADOR_LOGICO, "||", numeroLinha, 3));
-                inicioOperadorCompostoOU++;
-                i += 2;
-                if (i >= analisar.length - 1) {
-                    //numeroLinha++;
-                    return;                    
-                }
-            }
-            
-            acumulador += analisar[i];
-            String atual = "" + analisar[i];
-            Pattern patern = Pattern.compile(ExpressaoAuxiliar.SEPARADORES.valor);
-            Matcher m = patern.matcher(atual);
+	public void Executar(File arquivo) {
+		try {                          
+			//verificando se o arquivo existe para comecar a analisar
+			if (arquivo.exists()) {
+				BufferedReader leitor = new BufferedReader(new FileReader(arquivo));
+				boolean iniciouComentario = false;
+				numeroLinha = 1;
 
-            //verificar separadores
-            if (m.matches()) {
-                //Remove o separador
-                acumulador = removeUltimoElemento(acumulador);
-                if (!acumulador.equals("")) {
-                    //Se passa cria tokenn
-                    if (!verificaRegexCriandoToken(acumulador)) {
-                        //token de error
+				//pair para verificar o estado dos comentarios
+				ComentarioBloco pIB;
+				//Lendo do Arquivo
+				for (String linha = leitor.readLine(); linha != null; linha = leitor.readLine()) {
+					//verifica se abriu algum comentario
+					pIB = analisaComentario(0, iniciouComentario, linha);
+					pIB.setLinha(removerComentarioLinha(pIB.getLinha()));
 
-                        tokensError.add(new Token(acumulador, numeroLinha, true));
-                    }
-                }
-                acumulador = "";
-                //n�o � espaco
-                if (!m.group().matches("\\s+")) {
-                    char separador = m.group().charAt(0);
-                    int formador = buscadorDeSeparador(separador, entrada, i + 1);
-                    //outro separador
-                    if (formador > 0) {
-                        String palavra = "";
-                        for (int z = i; z <= formador; z++) {
-                            //Remonta a palavra
-                            palavra += analisar[z];
-                        }
-                        //cria token
-                        if (!verificaRegexCriandoToken(palavra)) {
-                            //Se deu erro em string
-                            if (m.group().equals("\"")) {
-                                tokensError.add(new Token(palavra, "CADEIA_ERRADA", numeroLinha, true));
-                            } //Outros erros ele auto-identifica na classe Token
-                            else {
+					iniciouComentario = pIB.isIniciouComentario();
 
-                                tokensError.add(new Token(palavra, numeroLinha, true));
-                            }
-                        }
-                        i = formador;
-                        continue;
-                    } //Terminou a linha e nao achou o separador
-                    else {
-                        String palavra = "";
-                        for (int z = i; z < analisar.length; z++) {
-                            //Remonta a palavra
-                            palavra += analisar[z];
-                        }
-                        //Se deu erro em string
-                        if (m.group().equals("\"")) {
-                            tokensError.add(new Token(palavra, "CADEIA_ERRADA", numeroLinha, true));
-                        } else {
+					verificaRegex(pIB.getLinha());
+					//atuliza contador de linha
+					numeroLinha++;
+				}
+				//se nao fechou comentario gera token de erro de comentario
+				if (iniciouComentario) {
+					tokensError.add(new Token("comentario", "COMENTARIO_MAL_FORMADO", numeroLinha, true));
+				}
+				//gerando saidas
+				gerarSaida(arquivo.getName());
+				leitor.close();
+			}
+			// Fim do Arquivo Atual            
+		} catch (FileNotFoundException ex) {
+			System.out.println("ERRO: Arquivo nao encontrado");
+		} catch (NullPointerException | IOException ex) {
+			ex.printStackTrace();
+		}
+	}
 
-                            tokensError.add(new Token(palavra, numeroLinha, true));
-                        }
+	private void verificaRegex(String entrada) {
+		char analisar[] = entrada.toCharArray();
+		String acumulador = "";
+		int inicioOperadorCompostoE = 0;
+		int inicioOperadorCompostoOU = 0;
+		for (int i = 0; i < analisar.length; i++) {
 
-                        i = analisar.length;
-                        continue;
-                    }
-                } //Caso seja espaco, continua
-                else {
-                    continue;
-                }
-            }
+			if (analisar[i] == '&') {
+				inicioOperadorCompostoE = i;
+			}
+			if (i < analisar.length - 1 && analisar[inicioOperadorCompostoE + 1] == '&') {
+				tokens.add(new Token(Constants.TIPO_OPERADOR_LOGICO, "&&", numeroLinha, 2));
+				inicioOperadorCompostoE++;
+				i += 2;
+				if (i >= analisar.length - 1) {
+					//numeroLinha++;
+					return;                    
+				}
+			}
+			if (analisar[i] == '|') {
+				inicioOperadorCompostoOU = i;
+			}
+			if (i < analisar.length - 1 && analisar[inicioOperadorCompostoOU + 1] == '|') {
+				tokens.add(new Token(Constants.TIPO_OPERADOR_LOGICO, "||", numeroLinha, 3));
+				inicioOperadorCompostoOU++;
+				i += 2;
+				if (i >= analisar.length - 1) {
+					//numeroLinha++;
+					return;                    
+				}
+			}
 
-            if (Pattern.matches(ExpressaoAuxiliar.CASOESPECIAL.valor, acumulador)) {
-                int proximo = i + 1;
-                if (proximo < analisar.length) {
-                    String prox = "" + analisar[proximo];
-                    try {
-                        int temp = Integer.parseInt(prox);
-                        acumulador += temp;
-                        i = proximo;
-                    } catch (NumberFormatException e) {
-                        tokensError.add(new Token(acumulador, numeroLinha, true));
-                        acumulador = "";
-                        continue;
-                    }
-                }
-            }
+			acumulador += analisar[i];
+			String atual = "" + analisar[i];
+			Pattern patern = Pattern.compile(ExpressaoAuxiliar.SEPARADORES.valor);
+			Matcher m = patern.matcher(atual);
 
-            if (isEntradaValida(acumulador) && i + 1 == analisar.length) {
-                verificaRegexCriandoToken(acumulador);
-            } else if (!isEntradaValida(acumulador)) {
-                boolean precisaCompensar = false;
-                if (acumulador.length() > 1) {
-                    acumulador = removeUltimoElemento(acumulador);
-                    precisaCompensar = true;
-                }
+			//verificar separadores
+			if (m.matches()) {
+				//Remove o separador
+				acumulador = removeUltimoElemento(acumulador);
+				if (!acumulador.equals("")) {
+					//Se passa cria tokenn
+					if (!verificaRegexCriandoToken(acumulador)) {
+						//token de error
 
-                if (!verificaRegexCriandoToken(acumulador)) {
-                    tokensError.add(new Token(acumulador, numeroLinha, true));
-                }
+						tokensError.add(new Token(acumulador, numeroLinha, true));
+					}
+				}
+				acumulador = "";
+				//n�o � espaco
+				if (!m.group().matches("\\s+")) {
+					char separador = m.group().charAt(0);
+					int formador = buscadorDeSeparador(separador, entrada, i + 1);
+					//outro separador
+					if (formador > 0) {
+						String palavra = "";
+						for (int z = i; z <= formador; z++) {
+							//Remonta a palavra
+							palavra += analisar[z];
+						}
+						//cria token
+						if (!verificaRegexCriandoToken(palavra)) {
+							//Se deu erro em string
+							if (m.group().equals("\"")) {
+								tokensError.add(new Token(palavra, "CADEIA_ERRADA", numeroLinha, true));
+							} //Outros erros ele auto-identifica na classe Token
+							else {
 
-                acumulador = "";
-                //decrementA o contador para criar a nova sentenca
-                if (precisaCompensar) {
-                    i--;
-                }
-            }
-        }
-    }
+								tokensError.add(new Token(palavra, numeroLinha, true));
+							}
+						}
+						i = formador;
+						continue;
+					} //Terminou a linha e nao achou o separador
+					else {
+						String palavra = "";
+						for (int z = i; z < analisar.length; z++) {
+							//Remonta a palavra
+							palavra += analisar[z];
+						}
+						//Se deu erro em string
+						if (m.group().equals("\"")) {
+							tokensError.add(new Token(palavra, "CADEIA_ERRADA", numeroLinha, true));
+						} else {
 
-    private boolean isEntradaValida(String entrada) {
-        for (ESTRUTURALEXICA regex : ESTRUTURALEXICA.values()) {
-            if (Pattern.matches(regex.valor, entrada)) {
-                return true;
-            }
-        }
-        return false;
-    }
+							tokensError.add(new Token(palavra, numeroLinha, true));
+						}
 
-    private boolean verificaRegexCriandoToken(String entrada) {
-        //ARMENGUE PRA SABER QUAL O TIPO DO TOKEN
-    	//int type = 0;
-        for (ESTRUTURALEXICA regex : ESTRUTURALEXICA.values()) {        	
-            Pattern patern = Pattern.compile(regex.valor);
-            Matcher m = patern.matcher(entrada);
-            if (m.matches()) {
-            	///*
-            	int grupo = 0;
-                for (int i = 1; i <= m.groupCount(); i++) {
-                    if (m.group(i) != null) {
-                        grupo = i;
-                        break;
-                    }
-                }
-                tokens.add(new Token(regex.ordinal(), entrada, numeroLinha, grupo));
-                //*/                
-                //tokens.add(new Token(regex.ordinal(), entrada, numeroLinha, type));                
-                return true;
-            }
-            //ARMENGUE PRA SABER QUAL O TIPO DO TOKEN
-            //type++;
-        }
-        return false;
-    }
+						i = analisar.length;
+						continue;
+					}
+				} //Caso seja espaco, continua
+				else {
+					continue;
+				}
+			}
 
-    public String removeUltimoElemento(String original) {
-        return original.substring(0, original.length() - 1);
-    }
+			if (Pattern.matches(ExpressaoAuxiliar.CASOESPECIAL.valor, acumulador)) {
+				int proximo = i + 1;
+				if (proximo < analisar.length) {
+					String prox = "" + analisar[proximo];
+					try {
+						int temp = Integer.parseInt(prox);
+						acumulador += temp;
+						i = proximo;
+					} catch (NumberFormatException e) {
+						tokensError.add(new Token(acumulador, numeroLinha, true));
+						acumulador = "";
+						continue;
+					}
+				}
+			}
 
-    private int buscadorDeSeparador(char separador, String palavra, int inicio) {
-        char[] buscador = palavra.toCharArray();
-        for (int i = inicio; i < buscador.length; i++) {
-            if (separador == buscador[i]) {
-                return i;
-            }
-        }
-        return -1;
-    }
+			if (isEntradaValida(acumulador) && i + 1 == analisar.length) {
+				verificaRegexCriandoToken(acumulador);
+			} else if (!isEntradaValida(acumulador)) {
+				boolean precisaCompensar = false;
+				if (acumulador.length() > 1) {
+					acumulador = removeUltimoElemento(acumulador);
+					precisaCompensar = true;
+				}
 
-    /**
-     * Com este m�todo, os coment�rios em bloco n�o chegam nem a serem
-     * analisados assim como o compilador ignora a an�lise deles, aqui ele est�
-     * sendo ignorado na hora de pegar os tokens.
-     */
-    public ComentarioBloco analisaComentario(int is, boolean iniciouComentario, String entrada) {
-        ComentarioBloco comentario = new ComentarioBloco(iniciouComentario);
-        boolean isString = false, isChar = false;
-        char[] analisar = entrada.toCharArray();
+				if (!verificaRegexCriandoToken(acumulador)) {
+					tokensError.add(new Token(acumulador, numeroLinha, true));
+				}
 
-        //se estiver esperando fechar comentario e nao existir, retorna logo
-        //esta verifica��o de cara s� � poss�vel pois d� para fazer compara��o com string
-        if ((!(entrada.contains("*/"))) && comentario.isIniciouComentario()) {
+				acumulador = "";
+				//decrementA o contador para criar a nova sentenca
+				if (precisaCompensar) {
+					i--;
+				}
+			}
+		}
+	}
 
-            comentario.setLinha("");
-            return comentario;
-        }
+	private boolean isEntradaValida(String entrada) {
+		for (ESTRUTURALEXICA regex : ESTRUTURALEXICA.values()) {
+			if (Pattern.matches(regex.valor, entrada)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-        for (int i = 0; i < analisar.length; i++) {
-            //verifica se nao abriu um comentario
-            if (!comentario.isIniciouComentario()) {
-                //iniciou comentario e nao eh string
-                /*N�O ALTERAR A ORDEM DOS OPERADORES, COMO � UMA VERIFICA��O &&
+	private boolean verificaRegexCriandoToken(String entrada) {
+		//ARMENGUE PRA SABER QUAL O TIPO DO TOKEN
+		//int type = 0;
+		for (ESTRUTURALEXICA regex : ESTRUTURALEXICA.values()) {        	
+			Pattern patern = Pattern.compile(regex.valor);
+			Matcher m = patern.matcher(entrada);
+			if (m.matches()) {
+				///*
+				int grupo = 0;
+				for (int i = 1; i <= m.groupCount(); i++) {
+					if (m.group(i) != null) {
+						grupo = i;
+						break;
+					}
+				}
+				tokens.add(new Token(regex.ordinal(), entrada, numeroLinha, grupo));
+				//*/                
+				//tokens.add(new Token(regex.ordinal(), entrada, numeroLinha, type));                
+				return true;
+			}
+			//ARMENGUE PRA SABER QUAL O TIPO DO TOKEN
+			//type++;
+		}
+		return false;
+	}
+
+	public String removeUltimoElemento(String original) {
+		return original.substring(0, original.length() - 1);
+	}
+
+	private int buscadorDeSeparador(char separador, String palavra, int inicio) {
+		char[] buscador = palavra.toCharArray();
+		for (int i = inicio; i < buscador.length; i++) {
+			if (separador == buscador[i]) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	/**
+	 * Com este m�todo, os coment�rios em bloco n�o chegam nem a serem
+	 * analisados assim como o compilador ignora a an�lise deles, aqui ele est�
+	 * sendo ignorado na hora de pegar os tokens.
+	 */
+	public ComentarioBloco analisaComentario(int is, boolean iniciouComentario, String entrada) {
+		ComentarioBloco comentario = new ComentarioBloco(iniciouComentario);
+		boolean isString = false, isChar = false;
+		char[] analisar = entrada.toCharArray();
+
+		//se estiver esperando fechar comentario e nao existir, retorna logo
+		//esta verifica��o de cara s� � poss�vel pois d� para fazer compara��o com string
+		if ((!(entrada.contains("*/"))) && comentario.isIniciouComentario()) {
+
+			comentario.setLinha("");
+			return comentario;
+		}
+
+		for (int i = 0; i < analisar.length; i++) {
+			//verifica se nao abriu um comentario
+			if (!comentario.isIniciouComentario()) {
+				//iniciou comentario e nao eh string
+				/*N�O ALTERAR A ORDEM DOS OPERADORES, COMO � UMA VERIFICA��O &&
                  A PRIMEIRA � VERIFICADA PARA DEPOIS A PR�XIMA, ENT�O ELE VERIFICA
                  SE N�O EST� NO LIMITE DO TAMANHO DA LINHA PARA DEPOIS PROCURAR O '*' */
-                if (analisar[i] == '/' && i < analisar.length - 1 && analisar[i + 1] == '*' && !isString && !isChar) {
-                    comentario.setIniciouComentario(true);
+				if (analisar[i] == '/' && i < analisar.length - 1 && analisar[i + 1] == '*' && !isString && !isChar) {
+					comentario.setIniciouComentario(true);
 
-                } else {
-                    //comecou uma string
-                    if (analisar[i] == '\"') {
-                        isString = !isString;
-                        isChar = false;
-                        comentario.setIniciouComentario(false);
-                    } //comecou um char
-                    else if (analisar[i] == '\'') {
-                        isChar = !isChar;
-                        isString = false;
-                        comentario.setIniciouComentario(false);
-                    }
-                    comentario.setLinha(comentario.getLinha() + analisar[i]);
+				} else {
+					//comecou uma string
+					if (analisar[i] == '\"') {
+						isString = !isString;
+						isChar = false;
+						comentario.setIniciouComentario(false);
+					} //comecou um char
+					else if (analisar[i] == '\'') {
+						isChar = !isChar;
+						isString = false;
+						comentario.setIniciouComentario(false);
+					}
+					comentario.setLinha(comentario.getLinha() + analisar[i]);
 
-                }
-            } //se abriu um comentario, verifica se fechou e nao eh uma string
-            else if (analisar[i] == '*' && i < analisar.length - 1 && analisar[i + 1] == '/' && !isString && !isChar) {
-                //if (i < analisar.length - 1) {
-                //  if (analisar[i + 1] == '/') {
-                i++;// duas horas para conseguir consertar esa merda                        
-                comentario.setIniciouComentario(false);
-                //  }
-                //}
-            }
-        }
+				}
+			} //se abriu um comentario, verifica se fechou e nao eh uma string
+			else if (analisar[i] == '*' && i < analisar.length - 1 && analisar[i + 1] == '/' && !isString && !isChar) {
+				//if (i < analisar.length - 1) {
+				//  if (analisar[i + 1] == '/') {
+				i++;// duas horas para conseguir consertar esa merda                        
+				comentario.setIniciouComentario(false);
+				//  }
+				//}
+			}
+		}
 
-        return comentario;
-    }
+		return comentario;
+	}
 
-    private void gerarSaida(String arquivo) {
-        try {
-            File pasta = new File(pastaSaida);
-            pasta.mkdir();
-            File n = new File(pasta.getName() + File.separator + "Out_"+arquivo.split("\\.")[0]+ this.extensaoArquivosLex);
-            //File n = new File(pasta.getName() + File.separator +"Out_" +arquivo);
-            BufferedWriter bw = new BufferedWriter(new FileWriter(n));
-            //escreveno os tokens identificados
-            for (Token t : tokens) {
-                bw.write(t.toString());
-                bw.newLine();
-                bw.flush();
-            }
-            //se possui erros, escreve eles
-            if (!tokensError.isEmpty()) {
-                bw.newLine();
-                bw.newLine();
-                bw.write("------------------------------ERROS L�XICOS IENTIFICADOS------------------------------");
-                bw.newLine();
-                bw.flush();
-                for (Token t : tokensError) {
-                    bw.write(t.toString());
-                    bw.newLine();
-                    bw.flush();
-                }            
-            }
-            //conferindo se houve erros
-            else if (tokensError.isEmpty()) {
-                bw.newLine();
-                bw.flush();
-            	bw.write("SUCESSO NA AN�LISE L�XICA DO ARQUIVO: "+arquivo);
-                System.out.println("Analise Lexica para o arquivo: " + arquivo + ": Sucesso.");
+	private void gerarSaida(String arquivo) {
+		try {
+			File pasta = new File(pastaSaida);
+			pasta.mkdir();
+			File n = new File(pasta.getName() + File.separator + "Out_"+arquivo.split("\\.")[0]+ this.extensaoArquivosLex);
+			//File n = new File(pasta.getName() + File.separator +"Out_" +arquivo);
+			BufferedWriter bw = new BufferedWriter(new FileWriter(n));
+			//escreveno os tokens identificados
+			for (Token t : tokens) {
+				bw.write(t.toString());
+				bw.newLine();
+				bw.flush();
+			}
+			//se possui erros, escreve eles
+			if (!tokensError.isEmpty()) {
+				bw.newLine();
+				bw.newLine();
+				bw.write("------------------------------ERROS LEXICOS IENTIFICADOS------------------------------");
+				bw.newLine();
+				bw.flush();
+				for (Token t : tokensError) {
+					bw.write(t.toString());
+					bw.newLine();
+					bw.flush();
+				}            
+			}
+			//conferindo se houve erros
+			else if (tokensError.isEmpty()) {
+				bw.newLine();
+				bw.flush();
+				bw.write("SUCESSO NA ANALISE LEXICA DO ARQUIVO: "+arquivo);
+				System.out.println("Analise Lexica para o arquivo: " + arquivo + ": Sucesso.");
 
-            } else {
-                //Prestar bem                 
-                System.out.println("[*] AVISO O arquivo: [" + arquivo + "] nao gerou nenhum Token. Pulando analise sintatica.");
-            }
+			} else {
+				//Prestar bem                 
+				System.out.println("[*] AVISO O arquivo: [" + arquivo + "] nao gerou nenhum Token. Pulando analise sintatica.");
+			}
 
-            bw.close();
-            if(tokensError.isEmpty()){
-                AnalisadorSintatico sintatico = new AnalisadorSintatico(tokens);
-                sintatico.executar(sintatico.getPrimeiraRegra());
-            }
-            tokens.clear();
-            tokensError.clear();
-        } catch (IOException ex) {
-            System.out.println("Deu merda na escrita do arquivo.");
-        }
-    }
+			bw.close();			
+		} catch (IOException ex) {
+			System.out.println("Deu merda na escrita do arquivo.");
+		}
+	}
 
-    /**
-     * método responsavel por receber uma linha, verificar se ela contem um //
-     * para remover as informa��es depois dela, mas n�o, caso ela esteja entre \" \"
-     * @param linha
-     * @return
-     */
-    private String removerComentarioLinha(String linha) {
-        int posicao = linha.indexOf("//");
+	/**
+	 * metodo responsavel por receber uma linha, verificar se ela contem um //
+	 * para remover as informa��es depois dela, mas n�o, caso ela esteja entre \" \"
+	 * @param linha
+	 * @return
+	 */
+	private String removerComentarioLinha(String linha) {
+		int posicao = linha.indexOf("//");
 
-        if (posicao == 0) {
-            return "";
-        } else if (posicao == -1) {
-            return linha;
-        }
+		if (posicao == 0) {
+			return "";
+		} else if (posicao == -1) {
+			return linha;
+		}
 
-        Matcher matcher = Pattern.compile("\"(.*?)\"").matcher(linha);
-        String acumulador = "";
-        while (matcher.find()) {
-            acumulador = acumulador.concat(matcher.group(1));
-        }
-        if (acumulador.indexOf("//") == -1) {
-            return linha.substring(0, linha.indexOf("//"));
-        }
-        int somatorioTamanho = 0;
-        int inicio = linha.indexOf(acumulador);
+		Matcher matcher = Pattern.compile("\"(.*?)\"").matcher(linha);
+		String acumulador = "";
+		while (matcher.find()) {
+			acumulador = acumulador.concat(matcher.group(1));
+		}
+		if (acumulador.indexOf("//") == -1) {
+			return linha.substring(0, linha.indexOf("//"));
+		}
+		int somatorioTamanho = 0;
+		int inicio = linha.indexOf(acumulador);
 
-        int fim = inicio + acumulador.length();
-        String[] partes = linha.split("//");
-        //System.out.println("partes = " + partes.length);
+		int fim = inicio + acumulador.length();
+		String[] partes = linha.split("//");
+		//System.out.println("partes = " + partes.length);
 
-        for (int i = 0; i < partes.length; i++) {
-            somatorioTamanho += partes[i].length() + 1;
+		for (int i = 0; i < partes.length; i++) {
+			somatorioTamanho += partes[i].length() + 1;
 
-            if (somatorioTamanho >= fim) {
-                break;
-            }
-        }
+			if (somatorioTamanho >= fim) {
+				break;
+			}
+		}
 
-        linha = linha.substring(0, somatorioTamanho);
-        if (linha.endsWith("/")) {
+		linha = linha.substring(0, somatorioTamanho);
+		if (linha.endsWith("/")) {
 
-            char[] letras = linha.toCharArray();
-            char[] novaLinha = new char[letras.length - 2];
-            for (int i = 0; i < novaLinha.length; i++) {
-                novaLinha[i] = letras[i];
-            }
+			char[] letras = linha.toCharArray();
+			char[] novaLinha = new char[letras.length - 2];
+			for (int i = 0; i < novaLinha.length; i++) {
+				novaLinha[i] = letras[i];
+			}
 
-            return new String(novaLinha);
+			return new String(novaLinha);
 
-        }
-        return linha;
-    }
+		}
+		return linha;
+	}
 
-    public List<Token> getListTokens(){
-    	return this.tokens;
-    }
-    
-    public List<Token> getListTokensError(){
-    	return this.tokensError;
-    }
-    
+	public List<Token> getListTokens(){
+		return this.tokens;
+	}
+
+	public boolean hasError(){
+		if(this.tokensError.isEmpty()){
+			return false;
+		}
+		return true;
+	}
+	
+	public void cleanLists(){
+		tokens.clear();
+		tokensError.clear();
+	}
 }

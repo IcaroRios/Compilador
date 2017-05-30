@@ -1,0 +1,28 @@
+program
+
+var begin
+    real base,expoente;
+end
+
+
+function sqrt(real base, integer expoente) : real
+begin
+    var begin
+        integer i a;
+        real result = base;
+    end
+
+    while (i < expoente) begin
+        result = result * base;
+        i = i + 1;
+    end
+    sqrt = result;
+end
+
+begin
+    write("Digite o numero base");
+    read(base);
+    write("Digite o expoente");
+    read(expoente);
+    write("O resultado da operacao foi: ", sqrt(base, expoente));
+end

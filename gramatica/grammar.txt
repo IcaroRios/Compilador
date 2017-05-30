@@ -4,7 +4,7 @@
 <Program> ::= 'program' <VarDeclaration> <ConstDeclaration> <Functions> 'begin' <Commands> 'end'
 
 <VarDeclaration> ::= 'var' 'begin' <TypeList> 'end' | 
-<TypeList> ::= Type <IdList> ';' <TypeList> | 
+<TypeList> ::= <Type> <IdList> ';' <TypeList> | 
 <IdList> ::= <Declaration> <IdListAux>
 <IdListAux> ::= ',' <IdList> | 
 <Declaration> ::= Id <DeclarationAux>
@@ -13,7 +13,7 @@
 <AssignmentOrEmpty> ::= '=' '[' <ExpressionList> ']' | 
 
 <ConstDeclaration> ::= 'const' 'begin' <TypeList2> 'end' | 
-<TypeList2> ::= Type <IdList2> ';' <TypeList2> | 
+<TypeList2> ::= <Type> <IdList2> ';' <TypeList2> | 
 <IdList2> ::= <Declaration2> <IdListAux2> | <Matrix> <IdList2Aux>
 <IdListAux2> ::= ',' <IdList2> | 
 <Declaration2> ::= Id <Declaration2Aux>
@@ -21,8 +21,8 @@
 <Declaration2Aux2> ::= ']' <MatrixAux> '=' '[' <ExpressionList> ']' | <Expression> ']' <MatrixAux> '=' '[' <ExpressionList> ']'
 
 <Functions> ::= 'function' Id '(' <ParameterList> ')' <Return> 'begin' <VarDeclaration> <Commands> 'end' <Functions> | 
-<Return> ::= ':' Type <MatrixDeclarationOrIdAux> | 
-<ParameterList> ::= Type <MatrixDeclarationOrId> <ParameterListAux> | 
+<Return> ::= ':' <Type> <MatrixDeclarationOrIdAux> | 
+<ParameterList> ::= <Type> <MatrixDeclarationOrId> <ParameterListAux> | 
 <ParameterListAux> ::= ',' <ParameterList> | 
 <MatrixDeclarationOrId> ::= Id <MatrixDeclarationOrIdAux>
 <MatrixDeclarationOrIdAux> ::= '[' ']' <MatrixDeclarationOrIdAux> | 
@@ -60,12 +60,14 @@
 <ExpressionLevel8> ::= LogicOpSimple <DeniableTerminals> | <Terminals>
 <ExpressionLevel8Aux> ::= LogicOpSimple <DeniableTerminals> | <TerminalsNoNegative>
 
-<Terminals> ::= '(' <Expression> ')' | Number | AritmeticOpSum <Negative> | Char | CharChain | Boolean | Id <Parameters> | <Matrix>
-<TerminalsNoNegative> ::= '(' <Expression> ')' | Number | Char | CharChain | Boolean | Id <Parameters> | <Matrix>
-<DeniableTerminals> ::= '(' <Expression> ')' Boolean | Id <Parameters> | <Matrix>
+<Terminals> ::= '(' <Expression> ')' | Number | AritmeticOpSum <Negative> | Char | CharChain | <Boolean> | Id <Parameters> | <Matrix>
+<TerminalsNoNegative> ::= '(' <Expression> ')' | Number | Char | CharChain | <Boolean> | Id <Parameters> | <Matrix>
+<DeniableTerminals> ::= '(' <Expression> ')' <Boolean> | Id <Parameters> | <Matrix>
 <Negative> ::= Id <Parameters> | Number | <Matrix>
 
 <Parameters> ::= '(' <ExpressionListOrEmpty> ')'
 
 <Matrix> ::= Id <MatrixAux>
 <MatrixAux> ::= '[' <Expression> ']' <MatrixAux> | 
+<Type> ::= 'integer' | 'real' | 'boolean' | 'string' | 'char'
+<Boolean> ::= 'true' | 'false'

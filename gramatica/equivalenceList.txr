@@ -1,0 +1,10 @@
+'program' 'begin' 'end' 'var' 'integer' 'real' 'boolean' 'string' 'char' 'const' 'function' 'if' 'then' 'else' 'while' 'read' 'write' 'true' 'false'
+Number
+AritmeticOpSum AritmeticOpMult
+RelationalOpEqual RelationalOpComp
+'='
+'||' '&&' LogicOpSimple
+';' ',' '[' ']' '(' ')' ':'
+Id
+Char
+CharChain

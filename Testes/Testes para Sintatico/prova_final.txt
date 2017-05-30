@@ -1,0 +1,46 @@
+program
+
+
+var begin
+    
+    real av1, av2, av3;
+
+    boolean final;
+end
+
+
+function prova_final(real av1, real av2, real av3) : boolean 
+begin
+    var begin
+        real aux;
+    end
+
+    aux = (av1 + av2 + av3) / 3;
+
+    if (aux < 7.0) then begin
+        prova_final = true;
+    end else begin
+        prova_final = false;
+    end
+end
+
+begin
+
+    write("Digite a nota da 1 avaliacao");
+
+    read(av1);
+    write("Digite a nota da 2 avaliacao");
+
+    read(av2);
+    write("Digite a nota da 3 avaliacao");
+
+    read(av3);
+    
+    final = prova_final(av1, av2, av3);
+
+    if (final) then begin
+        write("Voce esta na final");
+    end else begin
+        write("Va curtir as ferias");
+    end
+end

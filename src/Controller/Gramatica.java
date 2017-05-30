@@ -64,9 +64,9 @@ public class Gramatica {
 								if(!(producao[cont].charAt(0)=='<' &&
 										producao[cont].charAt(producao[cont].length()-1)=='>' )){
 									//adicionando a nova regra nTerminal
-								RegraTerminal novoTerminal = 
+									RegraTerminal novoTerminal = 
 											new RegraTerminal(producao[cont].trim());
-									//adicionando na lista de terminais caso n contenha
+									//adicionando na lista de terminais caso n contenha									
 									if(!terminais.contains(novoTerminal)){
 										terminais.add(novoTerminal);
 									}
@@ -129,7 +129,12 @@ public class Gramatica {
 								else{
 									RegraTerminal novoTerminal = new RegraTerminal(producao[cont].trim());
 									//adicionando a nova regra terminal
-									r.add(novoTerminal);									
+									r.add(novoTerminal);
+									
+									//adicionando na lista de terminais caso n contenha									
+									if(!terminais.contains(novoTerminal)){
+										terminais.add(novoTerminal);
+									}
 								}
 							}
 						}
@@ -168,7 +173,7 @@ public class Gramatica {
 				}
 			}
 		}
-		//assinalando quem já está calculado
+		//assinalando quem ja esta calculado
 		for(RegraNaoTerminal regraNT : regras){
 			Boolean soTemTerminal = true;
 			for(LinkedList<RegraGramatica> producoes: regraNT.getRegra()){
@@ -185,7 +190,7 @@ public class Gramatica {
 		//atualizando os firsts
 		this.atualizarFirsts();
 				
-		//atualiza firsts e os recalcula até que n hajam mais alterações nos conjuntos
+		//atualiza firsts e os recalcula ate que n hajam mais alteracoes nos conjuntos
 		boolean houveAtualizacao = false;
 		do {
 			houveAtualizacao = false;
@@ -218,11 +223,10 @@ public class Gramatica {
 		/*se X -> a ALPHA; a faz parte do conjunto 1 de X*/
 		for(RegraNaoTerminal regraNT : regras){//para cada regra
 			for(LinkedList<RegraGramatica> producoes: regraNT.getRegra()){//para cada producao
-				//se a 1° producao for um nTerminal
+				//se a 1 producao for um nTerminal
 				if(producoes.getFirst() instanceof RegraNaoTerminal){
 					RegraNaoTerminal primeiraProducao = (RegraNaoTerminal) producoes.getFirst();
-
-					//se o nTerminal ja estiver com seu 1° calculado
+					//se o nTerminal ja estiver com seu 1 calculado
 					if(primeiraProducao.getFirstEstaPronto()){
 						for(RegraTerminal a : primeiraProducao.getPrimeiro()){
 							regraNT.addPrimeiro(a);
@@ -232,7 +236,7 @@ public class Gramatica {
 			}
 		}
 		/*se X-> Y1 Y2 Y3 ... YK; 1 ed Y1 esta em 1 de X, se 1 Y1 possuir vazio entao 1 Y2
-		tambem esta¡ em 1 de X e assim por diante*/
+		tambem esta em 1 de X e assim por diante*/
 		for(RegraNaoTerminal regraNT : regras){//para cada regra			
 			for(int c = 0; c < regraNT.getRegra().size(); c++){
 				LinkedList<RegraGramatica> producoes = regraNT.getRegra().get(c); 
@@ -285,22 +289,13 @@ public class Gramatica {
 		}
 	}
 	
-	public void inserirFirst(RegraNaoTerminal regra, String key, LinkedList<RegraTerminal> firsts){
-		HashMap<String, LinkedList<RegraTerminal>> f;
-		f = new HashMap<>();
-		f.put(key, firsts);
-		regra.setFirsts(f);
-	}
-
-
 	public void CriarFollows() throws RuleHasNoFollowException{
 		//Marcar o fim do arquivo de entrada no nTerminal da regra inicial
 		regras.getFirst().addSeguinte(this.fimDeLinha);
 		
 		//A -> BCD, tudo em First(C), exceto vazio, esta em Follow(B)
 		//se First(C) tem vazio, entao add First(D) em Follow(B), e assim por diante
-		for (RegraNaoTerminal regraNT : regras) {
-			System.out.println(regraNT.getSimbolo());
+		for (RegraNaoTerminal regraNT : regras) {			
 			 for (LinkedList<RegraGramatica> regra : regraNT.getRegra()) {
 				for(int c = 0; c < regra.size(); c++){					
 					//caso seja um nTerminal
@@ -403,6 +398,9 @@ public class Gramatica {
 	public HashMap<String, RegraNaoTerminal> getRegrasHM(){
 		return this.regrasHM;
 	}
-	
-	
+
+	public RegraNaoTerminal getPrimeiraRegra() {
+		return this.regras.getFirst();
+	}
+		
 }

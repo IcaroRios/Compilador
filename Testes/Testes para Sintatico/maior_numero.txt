@@ -1,0 +1,36 @@
+program
+
+
+var begin
+    
+    integer a, b;
+
+end
+
+
+function maior(integer a, integer b) : integer
+
+begin
+
+    if (a>b) then begin
+        maior = a;  
+
+    end else begin
+        maior = b;
+    end
+end
+
+
+begin
+
+    write("Primeiro numero");
+
+    read(a);
+
+    write("Segundo numero");
+
+    read(b);
+
+    write("O maior numero eh ", maior(a,b));
+
+end

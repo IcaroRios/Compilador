@@ -1,11 +1,12 @@
 package syntactic;
 
 import Controller.Gramatica;
-import Model.CompareToken;
+import Model.CompareTokenToRegra;
 import Model.RegraGramatica;
 import Model.RegraNaoTerminal;
 import Model.RegraTerminal;
 import Model.Token;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
@@ -14,24 +15,42 @@ public class AnalisadorSintatico {
 
     //A PILHA VAI SER A PROPRIA PILHA DE EXECUCAO DO CODIGO
     private List<Token> tokens;
-    private List<RegraGramatica> primeiraRegra;
+    private RegraNaoTerminal primeiraRegra;
     private LinkedList<RegraNaoTerminal> regras;
+    private HashMap<String, RegraNaoTerminal> regrasHM;
+    LinkedList<RegraTerminal> terminais;
     private Gramatica gramatica;
 
-    public AnalisadorSintatico(List<Token> tokens) {
-        this.tokens = tokens;
-        this.gramatica = new Gramatica("gramatica//grammar.txt");
-        gramatica.LerGramatica();
-        this.regras = gramatica.getRegras();
-        this.primeiraRegra = regras.get(0).getRegra().get(0);// pega a primeira regra
-        //System.out.println(regras.get(0).getRegra().get(0));
+    public AnalisadorSintatico(RegraNaoTerminal primeiraRegra, LinkedList<RegraNaoTerminal> regras,
+    		HashMap<String, RegraNaoTerminal> regrasHM, LinkedList<RegraTerminal> terminais) {               
+    	this.primeiraRegra = primeiraRegra;
+    	this.regras = regras;
+        this.regrasHM = regrasHM;
+        this.terminais = terminais;        
     }
 
-    public void executar(List<RegraGramatica> regra) {
+	/*
+    se o que tem no topo da pilha e um terminal --- consome		
+    se o que tem no topo da pilha e um n terminal --- vai pra matriz e gera a producao dele		
+    segue ate a lista de tokens acabar		
+    lista de tokens acabou e a pilha esta vazia o codigo esta correto sintaticamente,
+    se nao estas errado
 
+	TRATAMENTO DE ERROS
+    pegue todos os follows da sua producao e de todos os seus antecessores                        
+    se for um nao terminal: ignore tokens ate chegar em um follow desses                        		                      
+    se for um terminal: assuma que o token foi inserido.                        
+    e continua
+    */
+    public void Executar(List<Token> tokens){
+    	for (Token token : tokens) {
+			System.out.println(token);
+		}	
+    }
+
+    /*
+        public void executar(List<Token> tokens) {
         CompareToken comparador = new CompareToken();
-
-        //System.out.println(regra);
         for (RegraGramatica atual : regra) {
 
             if (atual.isTerminal()) {
@@ -43,43 +62,15 @@ public class AnalisadorSintatico {
                 } else {
                     System.out.println("Erro sintático na linha: " + tokens.get(0).getnLinha());
                 }
-
-            } else {
-                
+            } else {                
                     System.out.println("expression encontrada "+gramatica.getRegrasHM().get(atual.getSimbolo()));
                     System.out.println("enviando para a regra dele.");
-                    System.out.println(gramatica.getRegrasHM().get(atual.getSimbolo()).getRegra().get(0));
-                    
-                    executar(gramatica.getRegrasHM().get(atual.getSimbolo()).getRegra().get(0));
-                    
-                
-
+                    System.out.println(gramatica.getRegrasHM().get(atual.getSimbolo()).getRegra().get(0));                    
+                    //executar(gramatica.getRegrasHM().get(atual.getSimbolo()).getRegra().get(0));                                
             }
         }
-
-		//TODO
-		/*
-         se o que tem no topo da pilha � um terminal --- consome
-		
-         se o que tem no topo da pilha � um n terminal --- vai pra matriz e gera a produ��o dele
-		
-         segue at� a lista de tokens acabar
-		
-         lista de tokens acabou e a pilha est� vazia o c�digo est� correto sintaticamente,
-         se n�o est� errado
-         */
-        //TODO
-		/*TRATAMENTO DE ERROS
-         pegue todos os follows da sua produ��o e de todos os seus antecessores                        
-         se for um n�o terminal: ignore tokens at� chegar em um follow desses                        
-		                       
-         se for um terminal: assuma que o token foi inserido.                        
-         e continua
-         */
-    }
-
-    public List<RegraGramatica> getPrimeiraRegra() {
-        return primeiraRegra;
-    }
+    */
+    
+    
 
 }

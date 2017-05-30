@@ -1,0 +1,25 @@
+program
+
+var begin
+	integer tamanho = 3;
+	real teste[3] = [1, 2, 3];
+	real teste2[] = [3, 2, 1];
+	real teste3[3];
+	real teste4[tamanho];
+	real teste5[tamanho*tamanho];
+	real teste6[1][2];
+end
+
+
+function area(real larguraAltura[]) : real
+begin
+	area = larguraAltura[0]*larguraAltura[1];
+end
+
+begin
+	write("Digite a altura do retangulo");
+	read(larguraAltura[0]);
+	write("Digite a largura do retangulo");
+	read(larguraAltura[1]);
+	write("A altura do retangulo eh ", area(larguraAltura));
+end

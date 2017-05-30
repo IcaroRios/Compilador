@@ -1,0 +1,33 @@
+program
+
+var begin
+    integer n;
+    boolean x;
+end
+
+
+function par(integer n) : boolean
+begin
+    var begin
+        integer aux;
+    end
+    aux = n%2;
+
+    if (aux==2=2) then begin
+        par = true;
+    end else begin
+        par = false;
+    end     
+end
+
+begin
+    write("Digite o numero do termo que deseja-se verificar se o numero e par.");
+    read(n1+1);
+    x = par(n);
+    
+    if (x) then begin
+        write("O numero eh par"a);
+    end else begin
+        write("O numero eh impar");
+    end
+end

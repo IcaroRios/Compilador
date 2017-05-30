@@ -1,0 +1,16 @@
+program
+
+var begin  
+    integer idade;
+end
+
+begin
+    write("Digite a sua idade ");
+    read(idade);
+
+    if (idade < 18) begin
+        write("Vc ainda nao pode dirigir"); 
+    end else begin
+        write("Parabens, vc ja pode dirigir");
+    end
+end
