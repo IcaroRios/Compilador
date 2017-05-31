@@ -7,7 +7,7 @@ public class RegraNaoTerminal extends RegraGramatica{
 	//todos os símbolos, terminais e n terminais que esse n terminal gera
 	private LinkedList<LinkedList<RegraGramatica>> regra;
 	//seu conjunto de first
-	private HashMap<String, LinkedList<RegraTerminal>> first;
+	private HashMap<String, Integer> primeiroHM;
 	private LinkedList<RegraTerminal> primeiro;
 	//seu conjunto de follow
 	private HashMap<String, LinkedList<RegraTerminal>> follow;
@@ -20,7 +20,7 @@ public class RegraNaoTerminal extends RegraGramatica{
 		super();
 		this.simbolo = simbolo;
 		this.regra = new LinkedList<>();
-		this.first = new HashMap<>();
+		this.primeiroHM = new HashMap<>();
 		this.primeiro = new LinkedList<>();
 		this.follow = new HashMap<>();
 		this.seguinte = new LinkedList<>();
@@ -36,8 +36,14 @@ public class RegraNaoTerminal extends RegraGramatica{
 		return this.regra;
 	}
 	
-	public void setFirsts(HashMap<String, LinkedList<RegraTerminal>> f){
-		this.first = f;
+	public void addPrimeiroHM(String key, int value){
+		if(!this.primeiroHM.containsKey(key)){
+			this.primeiroHM.put(key, value);
+		}			
+	}
+	
+	public HashMap<String, Integer> getPrimeiroHM() {
+		return this.primeiroHM;
 	}
 	
 	public void addPrimeiro(RegraTerminal f){
@@ -50,9 +56,6 @@ public class RegraNaoTerminal extends RegraGramatica{
 		return this.primeiro;
 	}
 	
-	public HashMap<String, LinkedList<RegraTerminal>> getFirsts(){
-		return this.first;
-	}
 	
 	public void setFollows(HashMap<String, LinkedList<RegraTerminal>> f){
 		this.follow = f;
@@ -75,11 +78,7 @@ public class RegraNaoTerminal extends RegraGramatica{
 	@Override
 	public boolean isTerminal(){
 		return false;
-	}
-
-	public HashMap<String, LinkedList<RegraTerminal>> getFirst() {
-		return this.first;
-	}
+	}	
 
 	public HashMap<String, LinkedList<RegraTerminal>> getFollow() {
 		return this.follow;

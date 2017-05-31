@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import Model.CompareTokenToRegra;
+import Model.TokenToRegraGramatica;
 import Model.RegraNaoTerminal;
 import Model.RegraTerminal;
 import Model.Token;
@@ -27,9 +27,9 @@ public class Controlador {
 	LinkedList<RegraNaoTerminal> regras;
 	HashMap<String, RegraNaoTerminal> regrasHM;
 	LinkedList<RegraTerminal> terminais;
-	CompareTokenToRegra comparador;
+	TokenToRegraGramatica comparador;
 	
-	public Controlador(String diretorioEntrada, String arquivoGramatica, String listaEquivalencia)
+	public Controlador(String diretorioEntrada, String arquivoGramatica)
 			throws RuleHasNoFirstException, RuleHasNoFollowException, RuleHasEmptyFollowException{	 
 		this.dirEntrada = new File(diretorioEntrada);        
 		//se conseguir pegar os arquivos, inicia a analise
@@ -40,7 +40,7 @@ public class Controlador {
 		//analisar a gramatica antes das demais analises
 		gramatica = new Gramatica(arquivoGramatica);		
 		analiseGramatica();
-		this.comparador = new CompareTokenToRegra(listaEquivalencia);
+		this.comparador = new TokenToRegraGramatica();
 		this.regrasHM = gramatica.getRegrasHM();
 		this.terminais = gramatica.getTerminais();
 		this.regras = gramatica.getRegras();
@@ -90,20 +90,20 @@ public class Controlador {
 
 	public void analiseGramatica() throws RuleHasNoFirstException, RuleHasNoFollowException,
 		RuleHasEmptyFollowException{
-		gramatica.LerGramatica();
-		gramatica.CriarFirsts();
-		gramatica.CriarFollows();
+		gramatica.lerGramatica();
+		gramatica.criarFirsts();
+		gramatica.criarFollows();
 		//gramatica.printGramatica();
 	}
 	
 	public void analiseLexica(File arquivo){
-		lexico.Executar(arquivo);
+		lexico.executar(arquivo);
 		//System.out.println("AQUI");
 		//System.exit(0);
 	}
 	
 	private void analiseSintatica() {
-		sintatico.Executar(this.tokens);		
+		sintatico.executar(this.tokens);		
 		
 	}
 	

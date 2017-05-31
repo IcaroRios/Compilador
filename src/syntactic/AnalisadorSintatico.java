@@ -1,7 +1,6 @@
 package syntactic;
 
-import Controller.Gramatica;
-import Model.CompareTokenToRegra;
+import Model.TokenToRegraGramatica;
 import Model.RegraGramatica;
 import Model.RegraNaoTerminal;
 import Model.RegraTerminal;
@@ -9,7 +8,6 @@ import Model.Token;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
 
 public class AnalisadorSintatico {
 
@@ -18,13 +16,12 @@ public class AnalisadorSintatico {
     private RegraNaoTerminal primeiraRegra;
     private LinkedList<RegraNaoTerminal> regras;
     private HashMap<String, RegraNaoTerminal> regrasHM;
-    private LinkedList<RegraTerminal> terminais;
-    private Gramatica gramatica;
-	private CompareTokenToRegra comparador;
+    private LinkedList<RegraTerminal> terminais;    
+	private TokenToRegraGramatica comparador;
 
     public AnalisadorSintatico(RegraNaoTerminal primeiraRegra, LinkedList<RegraNaoTerminal> regras,
     		HashMap<String, RegraNaoTerminal> regrasHM, LinkedList<RegraTerminal> terminais,
-    		CompareTokenToRegra comparador) {               
+    		TokenToRegraGramatica comparador) {               
     	this.primeiraRegra = primeiraRegra;
     	this.regras = regras;
         this.regrasHM = regrasHM;
@@ -45,8 +42,12 @@ public class AnalisadorSintatico {
     se for um terminal: assuma que o token foi inserido.                        
     e continua
     */
-    public void Executar(List<Token> tokens){
+    public void executar(List<Token> tokens){
     	this.tokens = tokens;
+    	analisar(primeiraRegra);
+    }
+    
+    public void analisar(RegraNaoTerminal regraAtual){
     	int cont = 0;
     	while(cont< tokens.size()){
 			LinkedList<LinkedList<RegraGramatica>> atual = primeiraRegra.getRegra();
@@ -55,7 +56,10 @@ public class AnalisadorSintatico {
 					if(cont == tokens.size()){
 						break;
 					}
-					int resp = comparador.compare(tokens.get(cont), r);
+					//int resp = comparador.compare(tokens.get(cont), r);
+					int resp = 1;
+					RegraTerminal b = comparador.tokenToTerminal(tokens.get(cont));
+					System.out.println(b);
 					if(resp == 1){
 						System.out.println(resp+" eh Terminal, DEU CERTO");
 						System.out.println("\tTOKEN("+cont+"): "+tokens.get(cont));
@@ -71,48 +75,13 @@ public class AnalisadorSintatico {
 						System.out.println("\tTOKEN("+cont+"): "+tokens.get(cont));
 						System.out.println("\tPRODUCAO: "+r.getSimbolo());
 						RegraNaoTerminal a = (RegraNaoTerminal) r;
-						recursivo(cont, a);
+						//recursivo(cont, a);
 					}
 					cont++;
 				}				
-			}				
+			}
 		}
     }
-
-    public int recursivo(int posicao, RegraNaoTerminal a){
-    	int cont = posicao;    	
-    	while(cont< a.getRegra().size()){
-			LinkedList<LinkedList<RegraGramatica>> atual = a.getRegra();
-			for(LinkedList<RegraGramatica> regra : atual){
-				for(RegraGramatica r : regra){					
-					if(cont == tokens.size()){
-						break;
-					}
-					int resp = comparador.compare(tokens.get(cont), r);
-					if(resp == 1){
-						System.out.println(resp+" eh Terminal, DEU CERTO");
-						System.out.println("\tTOKEN("+cont+"): "+tokens.get(cont));
-						System.out.println("\tPRODUCAO:  "+r.getSimbolo());						
-					}
-					else if(resp == 0){
-						System.out.println(resp+" DEU ERRADO PIVETE");
-						System.out.println("\tTOKEN("+cont+"): "+tokens.get(cont));
-						System.out.println("\tPRODUCAO: "+r.getSimbolo());
-					}
-					else if(resp == -1){						
-						System.out.println(resp+" eh nTerminal");
-						System.out.println("\tTOKEN("+cont+"): "+tokens.get(cont));
-						System.out.println("\tPRODUCAO: "+r.getSimbolo());
-						RegraNaoTerminal b = (RegraNaoTerminal) r;
-						recursivo(cont, b);
-					}
-					cont++;
-				}				
-			}				
-		}
-    	return cont;
-    }
-    
     /*
         public void executar(List<Token> tokens) {
         CompareToken comparador = new CompareToken();

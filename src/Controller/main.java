@@ -1,11 +1,8 @@
 package Controller;
 
-import java.io.File;
-
 import exceptions.RuleHasEmptyFollowException;
 import exceptions.RuleHasNoFirstException;
 import exceptions.RuleHasNoFollowException;
-import lexical.AnalisadorLexico;
 
 public class main {
 
@@ -14,8 +11,7 @@ public class main {
 		
 		String entrada = "entrada";
 		String gramatica = "gramatica//grammar.txt";
-		String listaEquivalencia = "gramatica//equivalenceList.txt";
-		Controlador controlador = new Controlador(entrada, gramatica, listaEquivalencia);
+		Controlador controlador = new Controlador(entrada, gramatica);
 		controlador.analisar();
 	}
 

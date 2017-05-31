@@ -97,7 +97,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
     }
 	 */
 
-	public void Executar(File arquivo) {
+	public void executar(File arquivo) {
 		try {                          
 			//verificando se o arquivo existe para comecar a analisar
 			if (arquivo.exists()) {
@@ -146,7 +146,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
 				inicioOperadorCompostoE = i;
 			}
 			if (i < analisar.length - 1 && analisar[inicioOperadorCompostoE + 1] == '&') {
-				tokens.add(new Token(Constants.TIPO_OPERADOR_LOGICO, "&&", numeroLinha, 2));
+				tokens.add(new Token(Constants.ID_OP_LOGICO, "&&", numeroLinha, 2));
 				inicioOperadorCompostoE++;
 				i += 2;
 				if (i >= analisar.length - 1) {
@@ -158,7 +158,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
 				inicioOperadorCompostoOU = i;
 			}
 			if (i < analisar.length - 1 && analisar[inicioOperadorCompostoOU + 1] == '|') {
-				tokens.add(new Token(Constants.TIPO_OPERADOR_LOGICO, "||", numeroLinha, 3));
+				tokens.add(new Token(Constants.ID_OP_LOGICO, "||", numeroLinha, 3));
 				inicioOperadorCompostoOU++;
 				i += 2;
 				if (i >= analisar.length - 1) {
