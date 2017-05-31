@@ -18,15 +18,18 @@ public class AnalisadorSintatico {
     private RegraNaoTerminal primeiraRegra;
     private LinkedList<RegraNaoTerminal> regras;
     private HashMap<String, RegraNaoTerminal> regrasHM;
-    LinkedList<RegraTerminal> terminais;
+    private LinkedList<RegraTerminal> terminais;
     private Gramatica gramatica;
+	private CompareTokenToRegra comparador;
 
     public AnalisadorSintatico(RegraNaoTerminal primeiraRegra, LinkedList<RegraNaoTerminal> regras,
-    		HashMap<String, RegraNaoTerminal> regrasHM, LinkedList<RegraTerminal> terminais) {               
+    		HashMap<String, RegraNaoTerminal> regrasHM, LinkedList<RegraTerminal> terminais,
+    		CompareTokenToRegra comparador) {               
     	this.primeiraRegra = primeiraRegra;
     	this.regras = regras;
         this.regrasHM = regrasHM;
-        this.terminais = terminais;        
+        this.terminais = terminais;     
+        this.comparador = comparador;
     }
 
 	/*
@@ -43,11 +46,73 @@ public class AnalisadorSintatico {
     e continua
     */
     public void Executar(List<Token> tokens){
-    	for (Token token : tokens) {
-			System.out.println(token);
-		}	
+    	this.tokens = tokens;
+    	int cont = 0;
+    	while(cont< tokens.size()){
+			LinkedList<LinkedList<RegraGramatica>> atual = primeiraRegra.getRegra();
+			for(LinkedList<RegraGramatica> regra : atual){
+				for(RegraGramatica r : regra){
+					if(cont == tokens.size()){
+						break;
+					}
+					int resp = comparador.compare(tokens.get(cont), r);
+					if(resp == 1){
+						System.out.println(resp+" eh Terminal, DEU CERTO");
+						System.out.println("\tTOKEN("+cont+"): "+tokens.get(cont));
+						System.out.println("\tPRODUCAO: "+r.getSimbolo());						
+					}
+					else if(resp == 0){
+						System.out.println(resp+" DEU ERRADO PIVETE");
+						System.out.println("\tTOKEN("+cont+"): "+tokens.get(cont));
+						System.out.println("\tPRODUCAO: "+r.getSimbolo());
+					}
+					else if(resp == -1){						
+						System.out.println(resp+" eh nTerminal");
+						System.out.println("\tTOKEN("+cont+"): "+tokens.get(cont));
+						System.out.println("\tPRODUCAO: "+r.getSimbolo());
+						RegraNaoTerminal a = (RegraNaoTerminal) r;
+						recursivo(cont, a);
+					}
+					cont++;
+				}				
+			}				
+		}
     }
 
+    public int recursivo(int posicao, RegraNaoTerminal a){
+    	int cont = posicao;    	
+    	while(cont< a.getRegra().size()){
+			LinkedList<LinkedList<RegraGramatica>> atual = a.getRegra();
+			for(LinkedList<RegraGramatica> regra : atual){
+				for(RegraGramatica r : regra){					
+					if(cont == tokens.size()){
+						break;
+					}
+					int resp = comparador.compare(tokens.get(cont), r);
+					if(resp == 1){
+						System.out.println(resp+" eh Terminal, DEU CERTO");
+						System.out.println("\tTOKEN("+cont+"): "+tokens.get(cont));
+						System.out.println("\tPRODUCAO:  "+r.getSimbolo());						
+					}
+					else if(resp == 0){
+						System.out.println(resp+" DEU ERRADO PIVETE");
+						System.out.println("\tTOKEN("+cont+"): "+tokens.get(cont));
+						System.out.println("\tPRODUCAO: "+r.getSimbolo());
+					}
+					else if(resp == -1){						
+						System.out.println(resp+" eh nTerminal");
+						System.out.println("\tTOKEN("+cont+"): "+tokens.get(cont));
+						System.out.println("\tPRODUCAO: "+r.getSimbolo());
+						RegraNaoTerminal b = (RegraNaoTerminal) r;
+						recursivo(cont, b);
+					}
+					cont++;
+				}				
+			}				
+		}
+    	return cont;
+    }
+    
     /*
         public void executar(List<Token> tokens) {
         CompareToken comparador = new CompareToken();

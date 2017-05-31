@@ -14,7 +14,8 @@ public class main {
 		
 		String entrada = "entrada";
 		String gramatica = "gramatica//grammar.txt";
-		Controlador controlador = new Controlador(entrada, gramatica);
+		String listaEquivalencia = "gramatica//equivalenceList.txt";
+		Controlador controlador = new Controlador(entrada, gramatica, listaEquivalencia);
 		controlador.analisar();
 	}
 
