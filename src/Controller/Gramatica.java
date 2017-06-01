@@ -90,7 +90,7 @@ public class Gramatica {
 			//Para cada linha
 			while ((linha = br.readLine()) != null) {
 				if(linha.equals("") || linha.charAt(0)=='!'){
-					//se for linha vazia ou comentário n fazer nada
+					//se for linha vazia ou comentario n fazer nada
 				}
 				else{
 					String[] aux = linha.split("::=");
@@ -386,7 +386,7 @@ public class Gramatica {
 		for(RegraNaoTerminal regraNT : regras){
 			System.out.println(regraNT.getSimbolo());
 			System.out.println("\tConjunto Primeiro:"+regraNT.getPrimeiro());
-			System.out.println("\tConjunto Primeiro:"+regraNT.getPrimeiroHM());
+			System.out.println("\tConjunto PrimeiroHM:"+regraNT.getPrimeiroHM());
 			System.out.println("\tConjunto Seguinte:"+regraNT.getSeguinte());
 		}
 		

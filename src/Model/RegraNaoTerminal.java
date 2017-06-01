@@ -12,7 +12,7 @@ public class RegraNaoTerminal extends RegraGramatica{
 	//seu conjunto de follow
 	private HashMap<String, LinkedList<RegraTerminal>> follow;
 	private LinkedList<RegraTerminal> seguinte;
-	//se a regra gera produção vazia
+	//se a regra gera produçao vazia
 	private boolean geraVazio;
 	private boolean firstEstaPronto;
 		

@@ -1,9 +1,10 @@
 package Model;
 
 public class TokenToRegraGramatica {
-	
+	RegraTerminal terminalVazio;
     public TokenToRegraGramatica(){
-    	super();    	
+    	super();
+    	this.terminalVazio = new RegraTerminal(Constants.PRODUCAO_VAZIA);
     }
     
     public RegraTerminal tokenToTerminal(Token token){
@@ -92,9 +93,12 @@ public class TokenToRegraGramatica {
         }    	       
     }
 
-	private int getTerminalType(RegraTerminal t1, RegraTerminal t2) {		
+	private int getTerminalType(RegraTerminal t1, RegraTerminal t2) {				
 		if(t1.equals(t2)){
 			return 1;
+		}else if(t1.equals(terminalVazio ) || t2.equals(terminalVazio)){
+			System.out.println(".........................ISSO FUNCIONOU");
+			return 1;			
 		}
 		return 0;			
 	}
