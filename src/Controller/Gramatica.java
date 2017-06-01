@@ -329,8 +329,8 @@ public class Gramatica {
 			for(LinkedList<RegraGramatica> regra : regraNT.getRegra()){
 				if(!regra.getLast().isTerminal()){
 					RegraNaoTerminal producao = (RegraNaoTerminal)regra.getLast();
-					this.addSeguinte(producao,regraNT);
-				}				
+					this.addSeguintePorFollow(producao,regraNT);
+				}
 			}
 		}
 		
@@ -356,6 +356,27 @@ public class Gramatica {
 		else if(r instanceof RegraNaoTerminal){
 			RegraNaoTerminal regraNT = (RegraNaoTerminal) r;
 			for(RegraTerminal regraT : regraNT.getPrimeiro()){
+				if(regraT.equals(new RegraTerminal(Constants.PRODUCAO_VAZIA))){
+					
+				}else{
+					regra.addSeguinte(regraT);
+				}				
+			}
+		}
+	}
+	
+	public void addSeguintePorFollow(RegraNaoTerminal regra, RegraGramatica r){
+		if(r instanceof RegraTerminal){
+			RegraTerminal regraT = (RegraTerminal) r;
+			if(regraT.equals(new RegraTerminal(Constants.PRODUCAO_VAZIA))){
+				
+			}else{
+				regra.addSeguinte(regraT);
+			}			
+		}
+		else if(r instanceof RegraNaoTerminal){
+			RegraNaoTerminal regraNT = (RegraNaoTerminal) r;
+			for(RegraTerminal regraT : regraNT.getSeguinte()){
 				if(regraT.equals(new RegraTerminal(Constants.PRODUCAO_VAZIA))){
 					
 				}else{
