@@ -92,8 +92,10 @@ public class Controlador {
 		RuleHasEmptyFollowException{
 		gramatica.lerGramatica();
 		gramatica.criarFirsts();
-		gramatica.criarFollows();
-		//gramatica.printGramatica();
+		for(int i = 0; i < 10; i++)
+			gramatica.criarFollows();
+		//gramatica.printGramaticaAmbigua();
+		gramatica.printGramatica();
 	}
 	
 	public void analiseLexica(File arquivo){
@@ -102,7 +104,7 @@ public class Controlador {
 		//System.exit(0);
 	}
 	
-	private void analiseSintatica() {
+	private void analiseSintatica(){
 		sintatico.executar(this.tokens);		
 		
 	}

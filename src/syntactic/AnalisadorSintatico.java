@@ -61,7 +61,7 @@ public class AnalisadorSintatico {
 
 	public void analisar(RegraNaoTerminal r, LinkedList<RegraTerminal> allFollows){
 		RegraTerminal terminalAtual = comparador.tokenToTerminal(tokens.get(cont));
-		int p = getPosicion(r, terminalAtual, allFollows);		
+		int p = this.getPosicion(r, terminalAtual, allFollows);		
 		if(p == -1){
 			//achou como follow, entao pule essa regra
 			return;
@@ -93,6 +93,7 @@ public class AnalisadorSintatico {
 				System.out.println(resp+" DEU ERRADO PIVETE");
 				System.out.println("\tTOKEN("+cont+"): "+tokens.get(cont));
 				System.out.println("\tPRODUCAO: "+regraAtual.get(c).getSimbolo());
+				throw new RuntimeErrorException(null);
 			}
 			//SE E UM NTERMINAL, VAI PRA REGRA NTERMINAL AGORA
 			else if(resp == -1){
@@ -100,32 +101,38 @@ public class AnalisadorSintatico {
 				System.out.println("\tTOKEN("+cont+"): "+tokens.get(cont));
 				System.out.println("\tPRODUCAO: "+regraAtual.get(c).getSimbolo());
 				RegraNaoTerminal a = (RegraNaoTerminal) regraAtual.get(c);
+				allFollows.addAll(a.getSeguinte());
 				this.analisar(a, allFollows);
+				allFollows.removeAll(a.getSeguinte());
 				System.out.println("....VOLTANDO POR BACKTRACKING.....");
 				System.out.println();
 				//retirando a contagem extra do backtracking
 				cont--;
 				//recursivo(cont, a);
 			}
+			
 			cont++;
-		}		
+		}
 
-	}	
+	}
 
 	private int getPosicion(RegraNaoTerminal r, RegraTerminal terminalAtual,
-			LinkedList<RegraTerminal> allFollows){
-		System.out.println("LISTA DE FOLLOWS: "+allFollows);
+			LinkedList<RegraTerminal> allFollows){		
+		System.out.println("PRIMEIRO "+r.getPrimeiro());
+		System.out.println(r.getPrimeiroHM());		
+		System.out.println("LISTA DE FOLLOWS: "+r.getSeguinte());
+		System.out.println("ALL FOLLOWS"+allFollows);
 		int posicaoRegra;
 		//se retornar null eh pq o simbolo n faz parte do conjunto
 		if(r.getPrimeiroHM().get(terminalAtual.getSimbolo()) == null){
-			System.out.println("AHHHHHH "+r.getPrimeiroHM().get(terminalAtual.getSimbolo()));
-			System.out.println(r.getPrimeiro());
-			System.out.println(r.getPrimeiroHM());
-			System.out.println(r.getSeguinte());
-			//se o nTerminal possui o simbolo como follow			
-			if(allFollows.contains(terminalAtual)){
+			System.out.println("AHHHHHH "+r.getPrimeiroHM().get(terminalAtual.getSimbolo()));			
+			//se o nTerminal possui o simbolo como follow						
+			//if(r.getGeraVazio() && r.getSeguinte().contains(terminalAtual)){
+			if(r.getSeguinte().contains(terminalAtual)){				
+				System.out.println("->ACHEI NO FOLLOW");
 				posicaoRegra = -1;
-				allFollows.remove(terminalAtual);
+				//posicaoRegra = -1;
+				//allFollows.remove(terminalAtual);				
 			}else{
 				throw new RuntimeErrorException(null);
 			}
@@ -142,7 +149,7 @@ public class AnalisadorSintatico {
 		}else{
 			System.out.println("->ACHEI NO FIRST");
 			posicaoRegra = r.getPrimeiroHM().get(terminalAtual.getSimbolo());
-			allFollows.addAll(r.getSeguinte());
+			//allFollows.addAll(r.getSeguinte());
 		}
 		return posicaoRegra;
 	}

@@ -1,0 +1,51 @@
+<reservada - program>
+<reservada - var>
+<reservada - begin>
+<reservada - real>
+<identificador - raio>
+<delimitador - ;>
+<reservada - end>
+<reservada - function>
+<identificador - area_circulo>
+<delimitador - (>
+<reservada - real>
+<identificador - raio>
+<delimitador - )>
+<delimitador - :>
+<reservada - real>
+<reservada - begin>
+<identificador - area_circulo>
+<operador_de_atribuicao - =>
+<numero - 3.14>
+<operador_aritmetico - *>
+<delimitador - (>
+<identificador - raio>
+<operador_aritmetico - *>
+<identificador - raio>
+<delimitador - )>
+<delimitador - ;>
+<reservada - end>
+<reservada - begin>
+<reservada - write>
+<delimitador - (>
+<cadeia_de_caracteres - "Digite o valor do raio">
+<delimitador - )>
+<delimitador - ;>
+<reservada - read>
+<delimitador - (>
+<identificador - raio>
+<delimitador - )>
+<delimitador - ;>
+<reservada - write>
+<delimitador - (>
+<cadeia_de_caracteres - "A area do circulo eh ">
+<delimitador - ,>
+<identificador - area_circulo>
+<delimitador - (>
+<identificador - raio>
+<delimitador - )>
+<delimitador - )>
+<delimitador - ;>
+<reservada - end>
+
+SUCESSO NA ANALISE LEXICA DO ARQUIVO: area_circ.txt
