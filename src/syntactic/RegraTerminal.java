@@ -1,7 +1,8 @@
-package Model;
+package syntactic;
 
 import java.util.LinkedList;
 
+import Model.RegraGramatica;
 import exceptions.TerminalHasNoFollowException;
 
 public class RegraTerminal extends RegraGramatica{

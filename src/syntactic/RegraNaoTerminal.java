@@ -1,7 +1,9 @@
-package Model;
+package syntactic;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+
+import Model.RegraGramatica;
 
 public class RegraNaoTerminal extends RegraGramatica{
 	//todos os símbolos, terminais e n terminais que esse n terminal gera

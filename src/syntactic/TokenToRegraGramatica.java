@@ -1,4 +1,8 @@
-package Model;
+package syntactic;
+
+import Model.Constants;
+import Model.RegraGramatica;
+import Model.Token;
 
 public class TokenToRegraGramatica {
 	RegraTerminal terminalVazio;

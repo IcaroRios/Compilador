@@ -1,6 +1,6 @@
 package Model;
 
-public final class Constants {
+public final class Constants {	
 	//Constantes dos tipos dos Tokens, serão usados nas análises sintáticas e semânticas
 	public static final int ID_PALAVRA_RESERVADA 		= 	0,
 							ID_NUMERO					=	1,
@@ -60,4 +60,9 @@ public final class Constants {
 	public static final String  PRODUCAO_VAZIA				= "#",
 								PRODUCAO_FIM_DO_ARQUIVO		= "$"
 							;
+	//Constantes para gerar saidas
+	public static final String pastaSaidaSin = "entrada";
+	public static final String extensaoArquivosSin = ".oSyn";
+	public static final String pastaSaidaLex = "entrada";
+	public static final String extensaoArquivosLex = ".oLex";
 }

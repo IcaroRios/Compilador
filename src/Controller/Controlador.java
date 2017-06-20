@@ -6,14 +6,15 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import Model.TokenToRegraGramatica;
-import Model.RegraNaoTerminal;
-import Model.RegraTerminal;
 import Model.Token;
+import exceptions.GramaticaTem2FirstNaMesmaRegra;
 import exceptions.RuleHasEmptyFollowException;
 import exceptions.RuleHasNoFirstException;
 import exceptions.RuleHasNoFollowException;
 import syntactic.AnalisadorSintatico;
+import syntactic.RegraNaoTerminal;
+import syntactic.RegraTerminal;
+import syntactic.TokenToRegraGramatica;
 import lexical.AnalisadorLexico;
 
 public class Controlador {
@@ -30,7 +31,8 @@ public class Controlador {
 	TokenToRegraGramatica comparador;
 	
 	public Controlador(String diretorioEntrada, String arquivoGramatica)
-			throws RuleHasNoFirstException, RuleHasNoFollowException, RuleHasEmptyFollowException{	 
+			throws RuleHasNoFirstException, RuleHasNoFollowException, 
+			RuleHasEmptyFollowException, GramaticaTem2FirstNaMesmaRegra{	 
 		this.dirEntrada = new File(diretorioEntrada);        
 		//se conseguir pegar os arquivos, inicia a analise
 		if(!dirEntrada.exists()) {
@@ -73,40 +75,35 @@ public class Controlador {
             }
         	analiseLexica(listaDeArquivos[cont]);
         	this.tokens = this.lexico.getListTokens();
-        	//se ocorreu algum erro lexico
-        	if(this.lexico.hasError()){
-        		//limpa todas as listas de tokens
+        	if(this.lexico.hasError()){        		
+        		//se ocorreu algum erro lexico,limpa todas as listas de tokens
         		this.lexico.cleanLists();        		
-			}
-        	//se n houve erro, comeca analise sintatica
-        	else{
-        		analiseSintatica();
+			}else{
+				//se n houve erro, comeca analise sintatica
+        		analiseSintatica(listaDeArquivos[cont].getName());
         	}
-        	
+        	this.lexico.cleanLists();
         }
 		System.out.println("ALL FILES HAVE BEEN COMPILED!");					
 	}	
 
 
 	public void analiseGramatica() throws RuleHasNoFirstException, RuleHasNoFollowException,
-		RuleHasEmptyFollowException{
+		RuleHasEmptyFollowException, GramaticaTem2FirstNaMesmaRegra{
 		gramatica.lerGramatica();
 		gramatica.criarFirsts();
 		for(int i = 0; i < 10; i++)
 			gramatica.criarFollows();
-		//gramatica.printGramaticaAmbigua();
+		gramatica.isGramaticaAmbigua();
 		gramatica.printGramatica();
 	}
 	
 	public void analiseLexica(File arquivo){
 		lexico.executar(arquivo);
-		//System.out.println("AQUI");
-		//System.exit(0);
 	}
 	
-	private void analiseSintatica(){
-		sintatico.executar(this.tokens);		
-		
+	private void analiseSintatica(String fileName){
+		sintatico.executar(this.tokens, fileName);				
 	}
 	
 }

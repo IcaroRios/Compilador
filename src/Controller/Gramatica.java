@@ -9,12 +9,13 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import syntactic.RegraNaoTerminal;
+import syntactic.RegraTerminal;
+import exceptions.GramaticaTem2FirstNaMesmaRegra;
 import exceptions.RuleHasNoFirstException;
 import exceptions.RuleHasNoFollowException;
 import Model.Constants;
 import Model.RegraGramatica;
-import Model.RegraNaoTerminal;
-import Model.RegraTerminal;
 
 
 public class Gramatica {
@@ -445,14 +446,7 @@ public class Gramatica {
 							RegraTerminal f = (RegraTerminal) regra.get(c+i);
 							rNT.addSeguinte(f);
 							//System.out.println(rNT.getSimbolo()+" adicionou "+f.getSimbolo());
-						}
-						/*
-						if(c+i == regra.size()){
-							this.addSeguintePorFollow(rNT,regraNT);
-							System.out.println("ENTREI- "+regraNT.getSimbolo());
-							System.out.println("ENTREI- "+rNT.getSimbolo());
-						}
-						*/
+						}						
 					}
 				}
 			}
@@ -499,7 +493,7 @@ public class Gramatica {
 		}			
 	}
 
-	public void printGramaticaAmbigua(){
+	public void isGramaticaAmbigua() throws GramaticaTem2FirstNaMesmaRegra{
 		for(RegraNaoTerminal rn : regras){
 			System.out.println("Regra:"+rn.getSimbolo());
 			LinkedList<RegraTerminal> primeiro = new LinkedList<>();
@@ -521,7 +515,7 @@ public class Gramatica {
 		     });
 			for(int c = 0; c < primeiro.size(); c++){
 				if(c+1< primeiro.size() && primeiro.get(c).equals(primeiro.get(c+1))){
-					System.out.println("\t"+primeiro.get(c).getSimbolo());
+					throw new GramaticaTem2FirstNaMesmaRegra(rn.getSimbolo());
 				}
 			}
 		}

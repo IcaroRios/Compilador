@@ -1,19 +1,18 @@
 package syntactic;
 
 import Model.Constants;
-import Model.TokenToRegraGramatica;
 import Model.RegraGramatica;
-import Model.RegraNaoTerminal;
-import Model.RegraTerminal;
 import Model.Token;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.management.RuntimeErrorException;
-
-import jdk.nashorn.internal.ir.Terminal;
 
 public class AnalisadorSintatico {
 
@@ -26,6 +25,7 @@ public class AnalisadorSintatico {
 	private TokenToRegraGramatica comparador;
 	RegraTerminal terminalVazio;
 	int cont;
+	private boolean hasError;	
 
 	public AnalisadorSintatico(RegraNaoTerminal primeiraRegra, LinkedList<RegraNaoTerminal> regras,
 			HashMap<String, RegraNaoTerminal> regrasHM, LinkedList<RegraTerminal> terminais,
@@ -51,12 +51,15 @@ public class AnalisadorSintatico {
     se for um terminal: assuma que o token foi inserido.                        
     e continua
 	 */
-	public void executar(List<Token> tokens){
+	public void executar(List<Token> tokens, String fileName){
 		this.tokens = tokens;
 		this.cont = 0;
+		this.hasError = false;
 		LinkedList<RegraTerminal> allFollows = new LinkedList<>();
 		allFollows.addAll(primeiraRegra.getSeguinte());
-		analisar(primeiraRegra, allFollows);
+		this.analisar(primeiraRegra, allFollows);
+		
+		this.gerarSaida(fileName);
 	}
 
 	public void analisar(RegraNaoTerminal r, LinkedList<RegraTerminal> allFollows){
@@ -67,45 +70,44 @@ public class AnalisadorSintatico {
 			return;
 		}
 		//System.out.println(terminalAtual);
-		System.out.println();
-		System.out.println("Regra nTerminal: "+r);
-		System.out.println("\tTomei a regra: "+p);
+		//System.out.println();
+		//System.out.println("Regra nTerminal: "+r);
+		//System.out.println("\tTomei a regra: "+p);
 		//pegando a regra atual
 		LinkedList<RegraGramatica> regraAtual = r.getRegra().get(p);
 		for(int c = 0; c < regraAtual.size(); c++){
-			terminalAtual = comparador.tokenToTerminal(tokens.get(cont));
 			if(cont == tokens.size()){
-				System.out.println("DEU MUITA MERDA\n A REGRA N TERMINOU E OS TOKENS JA.........");
-				break;
+				//System.out.println("DEU MUITA MERDA\n A REGRA N TERMINOU E OS TOKENS JA.........");
+				throw new RuntimeErrorException(null);
+				//break;
 			}
+			terminalAtual = comparador.tokenToTerminal(tokens.get(cont));
+			
 			int resp = comparador.compare(terminalAtual, regraAtual.get(c));
 			RegraTerminal b = comparador.tokenToTerminal(tokens.get(cont));
-			System.out.println(b);
+			//System.out.println(b);
+			//System.out.println("\tTOKEN("+cont+"): "+tokens.get(cont));
+			//System.out.println("\tPRODUCAO: "+regraAtual.get(c).getSimbolo());
 			//SE DER CERTO, FAZ NADA, APENAS ANDA
 			if(resp == 1){
 				allFollows.remove(terminalAtual);
-				System.out.println(resp+" eh Terminal, DEU CERTO");
-				System.out.println("\tTOKEN("+cont+"): "+tokens.get(cont));
-				System.out.println("\tPRODUCAO: "+regraAtual.get(c).getSimbolo());
+				//System.out.println(resp+" eh Terminal, DEU CERTO");				
 			}
 			//SE DEU ERRADO, FAZER TRATAMENTO DE ERRO
 			else if(resp == 0){
-				System.out.println(resp+" DEU ERRADO PIVETE");
-				System.out.println("\tTOKEN("+cont+"): "+tokens.get(cont));
-				System.out.println("\tPRODUCAO: "+regraAtual.get(c).getSimbolo());
+				//System.out.println(resp+" DEU ERRADO PIVETE");
+				this.hasError = true;
 				throw new RuntimeErrorException(null);
 			}
 			//SE E UM NTERMINAL, VAI PRA REGRA NTERMINAL AGORA
 			else if(resp == -1){
-				System.out.println(resp+" eh nTerminal");
-				System.out.println("\tTOKEN("+cont+"): "+tokens.get(cont));
-				System.out.println("\tPRODUCAO: "+regraAtual.get(c).getSimbolo());
+				//System.out.println(resp+" eh nTerminal");
 				RegraNaoTerminal a = (RegraNaoTerminal) regraAtual.get(c);
 				allFollows.addAll(a.getSeguinte());
 				this.analisar(a, allFollows);
 				allFollows.removeAll(a.getSeguinte());
-				System.out.println("....VOLTANDO POR BACKTRACKING.....");
-				System.out.println();
+				//System.out.println("....VOLTANDO POR BACKTRACKING.....");
+				//System.out.println();
 				//retirando a contagem extra do backtracking
 				cont--;
 				//recursivo(cont, a);
@@ -118,18 +120,18 @@ public class AnalisadorSintatico {
 
 	private int getPosicion(RegraNaoTerminal r, RegraTerminal terminalAtual,
 			LinkedList<RegraTerminal> allFollows){		
-		System.out.println("PRIMEIRO "+r.getPrimeiro());
-		System.out.println(r.getPrimeiroHM());		
-		System.out.println("LISTA DE FOLLOWS: "+r.getSeguinte());
-		System.out.println("ALL FOLLOWS"+allFollows);
+		//System.out.println("PRIMEIRO "+r.getPrimeiro());
+		//System.out.println(r.getPrimeiroHM());		
+		//System.out.println("LISTA DE FOLLOWS: "+r.getSeguinte());
+		//System.out.println("ALL FOLLOWS"+allFollows);
 		int posicaoRegra;
 		//se retornar null eh pq o simbolo n faz parte do conjunto
 		if(r.getPrimeiroHM().get(terminalAtual.getSimbolo()) == null){
-			System.out.println("AHHHHHH "+r.getPrimeiroHM().get(terminalAtual.getSimbolo()));			
+			//System.out.println("AHHHHHH "+r.getPrimeiroHM().get(terminalAtual.getSimbolo()));			
 			//se o nTerminal possui o simbolo como follow						
 			//if(r.getGeraVazio() && r.getSeguinte().contains(terminalAtual)){
 			if(r.getSeguinte().contains(terminalAtual)){				
-				System.out.println("->ACHEI NO FOLLOW");
+				//System.out.println("->ACHEI NO FOLLOW");
 				posicaoRegra = -1;
 				//posicaoRegra = -1;
 				//allFollows.remove(terminalAtual);				
@@ -147,34 +149,43 @@ public class AnalisadorSintatico {
 			*/
 			
 		}else{
-			System.out.println("->ACHEI NO FIRST");
+			//System.out.println("->ACHEI NO FIRST");
 			posicaoRegra = r.getPrimeiroHM().get(terminalAtual.getSimbolo());
 			//allFollows.addAll(r.getSeguinte());
 		}
 		return posicaoRegra;
 	}
-
-	/*
-    public void executar(List<Token> tokens) {
-    CompareToken comparador = new CompareToken();
-    for (RegraGramatica atual : regra) {
-
-        if (atual.isTerminal()) {
-            //System.out.println( tokens.get(0).getLexema()+ " aaa " + atual.toString());
-            //System.out.println( atual.toString().substring(1, atual.toString().length()-1));
-            if (comparador.compare(tokens.get(0), atual.getSimbolo()) == 1) {
-                if(!tokens.isEmpty())
-                    tokens.remove(0);
-            } else {
-                System.out.println("Erro sintático na linha: " + tokens.get(0).getnLinha());
-            }
-        } else {                
-                System.out.println("expression encontrada "+gramatica.getRegrasHM().get(atual.getSimbolo()));
-                System.out.println("enviando para a regra dele.");
-                System.out.println(gramatica.getRegrasHM().get(atual.getSimbolo()).getRegra().get(0));                    
-                //executar(gramatica.getRegrasHM().get(atual.getSimbolo()).getRegra().get(0));                                
-        }
+	
+	public boolean getHasError(){
+		return this.hasError;
 	}
-	 */
+	
+	private void gerarSaida(String arquivo) {
+		try {
+			File pasta = new File(Constants.pastaSaidaSin);
+			pasta.mkdir();
+			File n = new File(pasta.getName() + File.separator +
+					"Out_"+arquivo.split("\\.")[0]+ Constants.extensaoArquivosSin);			
+			BufferedWriter bw = new BufferedWriter(new FileWriter(n));			
+			if(this.hasError){//se houve erros
+				bw.newLine();
+				bw.newLine();
+				bw.write("------------------------------ERROS SINTATICOS IENTIFICADOS------------------------------");
+				bw.newLine();
+				bw.flush();
+				
+			}
+			else{//se nao houve erros
+				bw.newLine();
+				bw.flush();
+				bw.write("SUCESSO NA ANALISE SINTATICA DO ARQUIVO: "+arquivo);
+				System.out.println("Analise Sintatica para o arquivo: " + arquivo + ": Sucesso.");
 
+			}
+			bw.close();			
+		} catch (IOException ex) {
+			System.out.println("Deu merda na escrita do arquivo.");
+		}
+	}
+	
 }

@@ -1,7 +1,5 @@
 package Model;
 
-import java.util.LinkedList;
-
 public abstract class RegraGramatica {
 	
 	protected String simbolo;

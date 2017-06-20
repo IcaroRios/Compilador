@@ -3,29 +3,19 @@ package lexical;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import lexical.ExpressoesRegulares.ESTRUTURALEXICA;
-import lexical.ExpressoesRegulares.ExpressaoAuxiliar;
 import Model.Constants;
 import Model.Token;
 
-import com.sun.xml.internal.ws.util.StringUtils;
-import syntactic.AnalisadorSintatico;
 
-public class AnalisadorLexico implements ExpressoesRegulares {
-
-	private final String pastaSaida = "entrada";
-	private final String extensaoArquivosLex = ".oLex";
+public class AnalisadorLexico implements ExpressoesRegulares {	
 	private final List<Token> tokens;
 	private final List<Token> tokensError;
 	private int numeroLinha;
@@ -379,9 +369,10 @@ public class AnalisadorLexico implements ExpressoesRegulares {
 
 	private void gerarSaida(String arquivo) {
 		try {
-			File pasta = new File(pastaSaida);
+			File pasta = new File(Constants.pastaSaidaLex);
 			pasta.mkdir();
-			File n = new File(pasta.getName() + File.separator + "Out_"+arquivo.split("\\.")[0]+ this.extensaoArquivosLex);
+			File n = new File(pasta.getName() + File.separator +
+					"Out_"+arquivo.split("\\.")[0]+ Constants.extensaoArquivosLex);
 			//File n = new File(pasta.getName() + File.separator +"Out_" +arquivo);
 			BufferedWriter bw = new BufferedWriter(new FileWriter(n));
 			//escreveno os tokens identificados
