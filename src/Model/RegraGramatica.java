@@ -16,7 +16,8 @@ public abstract class RegraGramatica {
 	public String getSimbolo(){
 		return simbolo;
 	}
-		
+	
+	@Override
 	public boolean equals(Object other){
 		if(other instanceof RegraGramatica){
 			RegraGramatica a = (RegraGramatica) other;

@@ -1,3 +1,6 @@
+/*
+linha 14, if sem then
+*/
 program
 
 var begin  

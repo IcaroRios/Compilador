@@ -26,67 +26,6 @@ public class AnalisadorLexico implements ExpressoesRegulares {
 		numeroLinha = 1;
 	}
 
-	/*
-    public void Executar(File arquivos) {
-        try {
-
-            File listaDeArquivos[] = arquivos.listFiles(
-            	new FilenameFilter() { 
-                public boolean accept(File dir, String filename)
-                { return filename.endsWith(".txt"); }
-            } );
-
-            System.out.println("Arquivos carregaos para teste:");
-            for(int cont = 0; cont < listaDeArquivos.length; cont++){
-
-            	System.out.println("\t"+listaDeArquivos[cont]);
-            }
-
-            //Percorre os arquivos na pasta
-            for (int i = 0; i < listaDeArquivos.length; i++) {
-                //Se for diretorio ou um tipo de arquivo ignorado, passa pro proximo
-                if (listaDeArquivos[i].isDirectory()) {
-                    continue;
-                }
-                //verificando se o arquivo existe para comecar a analisar
-                if (listaDeArquivos[i].exists()) {
-                    BufferedReader leitor = new BufferedReader(new FileReader(listaDeArquivos[i]));
-                    boolean iniciouComentario = false;
-                    numeroLinha = 1;
-
-                    //pair para verificar o estado dos comentarios
-                    ComentarioBloco pIB;
-                    //Lendo do Arquivo
-                    for (String linha = leitor.readLine(); linha != null; linha = leitor.readLine()) {
-                        //verifica se abriu algum comentario
-                        pIB = analisaComentario(0, iniciouComentario, linha);
-                        pIB.setLinha(removerComentarioLinha(pIB.getLinha()));
-
-                        iniciouComentario = pIB.isIniciouComentario();
-
-                        verificaRegex(pIB.getLinha());
-                        //atuliza contador de linha
-                        numeroLinha++;
-                    }
-                    //se nao fechou comentario gera token de erro de comentario
-                    if (iniciouComentario) {
-                        tokensError.add(new Token("comentario", "COMENTARIO_MAL_FORMADO", numeroLinha, true));
-                    }
-
-                    //gerando saidas
-                    gerarSaida(listaDeArquivos[i].getName());
-                    leitor.close();
-                }
-                // Fim do Arquivo Atual
-            }
-        } catch (FileNotFoundException ex) {
-            System.out.println("ERRO: Arquivo nao encontrado");
-        } catch (NullPointerException | IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-	 */
-
 	public void executar(File arquivo) {
 		try {                          
 			//verificando se o arquivo existe para comecar a analisar
@@ -94,7 +33,6 @@ public class AnalisadorLexico implements ExpressoesRegulares {
 				BufferedReader leitor = new BufferedReader(new FileReader(arquivo));
 				boolean iniciouComentario = false;
 				numeroLinha = 1;
-
 				//pair para verificar o estado dos comentarios
 				ComentarioBloco pIB;
 				//Lendo do Arquivo
@@ -193,7 +131,6 @@ public class AnalisadorLexico implements ExpressoesRegulares {
 								tokensError.add(new Token(palavra, "CADEIA_ERRADA", numeroLinha, true));
 							} //Outros erros ele auto-identifica na classe Token
 							else {
-
 								tokensError.add(new Token(palavra, numeroLinha, true));
 							}
 						}
@@ -213,7 +150,6 @@ public class AnalisadorLexico implements ExpressoesRegulares {
 
 							tokensError.add(new Token(palavra, numeroLinha, true));
 						}
-
 						i = analisar.length;
 						continue;
 					}
@@ -286,12 +222,8 @@ public class AnalisadorLexico implements ExpressoesRegulares {
 					}
 				}
 				tokens.add(new Token(regex.ordinal(), entrada, numeroLinha, grupo));
-				//*/                
-				//tokens.add(new Token(regex.ordinal(), entrada, numeroLinha, type));                
 				return true;
 			}
-			//ARMENGUE PRA SABER QUAL O TIPO DO TOKEN
-			//type++;
 		}
 		return false;
 	}
@@ -321,9 +253,8 @@ public class AnalisadorLexico implements ExpressoesRegulares {
 		char[] analisar = entrada.toCharArray();
 
 		//se estiver esperando fechar comentario e nao existir, retorna logo
-		//esta verifica��o de cara s� � poss�vel pois d� para fazer compara��o com string
+		//esta verificacao de cara sera possivel pois da para fazer comparacao com string
 		if ((!(entrada.contains("*/"))) && comentario.isIniciouComentario()) {
-
 			comentario.setLinha("");
 			return comentario;
 		}
@@ -372,7 +303,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
 			File pasta = new File(Constants.pastaSaidaLex);
 			pasta.mkdir();
 			File n = new File(pasta.getName() + File.separator +
-					"Out_"+arquivo.split("\\.")[0]+ Constants.extensaoArquivosLex);
+					"Out_Lex_"+arquivo.split("\\.")[0]+ Constants.extensaoArquivosLex);
 			//File n = new File(pasta.getName() + File.separator +"Out_" +arquivo);
 			BufferedWriter bw = new BufferedWriter(new FileWriter(n));
 			//escreveno os tokens identificados
@@ -405,7 +336,6 @@ public class AnalisadorLexico implements ExpressoesRegulares {
 				//Prestar bem                 
 				System.out.println("[*] AVISO O arquivo: [" + arquivo + "] nao gerou nenhum Token. Pulando analise sintatica.");
 			}
-
 			bw.close();			
 		} catch (IOException ex) {
 			System.out.println("Deu merda na escrita do arquivo.");
@@ -449,7 +379,6 @@ public class AnalisadorLexico implements ExpressoesRegulares {
 				break;
 			}
 		}
-
 		linha = linha.substring(0, somatorioTamanho);
 		if (linha.endsWith("/")) {
 
@@ -458,9 +387,7 @@ public class AnalisadorLexico implements ExpressoesRegulares {
 			for (int i = 0; i < novaLinha.length; i++) {
 				novaLinha[i] = letras[i];
 			}
-
 			return new String(novaLinha);
-
 		}
 		return linha;
 	}

@@ -390,13 +390,13 @@ public class Gramatica {
 						//comece do proximo e va ate o final
 						for(int i = 1; c+i < regra.size(); i++){
 							this.addSeguinte(producao, regra.get(c+i));							
-							/*
-							TODO AQUI
+							///*
+							//TODO AQUI
 							//se esta producao n gerar vazio quebra esse laço
 							if(!regra.get(c+i).getGeraVazio()){
 								break;
 							}
-							 */
+							//*/
 							//A -> BC, entao Follow(A) esta em Follow(C)
 							//se chegou na ultima producao da regra
 							if(c+i == regra.size()-1){
@@ -494,8 +494,7 @@ public class Gramatica {
 	}
 
 	public void isGramaticaAmbigua() throws GramaticaTem2FirstNaMesmaRegra{
-		for(RegraNaoTerminal rn : regras){
-			System.out.println("Regra:"+rn.getSimbolo());
+		for(RegraNaoTerminal rn : regras){			
 			LinkedList<RegraTerminal> primeiro = new LinkedList<>();
 			for(LinkedList<RegraGramatica> regra : rn.getRegra()){
 				if(!regra.getFirst().isTerminal()){

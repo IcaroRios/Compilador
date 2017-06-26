@@ -1,9 +1,9 @@
 package syntactic;
 
 import Model.Constants;
+import Model.Leaf;
 import Model.RegraGramatica;
 import Model.Token;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -11,8 +11,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.management.RuntimeErrorException;
+import exceptions.ErrorAtFirstGrammar;
 
 public class AnalisadorSintatico {
 
@@ -23,10 +22,12 @@ public class AnalisadorSintatico {
 	private HashMap<String, RegraNaoTerminal> regrasHM;
 	private LinkedList<RegraTerminal> terminais;    
 	private TokenToRegraGramatica comparador;
-	RegraTerminal terminalVazio;
-	int cont;
+	private RegraTerminal terminalVazio;
+	private int cont;
 	private boolean hasError;	
-
+	private String errors;
+	private Leaf arvore;
+	
 	public AnalisadorSintatico(RegraNaoTerminal primeiraRegra, LinkedList<RegraNaoTerminal> regras,
 			HashMap<String, RegraNaoTerminal> regrasHM, LinkedList<RegraTerminal> terminais,
 			TokenToRegraGramatica comparador) {               
@@ -35,21 +36,18 @@ public class AnalisadorSintatico {
 		this.regrasHM = regrasHM;
 		this.terminais = terminais;     
 		this.comparador = comparador;
-		this.terminalVazio = new RegraTerminal(Constants.PRODUCAO_VAZIA);
+		this.terminalVazio = new RegraTerminal(Constants.PRODUCAO_VAZIA);		
 	}
 
 	/*
     se o que tem no topo da pilha e um terminal --- consome		
     se o que tem no topo da pilha e um n terminal --- vai pra matriz e gera a producao dele		
-    segue ate a lista de tokens acabar		
-    lista de tokens acabou e a pilha esta vazia o codigo esta correto sintaticamente,
-    se nao estas errado
-
+    segue ate a lista de tokens acabar lista de tokens acabou e a pilha esta vazia
+     o codigo esta correto sintaticamente, se nao estas errado
 	TRATAMENTO DE ERROS
     pegue todos os follows da sua producao e de todos os seus antecessores                        
     se for um nao terminal: ignore tokens ate chegar em um follow desses                        		                      
-    se for um terminal: assuma que o token foi inserido.                        
-    e continua
+    se for um terminal: assuma que o token foi inserido e continua
 	 */
 	public void executar(List<Token> tokens, String fileName){
 		this.tokens = tokens;
@@ -57,101 +55,133 @@ public class AnalisadorSintatico {
 		this.hasError = false;
 		LinkedList<RegraTerminal> allFollows = new LinkedList<>();
 		allFollows.addAll(primeiraRegra.getSeguinte());
-		this.analisar(primeiraRegra, allFollows);
-		
+		this.arvore = new Leaf(primeiraRegra, false);
+		this.errors = "";		
+		try {
+			this.analisar(primeiraRegra, allFollows);
+		}catch (ErrorAtFirstGrammar e){
+			this.errors = errors+" FATAL ERROR\n RTFM?!\n";
+		}		
 		this.gerarSaida(fileName);
+		//System.out.println("ARVORE: "+this.arvore.toString());
 	}
 
-	public void analisar(RegraNaoTerminal r, LinkedList<RegraTerminal> allFollows){
+	public void analisar(RegraNaoTerminal r, LinkedList<RegraTerminal> allFollows)
+			throws ErrorAtFirstGrammar{
 		RegraTerminal terminalAtual = comparador.tokenToTerminal(tokens.get(cont));
+		Leaf folha = new Leaf(r, false);
 		int p = this.getPosicion(r, terminalAtual, allFollows);		
 		if(p == -1){
 			//achou como follow, entao pule essa regra
 			return;
 		}
-		//System.out.println(terminalAtual);
-		//System.out.println();
-		//System.out.println("Regra nTerminal: "+r);
-		//System.out.println("\tTomei a regra: "+p);
 		//pegando a regra atual
 		LinkedList<RegraGramatica> regraAtual = r.getRegra().get(p);
 		for(int c = 0; c < regraAtual.size(); c++){
-			if(cont == tokens.size()){
-				//System.out.println("DEU MUITA MERDA\n A REGRA N TERMINOU E OS TOKENS JA.........");
-				throw new RuntimeErrorException(null);
-				//break;
+			if(cont == tokens.size()){				
+				this.escreverErroFimDeArquivo(regraAtual.get(c));
+				break;
 			}
 			terminalAtual = comparador.tokenToTerminal(tokens.get(cont));
 			
 			int resp = comparador.compare(terminalAtual, regraAtual.get(c));
-			RegraTerminal b = comparador.tokenToTerminal(tokens.get(cont));
-			//System.out.println(b);
-			//System.out.println("\tTOKEN("+cont+"): "+tokens.get(cont));
-			//System.out.println("\tPRODUCAO: "+regraAtual.get(c).getSimbolo());
 			//SE DER CERTO, FAZ NADA, APENAS ANDA
 			if(resp == 1){
-				allFollows.remove(terminalAtual);
-				//System.out.println(resp+" eh Terminal, DEU CERTO");				
+				folha.addLeaf(new Leaf(tokens.get(cont), true));
+				allFollows.remove(terminalAtual);				
 			}
 			//SE DEU ERRADO, FAZER TRATAMENTO DE ERRO
-			else if(resp == 0){
-				//System.out.println(resp+" DEU ERRADO PIVETE");
-				this.hasError = true;
-				throw new RuntimeErrorException(null);
+			else if(resp == 0){				
+				this.escreverErro(tokens.get(cont), regraAtual.get(c));
+				cont--;
 			}
 			//SE E UM NTERMINAL, VAI PRA REGRA NTERMINAL AGORA
 			else if(resp == -1){
-				//System.out.println(resp+" eh nTerminal");
 				RegraNaoTerminal a = (RegraNaoTerminal) regraAtual.get(c);
-				allFollows.addAll(a.getSeguinte());
-				this.analisar(a, allFollows);
+				allFollows.addAll(a.getSeguinte());				
+				try{
+					this.analisar(a, allFollows);
+				}catch (ErrorAtFirstGrammar e){
+					//se essa regra possui o terminal como follow
+					if(r.getSeguinte().contains(e.getRegraTerminal())){
+						//continue;
+					}else{//se nao, lance novamente ate a regra que possui
+						throw e;
+					}
+				}				
 				allFollows.removeAll(a.getSeguinte());
-				//System.out.println("....VOLTANDO POR BACKTRACKING.....");
-				//System.out.println();
 				//retirando a contagem extra do backtracking
 				cont--;
-				//recursivo(cont, a);
-			}
-			
+			}			
 			cont++;
 		}
-
+		this.arvore.addLeaf(folha);
 	}
 
+	private void escreverErroFimDeArquivo(RegraGramatica regra){
+		this.hasError = true;
+		this.errors = errors+"\tEXPECTED: "+regra+"\n\tbut recieved: END OF FILEn\n";		
+	}
+
+	private void escreverErro(Token token, RegraGramatica regra){
+		this.hasError = true;
+		this.errors = errors+"On line: "+token.getnLinha()+
+				"\n\tEXPECTED: "+regra+"\n\tbut recieved: "+
+				token.getLexema()+"\n\n";
+	}
+	
+	private void escreverErroRegra(Token token, LinkedList<RegraTerminal> regra){
+		this.hasError = true;
+		this.errors = errors+"On line: "+token.getnLinha()+"\n\tEXPECTED: ";
+		for(RegraTerminal regraTerminal : regra){
+			this.errors= errors+" "+regraTerminal;
+		}
+		this.errors = errors+"\n\tbut recieved: "+token.getLexema()+"\n\n";
+	}
+	
 	private int getPosicion(RegraNaoTerminal r, RegraTerminal terminalAtual,
-			LinkedList<RegraTerminal> allFollows){		
-		//System.out.println("PRIMEIRO "+r.getPrimeiro());
-		//System.out.println(r.getPrimeiroHM());		
-		//System.out.println("LISTA DE FOLLOWS: "+r.getSeguinte());
-		//System.out.println("ALL FOLLOWS"+allFollows);
-		int posicaoRegra;
-		//se retornar null eh pq o simbolo n faz parte do conjunto
+			LinkedList<RegraTerminal> allFollows) throws ErrorAtFirstGrammar{
+		int posicaoRegra = 0;
+		//se retornar null eh pq o simbolo n faz parte do conjunto FIRST
 		if(r.getPrimeiroHM().get(terminalAtual.getSimbolo()) == null){
-			//System.out.println("AHHHHHH "+r.getPrimeiroHM().get(terminalAtual.getSimbolo()));			
 			//se o nTerminal possui o simbolo como follow						
-			//if(r.getGeraVazio() && r.getSeguinte().contains(terminalAtual)){
 			if(r.getSeguinte().contains(terminalAtual)){				
-				//System.out.println("->ACHEI NO FOLLOW");
 				posicaoRegra = -1;
-				//posicaoRegra = -1;
-				//allFollows.remove(terminalAtual);				
-			}else{
-				throw new RuntimeErrorException(null);
+			}//nao esta no first e nem no follow deste
+			else{//se deu erro no token 0 -> program, continue a analise, e registra o erro depois
+				if(cont==0){
+					posicaoRegra = 0;					
+				}else{
+					LinkedList<RegraTerminal> a = new LinkedList<>();
+					a.addAll(r.getPrimeiro());
+					if(r.getGeraVazio()){										
+						a.addAll(r.getSeguinte());				
+					}
+					a.remove(new RegraTerminal(Constants.PRODUCAO_VAZIA));
+					this.escreverErroRegra(tokens.get(cont), a);
+					RegraTerminal aux = comparador.tokenToTerminal(tokens.get(cont));
+					while(cont < tokens.size()-1 &&
+							!allFollows.contains(aux) &&						
+							!r.getPrimeiro().contains(aux)){		
+						cont++;
+						aux = comparador.tokenToTerminal(tokens.get(cont));						
+					}
+					//se achar no first, continue dessa regra mesmo
+					if(r.getPrimeiro().contains(aux)){
+						aux = comparador.tokenToTerminal(tokens.get(cont));
+						posicaoRegra = r.getPrimeiroHM().get(aux.getSimbolo());
+					}else if(r.getSeguinte().contains(aux)){
+						posicaoRegra = -1;
+					}
+					//se achou no allFollows, retorne ate a regra que tem esse token como follow
+					else if(allFollows.contains(aux)){
+						throw new ErrorAtFirstGrammar(aux);
+					}					
+				}				
 			}
-			/*
-			if(r.getSeguinte().contains(terminalAtual)){
-				System.out.println("->ACHEI NO FOLLOW");
-				posicaoRegra = -1;
-			}else{
-				System.out.println("->NAO ACHEI NEM NO FOLLOW");
-				posicaoRegra = -2;
-			}
-			*/
-			
+		//ACHOU NO FIRST 
 		}else{
-			//System.out.println("->ACHEI NO FIRST");
 			posicaoRegra = r.getPrimeiroHM().get(terminalAtual.getSimbolo());
-			//allFollows.addAll(r.getSeguinte());
 		}
 		return posicaoRegra;
 	}
@@ -160,31 +190,26 @@ public class AnalisadorSintatico {
 		return this.hasError;
 	}
 	
-	private void gerarSaida(String arquivo) {
+	private void gerarSaida(String arquivo){
 		try {
 			File pasta = new File(Constants.pastaSaidaSin);
 			pasta.mkdir();
 			File n = new File(pasta.getName() + File.separator +
-					"Out_"+arquivo.split("\\.")[0]+ Constants.extensaoArquivosSin);			
+					"Out_Syn_"+arquivo.split("\\.")[0]+ Constants.extensaoArquivosSin);			
 			BufferedWriter bw = new BufferedWriter(new FileWriter(n));			
-			if(this.hasError){//se houve erros
-				bw.newLine();
-				bw.newLine();
-				bw.write("------------------------------ERROS SINTATICOS IENTIFICADOS------------------------------");
+			if(this.hasError){//se houve erros		
+				bw.write("------------------------------ERROS SINTATICOS IDENTIFICADOS------------------------------");
 				bw.newLine();
 				bw.flush();
-				
-			}
-			else{//se nao houve erros
-				bw.newLine();
-				bw.flush();
+				bw.write(this.errors);
+			}else{//se nao houve erros				
 				bw.write("SUCESSO NA ANALISE SINTATICA DO ARQUIVO: "+arquivo);
 				System.out.println("Analise Sintatica para o arquivo: " + arquivo + ": Sucesso.");
-
 			}
 			bw.close();			
 		} catch (IOException ex) {
-			System.out.println("Deu merda na escrita do arquivo.");
+			System.out.println("Deu merda na escrita do arquivo."
+					+ "\nVerifique as permissoes de execucao do codigo.");
 		}
 	}
 	

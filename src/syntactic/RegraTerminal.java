@@ -2,6 +2,7 @@ package syntactic;
 
 import java.util.LinkedList;
 
+import Model.Constants;
 import Model.RegraGramatica;
 import exceptions.TerminalHasNoFollowException;
 
@@ -27,7 +28,26 @@ public class RegraTerminal extends RegraGramatica{
 
 	@Override
 	public String toString(){
-		return this.simbolo;
+		//return this.simbolo;
+		String a = "";
+		if(this.simbolo.equals("LogicOpSimple")){			
+			a = "'!'";
+		}else if(this.simbolo.equals("AritmeticOpSum")){			
+			a = "'+' '-'";
+		}else if(this.simbolo.equals("AritmeticOpMult")){			
+			a = "'*' '/'";
+		}else if(this.simbolo.equals("RelationalOpEqual")){			
+			a = "'!=' '=='";
+		}else if(this.simbolo.equals("RelationalOpComp")){			
+			a = "'<=' '>=' '<' '>'";
+		}else if(this.simbolo.equals(Constants.PRODUCAO_VAZIA)){
+			a = "'PRODUCAO VAZIA'";
+		}else if(this.simbolo.equals(Constants.PRODUCAO_FIM_DO_ARQUIVO)){
+			a = "'PRODUCAO FIM DO ARQUIVO'";
+		}else{
+			a = this.simbolo;
+		}
+		return a;
 	}
 
 	@Override
@@ -39,4 +59,5 @@ public class RegraTerminal extends RegraGramatica{
 	public boolean getGeraVazio(){
 		return false;
 	}
+	
 }

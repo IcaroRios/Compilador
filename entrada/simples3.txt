@@ -1,0 +1,9 @@
+program
+
+var begin
+	integer fat, n;
+end
+
+begin
+	write("Programa basico");
+end

@@ -75,7 +75,7 @@ public class Controlador {
             }
         	analiseLexica(listaDeArquivos[cont]);
         	this.tokens = this.lexico.getListTokens();
-        	if(this.lexico.hasError()){        		
+        	if(this.lexico.hasError()){
         		//se ocorreu algum erro lexico,limpa todas as listas de tokens
         		this.lexico.cleanLists();        		
 			}else{
@@ -85,7 +85,7 @@ public class Controlador {
         	this.lexico.cleanLists();
         }
 		System.out.println("ALL FILES HAVE BEEN COMPILED!");					
-	}	
+	}
 
 
 	public void analiseGramatica() throws RuleHasNoFirstException, RuleHasNoFollowException,
@@ -95,7 +95,7 @@ public class Controlador {
 		for(int i = 0; i < 10; i++)
 			gramatica.criarFollows();
 		gramatica.isGramaticaAmbigua();
-		gramatica.printGramatica();
+		//gramatica.printGramatica();
 	}
 	
 	public void analiseLexica(File arquivo){

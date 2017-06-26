@@ -1,11 +1,7 @@
 program
-
-
 var begin
-    
 	real raio;
 end
-
 
 function area_circulo(real raio) : real 
 begin
@@ -13,10 +9,7 @@ begin
 end
 
 begin
-
 	write("Digite o valor do raio");
-
 	read(raio);
-	
 	write("A area do circulo eh ", area_circulo(raio));
 end
