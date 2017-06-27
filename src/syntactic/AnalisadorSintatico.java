@@ -59,11 +59,15 @@ public class AnalisadorSintatico {
 		this.errors = "";		
 		try {
 			this.analisar(primeiraRegra, allFollows);
+			//caso tenha algo apos o ultimo end
+			if(this.cont < tokens.size()){
+				this.escreverErroEsperavaFimDeArquivo();
+			}
 		}catch (ErrorAtFirstGrammar e){
 			this.errors = errors+" FATAL ERROR\n RTFM?!\n";
 		}		
 		this.gerarSaida(fileName);
-		//System.out.println("ARVORE: "+this.arvore.toString());
+		System.out.println("ARVORE: "+this.arvore.toString());
 	}
 
 	public void analisar(RegraNaoTerminal r, LinkedList<RegraTerminal> allFollows)
@@ -123,6 +127,16 @@ public class AnalisadorSintatico {
 		this.errors = errors+"\tEXPECTED: "+regra+"\n\tbut recieved: END OF FILEn\n";		
 	}
 
+	private void escreverErroEsperavaFimDeArquivo(){
+		this.hasError = true;
+		this.errors = errors+"\tEXPECTED: END OF FILE \n\tbut recieved(on line "
+				+tokens.get(cont).getnLinha()+"): ";
+		while(cont < tokens.size()){
+			this.errors = errors+"'"+tokens.get(cont)+"' ";
+			cont++;
+		}
+	}
+	
 	private void escreverErro(Token token, RegraGramatica regra){
 		this.hasError = true;
 		this.errors = errors+"On line: "+token.getnLinha()+
