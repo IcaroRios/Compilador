@@ -7,10 +7,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import Model.Token;
+import exceptions.GramaticaIsNotSimplified;
 import exceptions.GramaticaTem2FirstNaMesmaRegra;
 import exceptions.RuleHasEmptyFollowException;
 import exceptions.RuleHasNoFirstException;
 import exceptions.RuleHasNoFollowException;
+import semantic.AnalisadorSemantico;
 import syntactic.AnalisadorSintatico;
 import syntactic.RegraNaoTerminal;
 import syntactic.RegraTerminal;
@@ -21,6 +23,7 @@ public class Controlador {
 
 	AnalisadorLexico lexico;
 	AnalisadorSintatico sintatico;
+	AnalisadorSemantico semantico;
 	Gramatica gramatica;
 	File dirEntrada;
 	//listas
@@ -32,10 +35,10 @@ public class Controlador {
 	
 	public Controlador(String diretorioEntrada, String arquivoGramatica)
 			throws RuleHasNoFirstException, RuleHasNoFollowException, 
-			RuleHasEmptyFollowException, GramaticaTem2FirstNaMesmaRegra{	 
+			RuleHasEmptyFollowException, GramaticaTem2FirstNaMesmaRegra, GramaticaIsNotSimplified{	 
 		this.dirEntrada = new File(diretorioEntrada);        
 		//se conseguir pegar os arquivos, inicia a analise
-		if(!dirEntrada.exists()) {
+		if(!dirEntrada.exists()){
             System.out.println("A pasta "+diretorioEntrada+" nao existe.");
             System.exit(0);
         }
@@ -48,14 +51,12 @@ public class Controlador {
 		this.regras = gramatica.getRegras();
 		this.lexico = new AnalisadorLexico();
 		this.sintatico = new AnalisadorSintatico(gramatica.getPrimeiraRegra(), regras,
-				regrasHM, terminais, this.comparador);
-		
+				this.comparador);
+		this.semantico = new AnalisadorSemantico();
 	}
 	
-
 	public void analisar() throws RuleHasNoFirstException, RuleHasNoFollowException,
-		RuleHasEmptyFollowException{
-		
+		RuleHasEmptyFollowException{		
 		File listaDeArquivos[] = dirEntrada.listFiles(
             	new FilenameFilter() { 
                 public boolean accept(File dir, String filename)
@@ -73,8 +74,10 @@ public class Controlador {
             if (listaDeArquivos[cont].isDirectory()) {
                 continue;
             }
+            //analise lexica           
         	analiseLexica(listaDeArquivos[cont]);
         	this.tokens = this.lexico.getListTokens();
+        	//analise sintatica
         	if(this.lexico.hasError()){
         		//se ocorreu algum erro lexico,limpa todas as listas de tokens
         		this.lexico.cleanLists();        		
@@ -82,14 +85,24 @@ public class Controlador {
 				//se n houve erro, comeca analise sintatica
         		analiseSintatica(listaDeArquivos[cont].getName());
         	}
+        	//analise semantica
+        	if(this.sintatico.getHasError()){
+        		this.lexico.cleanLists();
+        		this.sintatico.cleanLists();
+        	}else{
+        		//analiseSemantica(listaDeArquivos[cont].getName());
+        	}
+        	
+        	
         	this.lexico.cleanLists();
+        	this.sintatico.cleanLists();
+        	this.semantico.cleanLists();
         }
 		System.out.println("ALL FILES HAVE BEEN COMPILED!");					
 	}
 
-
 	public void analiseGramatica() throws RuleHasNoFirstException, RuleHasNoFollowException,
-		RuleHasEmptyFollowException, GramaticaTem2FirstNaMesmaRegra{
+		RuleHasEmptyFollowException, GramaticaTem2FirstNaMesmaRegra, GramaticaIsNotSimplified{
 		gramatica.lerGramatica();
 		gramatica.criarFirsts();
 		for(int i = 0; i < 10; i++)
@@ -106,4 +119,7 @@ public class Controlador {
 		sintatico.executar(this.tokens, fileName);				
 	}
 	
+	private void analiseSemantica(String name) {		
+		this.semantico.executar(name, sintatico.getTree(), lexico.getListTokens());
+	}
 }

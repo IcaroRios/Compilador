@@ -19,9 +19,11 @@
 !<Declaration2> ::= Id <Declaration2Aux>
 !<Declaration2Aux> ::= '=' <Expression> | '[' <Declaration2Aux2>
 !<Declaration2Aux2> ::= ']' <MatrixAux> '=' '[' <ExpressionList> ']' | <Expression> ']' <MatrixAux> '=' '[' <ExpressionList> ']'
-<Mat3> ::= '=' <Expression> <IdListAux2> | '[' <Mat4> | <IdList2Aux>
+!<Mat3> ::= '=' <Expression> <IdListAux2> | '[' <Mat4> | <IdList2Aux>
+<Mat3> ::= '=' <Expression> <IdListAux2> | '[' <Mat4> | ',' <Matrix> <IdList2Aux> | 
 <Mat4> ::= ']' <MatrixAux> '=' '[' <ExpressionList> ']' <IdListAux2> | <Expression> ']' <MatrixAux> <Mat5>
-<Mat5> ::= '=' '[' <ExpressionList> ']' <IdListAux2> |  <IdList2Aux>
+!<Mat5> ::= '=' '[' <ExpressionList> ']' <IdListAux2> |  <IdList2Aux>
+<Mat5> ::= '=' '[' <ExpressionList> ']' <IdListAux2> | ',' <Matrix> <IdList2Aux> | 
 
 <Functions> ::= 'function' Id '(' <ParameterList> ')' <Return> 'begin' <VarDeclaration> <Commands> 'end' <Functions> | 
 <Return> ::= ':' <Type> <MatrixDeclarationOrIdAux> | 
@@ -46,8 +48,8 @@
 !<CommandAssignment> ::= <Matrix> '=' <Expression> ';'
 
 !<Expression> ::= <Matrix> '=' <Expression> | <ExpressionLevel2>
-<Expression> ::= '=' <Expression> | <ExpressionLevel2>
-<ExpressionLevel2> ::= <ExpressionLevel3> <ExpressionLevel2NoLeftRec>
+<Expression> ::= '=' <Expression> | <ExpressionLevel3> <ExpressionLevel2NoLeftRec>
+!<ExpressionLevel2> ::= <ExpressionLevel3> <ExpressionLevel2NoLeftRec>
 <ExpressionLevel2NoLeftRec> ::= '||' <ExpressionLevel3> <ExpressionLevel2NoLeftRec> | 
 <ExpressionLevel3> ::= <ExpressionLevel4> <ExpressionLevel3NoLeftRec>
 <ExpressionLevel3NoLeftRec> ::= '&&' <ExpressionLevel4> <ExpressionLevel3NoLeftRec> | 
@@ -61,14 +63,15 @@
 <ExpressionLevel7NoLeftRec> ::= AritmeticOpMult <ExpressionLevel8> <ExpressionLevel7NoLeftRec> | 
 <ExpressionLevel7Aux> ::= <ExpressionLevel8Aux> <ExpressionLevel7AuxNoLeftRec>
 <ExpressionLevel7AuxNoLeftRec> ::= AritmeticOpMult <ExpressionLevel8> <ExpressionLevel7AuxNoLeftRec> | 
-<ExpressionLevel8> ::= LogicOpSimple <DeniableTerminals> | <Terminals>
-<ExpressionLevel8Aux> ::= LogicOpSimple <DeniableTerminals> | <TerminalsNoNegative>
+<ExpressionLevel8> ::= LogicOpSimple <DeniableTerminals> | '(' <Expression> ')' | Number | AritmeticOpSum <Negative> | Char | CharChain | 'true' | 'false' | Id <Mat>
+<ExpressionLevel8Aux> ::= LogicOpSimple <DeniableTerminals> | '(' <Expression> ')' | Number | Char | CharChain | 'true' | 'faalse' | Id <Mat>
 
-<Terminals> ::= '(' <Expression> ')' | Number | AritmeticOpSum <Negative> | Char | CharChain | <Boolean> | Id <Mat>
-<TerminalsNoNegative> ::= '(' <Expression> ')' | Number | Char | CharChain | <Boolean> | Id <Mat>
+!<Terminals> ::= '(' <Expression> ')' | Number | AritmeticOpSum <Negative> | Char | CharChain | <Boolean> | Id <Mat>
+!<TerminalsNoNegative> ::= '(' <Expression> ')' | Number | Char | CharChain | <Boolean> | Id <Mat>
 <DeniableTerminals> ::= '(' <Expression> ')' <Boolean> | Id <Mat>
 <Negative> ::= Id <Mat> | Number 
-<Mat> ::= <MatrixAux> | <Parameters>
+!<Mat> ::= <MatrixAux> | <Parameters>
+<Mat> ::= '[' <Expression> ']' <MatrixAux> | '(' <ExpressionListOrEmpty> ')' | 
 
 <Parameters> ::= '(' <ExpressionListOrEmpty> ')'
 

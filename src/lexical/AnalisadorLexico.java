@@ -300,10 +300,10 @@ public class AnalisadorLexico implements ExpressoesRegulares {
 
 	private void gerarSaida(String arquivo) {
 		try {
-			File pasta = new File(Constants.pastaSaidaLex);
+			File pasta = new File(Constants.PASTA_SAIDA_LEX);
 			pasta.mkdir();
 			File n = new File(pasta.getName() + File.separator +
-					"Out_Lex_"+arquivo.split("\\.")[0]+ Constants.extensaoArquivosLex);
+					"Out_Lex_"+arquivo.split("\\.")[0]+ Constants.ARQUIVO_ENTENSAO_LEX);
 			//File n = new File(pasta.getName() + File.separator +"Out_" +arquivo);
 			BufferedWriter bw = new BufferedWriter(new FileWriter(n));
 			//escreveno os tokens identificados

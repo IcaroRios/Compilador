@@ -4,6 +4,23 @@ var begin
 	integer fat, n;
 end
 
+function a()
+begin
+	var begin
+		real c;
+		integer e;
+	end
+	fat = a;
+end
+
+function b()
+begin
+	var begin
+		real c;
+		integer e;
+	end
+end
+
 begin
 	write("Programa basico");
 end

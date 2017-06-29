@@ -35,6 +35,15 @@ public final class Constants {
 							PAL_RES_STRING 			= 19,
 							PAL_RES_CHAR 			= 20							
 							;
+	
+	//tipo de id´s
+	public static final int TIPO_INTEGER 		= 0,
+							TIPO_REAL 			= 1,
+							TIPO_BOOLEAN 		= 2,
+							TIPO_STRING 		= 3,
+							TIPO_CHAR 			= 4
+							;
+	
 	//op de atribuicao
 	public static final int OP_ATRI_SUM		=	1,
 							OP_ATRI_SUB		=	2,
@@ -56,13 +65,17 @@ public final class Constants {
 							OP_LOG_AND		=	2,
 							OP_LOG_OR		=	3
 							;
-							
+	
+	//marcadores para gramatica
 	public static final String  PRODUCAO_VAZIA				= "#",
 								PRODUCAO_FIM_DO_ARQUIVO		= "$"
 							;
 	//Constantes para gerar saidas
-	public static final String pastaSaidaSin = "entrada";
-	public static final String extensaoArquivosSin = ".oSyn";
-	public static final String pastaSaidaLex = "entrada";
-	public static final String extensaoArquivosLex = ".oLex";
+	public static final String PASTA_SAIDA_SIN = "entrada";
+	public static final String ARQUIVO_EXTENSAO_SIN = ".oSyn";
+	public static final String PASTA_SAIDA_LEX = "entrada";
+	public static final String ARQUIVO_ENTENSAO_LEX = ".oLex";
+	public static final String ESCOPO_GLOBAL_ID = "-1";
+	public static final String ARQUIVO_EXTENSAO_SEM = ".oSem";
+	public static final String PASTA_SAIDA_SEM = "entrada";
 }

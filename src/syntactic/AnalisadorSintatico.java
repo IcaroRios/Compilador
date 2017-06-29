@@ -1,7 +1,7 @@
 package syntactic;
 
 import Model.Constants;
-import Model.Leaf;
+import Model.Folha;
 import Model.RegraGramatica;
 import Model.Token;
 import java.io.BufferedWriter;
@@ -18,25 +18,17 @@ public class AnalisadorSintatico {
 	//A PILHA VAI SER A PROPRIA PILHA DE EXECUCAO DO CODIGO
 	private List<Token> tokens;
 	private RegraNaoTerminal primeiraRegra;
-	private LinkedList<RegraNaoTerminal> regras;
-	private HashMap<String, RegraNaoTerminal> regrasHM;
-	private LinkedList<RegraTerminal> terminais;    
 	private TokenToRegraGramatica comparador;
-	private RegraTerminal terminalVazio;
 	private int cont;
 	private boolean hasError;	
 	private String errors;
-	private Leaf arvore;
+	private Folha arvore;
 	
+
 	public AnalisadorSintatico(RegraNaoTerminal primeiraRegra, LinkedList<RegraNaoTerminal> regras,
-			HashMap<String, RegraNaoTerminal> regrasHM, LinkedList<RegraTerminal> terminais,
-			TokenToRegraGramatica comparador) {               
+			TokenToRegraGramatica comparador){               
 		this.primeiraRegra = primeiraRegra;
-		this.regras = regras;
-		this.regrasHM = regrasHM;
-		this.terminais = terminais;     
 		this.comparador = comparador;
-		this.terminalVazio = new RegraTerminal(Constants.PRODUCAO_VAZIA);		
 	}
 
 	/*
@@ -55,7 +47,7 @@ public class AnalisadorSintatico {
 		this.hasError = false;
 		LinkedList<RegraTerminal> allFollows = new LinkedList<>();
 		allFollows.addAll(primeiraRegra.getSeguinte());
-		this.arvore = new Leaf(primeiraRegra, false);
+		this.arvore = new Folha(primeiraRegra, false);
 		this.errors = "";		
 		try {
 			this.analisar(primeiraRegra, allFollows);
@@ -67,13 +59,14 @@ public class AnalisadorSintatico {
 			this.errors = errors+" FATAL ERROR\n RTFM?!\n";
 		}		
 		this.gerarSaida(fileName);
-		System.out.println("ARVORE: "+this.arvore.toString());
+		//System.out.println("ARVORE: "+this.arvore.toString());
 	}
 
 	public void analisar(RegraNaoTerminal r, LinkedList<RegraTerminal> allFollows)
 			throws ErrorAtFirstGrammar{
+		//System.out.println(r);
 		RegraTerminal terminalAtual = comparador.tokenToTerminal(tokens.get(cont));
-		Leaf folha = new Leaf(r, false);
+		Folha folha = new Folha(r, false);
 		int p = this.getPosicion(r, terminalAtual, allFollows);		
 		if(p == -1){
 			//achou como follow, entao pule essa regra
@@ -91,7 +84,7 @@ public class AnalisadorSintatico {
 			int resp = comparador.compare(terminalAtual, regraAtual.get(c));
 			//SE DER CERTO, FAZ NADA, APENAS ANDA
 			if(resp == 1){
-				folha.addLeaf(new Leaf(tokens.get(cont), true));
+				folha.addLeaf(new Folha(tokens.get(cont), true));
 				allFollows.remove(terminalAtual);				
 			}
 			//SE DEU ERRADO, FAZER TRATAMENTO DE ERRO
@@ -124,11 +117,14 @@ public class AnalisadorSintatico {
 
 	private void escreverErroFimDeArquivo(RegraGramatica regra){
 		this.hasError = true;
+		//System.out.println("\tEXPECTED: "+regra+"\n\tbut recieved: END OF FILEn\n");
 		this.errors = errors+"\tEXPECTED: "+regra+"\n\tbut recieved: END OF FILEn\n";		
 	}
 
 	private void escreverErroEsperavaFimDeArquivo(){
 		this.hasError = true;
+		//System.out.println("\tEXPECTED: END OF FILE \n\tbut recieved(on line "
+		//		+tokens.get(cont).getnLinha()+"): ");
 		this.errors = errors+"\tEXPECTED: END OF FILE \n\tbut recieved(on line "
 				+tokens.get(cont).getnLinha()+"): ";
 		while(cont < tokens.size()){
@@ -139,6 +135,9 @@ public class AnalisadorSintatico {
 	
 	private void escreverErro(Token token, RegraGramatica regra){
 		this.hasError = true;
+		//System.out.println("On line: "+token.getnLinha()+
+		//		"\n\tEXPECTED: "+regra+"\n\tbut recieved: "+
+		//		token.getLexema()+"\n\n");
 		this.errors = errors+"On line: "+token.getnLinha()+
 				"\n\tEXPECTED: "+regra+"\n\tbut recieved: "+
 				token.getLexema()+"\n\n";
@@ -146,6 +145,8 @@ public class AnalisadorSintatico {
 	
 	private void escreverErroRegra(Token token, LinkedList<RegraTerminal> regra){
 		this.hasError = true;
+		//System.out.println("On line: "+token.getnLinha()+"\n\tEXPECTED: "+regra+
+		//		"\n\tbut recieved: "+token.getLexema()+"\n\n");
 		this.errors = errors+"On line: "+token.getnLinha()+"\n\tEXPECTED: ";
 		for(RegraTerminal regraTerminal : regra){
 			this.errors= errors+" "+regraTerminal;
@@ -158,8 +159,9 @@ public class AnalisadorSintatico {
 		int posicaoRegra = 0;
 		//se retornar null eh pq o simbolo n faz parte do conjunto FIRST
 		if(r.getPrimeiroHM().get(terminalAtual.getSimbolo()) == null){
-			//se o nTerminal possui o simbolo como follow						
-			if(r.getSeguinte().contains(terminalAtual)){				
+			//se o nTerminal possui o simbolo como follow
+			//if(r.getSeguinte().contains(terminalAtual)){
+			if(r.getSeguinte().contains(terminalAtual) && r.getGeraVazio()){
 				posicaoRegra = -1;
 			}//nao esta no first e nem no follow deste
 			else{//se deu erro no token 0 -> program, continue a analise, e registra o erro depois
@@ -206,10 +208,10 @@ public class AnalisadorSintatico {
 	
 	private void gerarSaida(String arquivo){
 		try {
-			File pasta = new File(Constants.pastaSaidaSin);
+			File pasta = new File(Constants.PASTA_SAIDA_SIN);
 			pasta.mkdir();
 			File n = new File(pasta.getName() + File.separator +
-					"Out_Syn_"+arquivo.split("\\.")[0]+ Constants.extensaoArquivosSin);			
+					"Out_Syn_"+arquivo.split("\\.")[0]+ Constants.ARQUIVO_EXTENSAO_SIN);			
 			BufferedWriter bw = new BufferedWriter(new FileWriter(n));			
 			if(this.hasError){//se houve erros		
 				bw.write("------------------------------ERROS SINTATICOS IDENTIFICADOS------------------------------");
@@ -225,6 +227,15 @@ public class AnalisadorSintatico {
 			System.out.println("Deu merda na escrita do arquivo."
 					+ "\nVerifique as permissoes de execucao do codigo.");
 		}
+	}
+	
+	public Folha getTree(){
+		return this.arvore;
+	}
+	
+	public void cleanLists() {
+		this.hasError = false;
+		this.errors = "";
 	}
 	
 }

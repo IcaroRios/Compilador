@@ -11,6 +11,7 @@ import java.util.LinkedList;
 
 import syntactic.RegraNaoTerminal;
 import syntactic.RegraTerminal;
+import exceptions.GramaticaIsNotSimplified;
 import exceptions.GramaticaTem2FirstNaMesmaRegra;
 import exceptions.RuleHasNoFirstException;
 import exceptions.RuleHasNoFollowException;
@@ -493,7 +494,7 @@ public class Gramatica {
 		}			
 	}
 
-	public void isGramaticaAmbigua() throws GramaticaTem2FirstNaMesmaRegra{
+	public void isGramaticaAmbigua() throws GramaticaTem2FirstNaMesmaRegra, GramaticaIsNotSimplified{
 		for(RegraNaoTerminal rn : regras){			
 			LinkedList<RegraTerminal> primeiro = new LinkedList<>();
 			for(LinkedList<RegraGramatica> regra : rn.getRegra()){
@@ -515,6 +516,15 @@ public class Gramatica {
 			for(int c = 0; c < primeiro.size(); c++){
 				if(c+1< primeiro.size() && primeiro.get(c).equals(primeiro.get(c+1))){
 					throw new GramaticaTem2FirstNaMesmaRegra(rn.getSimbolo());
+				}
+			}
+		}		
+		for(RegraNaoTerminal rn : regras){
+			for (LinkedList<RegraGramatica> regra : rn.getRegra()) {
+				if(regra.size() == 1){//produz apenas 1 item
+					if(!regra.getFirst().isTerminal()){//se produz apenas 1 nTerminal
+						throw new GramaticaIsNotSimplified(rn.getSimbolo(), regra.toString());
+					}
 				}
 			}
 		}

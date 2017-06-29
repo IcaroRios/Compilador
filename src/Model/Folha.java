@@ -4,19 +4,19 @@ import java.util.LinkedList;
 
 import syntactic.RegraNaoTerminal;
 
-public class Leaf{
-	private LinkedList<Leaf> list;
+public class Folha{
+	private LinkedList<Folha> list;
 	//private Token token;
 	private Object value;
 	private boolean isTerminal;
 	
-	public Leaf(Object token, boolean isTerminal){
+	public Folha(Object token, boolean isTerminal){
 		this.value = token;
 		this.list = new LinkedList<>();
 		this.isTerminal = isTerminal;
 	}
 	
-	public void addLeaf(Leaf node){
+	public void addLeaf(Folha node){
 		this.list.add(node);
 	}
 	
@@ -24,7 +24,7 @@ public class Leaf{
 		return this.value;
 	}
 	
-	public LinkedList<Leaf> getList(){
+	public LinkedList<Folha> getList(){
 		return this.list;
 	}
 	
@@ -45,7 +45,7 @@ public class Leaf{
 			//text = rnt.getSimbolo()+"\n";
 			text = rnt.getSimbolo();
 		}		
-		for(Leaf node : list) {
+		for(Folha node : list) {
 			//text = text +"\t"+node.toString() ;
 			text = text +"{"+node.toString()+"}" ;
 		}

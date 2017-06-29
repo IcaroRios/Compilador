@@ -1,5 +1,6 @@
 package Controller;
 
+import exceptions.GramaticaIsNotSimplified;
 import exceptions.GramaticaTem2FirstNaMesmaRegra;
 import exceptions.RuleHasEmptyFollowException;
 import exceptions.RuleHasNoFirstException;
@@ -8,7 +9,7 @@ import exceptions.RuleHasNoFollowException;
 public class main {
 
 	public static void main(String[] args) throws RuleHasNoFirstException, RuleHasNoFollowException,
-		RuleHasEmptyFollowException, GramaticaTem2FirstNaMesmaRegra {
+		RuleHasEmptyFollowException, GramaticaTem2FirstNaMesmaRegra, GramaticaIsNotSimplified {
 		
 		String entrada = "entrada";
 		String gramatica = "gramatica//grammar.txt";
