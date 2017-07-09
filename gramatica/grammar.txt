@@ -48,7 +48,11 @@
 !<CommandAssignment> ::= <Matrix> '=' <Expression> ';'
 
 !<Expression> ::= <Matrix> '=' <Expression> | <ExpressionLevel2>
-<Expression> ::= '=' <Expression> | <ExpressionLevel3> <ExpressionLevel2NoLeftRec>
+!<Expression> ::= '=' <Expression1> | <ExpressionLevel3> <ExpressionLevel2NoLeftRec>
+!<Expression1> ::= '(' <Expression> ')' <Ex2> | Number <Ex2> | AritmeticOpSum <Negative> <Ex2> | Char <Ex2> | CharChain <Ex2> | <Boolean> <Ex2> | Id <Mat> <Ex2>
+!<Ex2> ::=  '=' <Ex2> | 
+!<Expression> ::= '=' <Expression> | <ExpressionLevel3> <ExpressionLevel2NoLeftRec>
+<Expression> ::= <ExpressionLevel3> <ExpressionLevel2NoLeftRec>
 !<ExpressionLevel2> ::= <ExpressionLevel3> <ExpressionLevel2NoLeftRec>
 <ExpressionLevel2NoLeftRec> ::= '||' <ExpressionLevel3> <ExpressionLevel2NoLeftRec> | 
 <ExpressionLevel3> ::= <ExpressionLevel4> <ExpressionLevel3NoLeftRec>

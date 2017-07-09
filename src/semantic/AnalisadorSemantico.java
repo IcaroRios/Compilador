@@ -33,13 +33,12 @@ public class AnalisadorSemantico{
 		this.preCompile();
 		this.compile();
 		//TODO
-		//listar funcoes declaradas, verificar se funcao nao foi declarada mais de uma vez
 		//verificar se funcao chamada foi declarada e quantidade e tipos de parametros corretos
 		//verificar se as variaveis atribuidas estao recebendo os tipos corretos
 		//TODO SE UMA FUNCAO JA ESTA DECLARADA A ANALISE DA MESMA DEVE SER IGNORADA????
 		this.analisar();
-		//this.gerarSaida(name);
-		System.out.println(errors);
+		//this.gerarSaida(name);		
+		System.out.println("ERRORS:"+errors);
 	}	
 
 	//lista variaveis e funcoes, verifica se existem variaveis duplicadas
@@ -172,8 +171,7 @@ public class AnalisadorSemantico{
 	private void escreverErroFuncoesDuplicada(TokenFunction e, TokenFunction tF){
 		this.hasError = true;
 		this.errors = errors+ "On line "+e.getnLinha()+
-				"\n\tfunction "+e.getNome()+" is already declared at line "+tF.getnLinha()+"\n";
-		
+				"\n\tfunction "+e.getNome()+" is already declared at line "+tF.getnLinha()+"\n";		
 	}
 
 	private void escreverErroVariavelDuplicada(TokenId aux, TokenId b){
