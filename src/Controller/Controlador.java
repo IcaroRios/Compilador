@@ -90,7 +90,7 @@ public class Controlador {
         		this.lexico.cleanLists();
         		this.sintatico.cleanLists();
         	}else{
-        		//analiseSemantica(listaDeArquivos[cont].getName());
+        		analiseSemantica(listaDeArquivos[cont].getName());
         	}
         	
         	

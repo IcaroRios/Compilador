@@ -33,7 +33,8 @@ public final class Constants {
 							PAL_RES_TRUE 			= 17,
 							PAL_RES_FALSE 			= 18,
 							PAL_RES_STRING 			= 19,
-							PAL_RES_CHAR 			= 20							
+							PAL_RES_CHAR 			= 20,
+							PAL_RES_RETURN 			= 21
 							;
 	
 	//tipo de id´s

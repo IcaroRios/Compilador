@@ -72,8 +72,8 @@ public class TokenFunction{
 		for(TokenId tokenId : parametros){
 			a = a + tokenId+"\n\t\t";
 		}
-		a = a +" \n\t->linha: "+this.nLinha;
-		a = a +" \n\t->return:"+this.hasReturn+" - "+this.tipo(this.returnType);
+		a = a +"->linha: "+this.nLinha;
+		a = a +" \n\t\t->return:"+this.hasReturn+" - "+this.tipo(this.returnType);
 		return a;
 	}
 

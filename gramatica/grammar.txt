@@ -25,7 +25,7 @@
 !<Mat5> ::= '=' '[' <ExpressionList> ']' <IdListAux2> |  <IdList2Aux>
 <Mat5> ::= '=' '[' <ExpressionList> ']' <IdListAux2> | ',' <Matrix> <IdList2Aux> | 
 
-<Functions> ::= 'function' Id '(' <ParameterList> ')' <Return> 'begin' <VarDeclaration> <Commands> 'end' <Functions> | 
+<Functions> ::= 'function' Id '(' <ParameterList> ')' <Return> 'begin' <VarDeclaration> <CommandsReturn> 'end' <Functions> | 
 <Return> ::= ':' <Type> <MatrixDeclarationOrIdAux> | 
 <ParameterList> ::= <Type> <MatrixDeclarationOrId> <ParameterListAux> | 
 <ParameterListAux> ::= ',' <ParameterList> | 
@@ -33,6 +33,7 @@
 <MatrixDeclarationOrIdAux> ::= '[' ']' <MatrixDeclarationOrIdAux> | 
 
 <Commands> ::= <CommandIf> <Commands> | <CommandWhile> <Commands> | <CommandRead> <Commands> | <CommandWrite> <Commands> | Id <Mat2> | 
+<CommandsReturn> ::= <CommandIf> <CommandsReturn> | <CommandWhile> <CommandsReturn> | <CommandRead> <CommandsReturn> | <CommandWrite> <CommandsReturn> | Id <Mat2> | 'return' <Expression> ';' <CommandsReturn> | 
 <CommandIf> ::= 'if' '(' <Expression> ')' 'then' 'begin' <Commands> 'end' <CommandElse>
 <CommandElse> ::= 'else' 'begin' <Commands> 'end' | 
 <CommandWhile> ::= 'while' '(' <Expression> ')' 'do' 'begin' <Commands> 'end'

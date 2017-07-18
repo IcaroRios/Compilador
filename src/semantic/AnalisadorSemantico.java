@@ -30,6 +30,7 @@ public class AnalisadorSemantico{
 		this.tree = tree;
 		this.hasError = false;
 		this.errors = "";
+		System.out.println(tree);
 		this.preCompile();
 		this.compile();
 		//TODO
@@ -38,7 +39,7 @@ public class AnalisadorSemantico{
 		//TODO SE UMA FUNCAO JA ESTA DECLARADA A ANALISE DA MESMA DEVE SER IGNORADA????
 		this.analisar();
 		//this.gerarSaida(name);		
-		System.out.println("ERRORS:"+errors);
+		System.out.println("ERRORS:\n"+errors);
 	}	
 
 	//lista variaveis e funcoes, verifica se existem variaveis duplicadas
@@ -51,15 +52,23 @@ public class AnalisadorSemantico{
 				escopo = tokens.get(i).getLexema();			
 				LinkedList<TokenId> parametros = new LinkedList<>();
 				//int c = 2;
-				i+=2;
+				i+=3;
 				while(!tokens.get(i).getLexema().equals(")")){//enquanto n for ')'					
 					TokenId aux = new TokenId(tokens.get(i).getLexema(), escopo,
+							this.getTipo(tokens.get(i-1).getLexema()), false,
 							tokens.get(i).getnLinha());
-					parametros.add(aux);
-					i++;
+					//System.out.println("aqui...  "+tokens.get(i).getLexema());
+					parametros.add(aux);//add o parametro								
+					this.addVariable(aux);//add o parametro como variavel declarada					
+					if(tokens.get(i+1).getLexema().equals(")")){
+						i++;
+						break;
+					}
+					i+=3;
 				}
 				i++;
 				TokenFunction e = null;
+				System.out.println(tokens.get(i));
 				if(tokens.get(i).getLexema().equals(":")){//se a funcao possui retorno					
 					int returnType = this.getTipo(tokens.get(i+2).getLexema());
 					e = new TokenFunction(escopo, parametros, tokens.get(i).getnLinha(),
@@ -123,22 +132,50 @@ public class AnalisadorSemantico{
 			if(tokens.get(i).getId()==Constants.ID_IDENTIFICADOR &&
 					tokens.get(i+1).getLexema().equals("(")){//achar uma funcao
 				Token a = tokens.get(i);		
-				TokenFunction aux = new TokenFunction(a.getLexema(), a.getnLinha());
+				TokenFunction chamada = new TokenFunction(a.getLexema(), a.getnLinha());
 				//System.out.println("aqui: "+aux);
-				if(!this.declaredFunctions.contains(aux)){
-					this.escreverErroFuncaoNaoDeclarada(aux);
+				if(!this.declaredFunctions.contains(chamada)){//caso nao exista funcao com esse nome				
+					this.escreverErroFuncaoNaoDeclarada(chamada);
+				}else{//caso exista funcao com esse nome
+					TokenFunction funcao = this.getFuncaoNome(chamada);
+					this.verificaFuncao(chamada, funcao);
 				}
 			}else if(tokens.get(i).getId()==Constants.ID_IDENTIFICADOR){//achar um id
 				Token a = tokens.get(i);							
 				TokenId aux = new TokenId(a.getLexema(), escopo, a.getnLinha());
-				if(!this.declaredVariables.contains(aux)){
+				//if(!this.declaredVariables.contains(aux)){
+				if(!this.containsVariable(aux)){
 					this.escreverErroVariavelNaoDeclarada(aux);
 				}
 			}
 		}
 
-	}		
+	}					
+
+	private TokenFunction getFuncaoNome(TokenFunction chamada) {
+		for(int i = 0; i < declaredFunctions.size(); i++){
+			if(declaredFunctions.get(i).equals(chamada)){
+				return declaredFunctions.get(i);
+			}
+		}
+		return null;
+	}
+	
+	private void verificaFuncao(TokenFunction chamada, TokenFunction funcao) {
+		//TODO DEVE VERIFICAR SE OS PARAMETROS PASSADOS SAO EQUIVALENTES AOS PARAMETROS ESPERADOS PELO
+		//ESCOPO DA FUNCAO DECLARADA. USAR A ARVORE???
 		
+	}
+
+	private boolean containsVariable(TokenId aux) {
+		for(int i = 0; i < declaredVariables.size(); i++){
+			if(aux.myEquals(declaredVariables.get(i))){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private void addVariable(TokenId aux){
 		if(this.declaredVariables.contains(aux)){
 			int i = 0;

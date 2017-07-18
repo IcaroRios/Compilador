@@ -105,7 +105,7 @@ public class AnalisadorSintatico {
 					}else{//se nao, lance novamente ate a regra que possui
 						throw e;
 					}
-				}				
+				}
 				allFollows.removeAll(a.getSeguinte());
 				//retirando a contagem extra do backtracking
 				cont--;

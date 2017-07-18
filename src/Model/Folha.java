@@ -45,7 +45,7 @@ public class Folha{
 			//text = rnt.getSimbolo()+"\n";
 			text = rnt.getSimbolo();
 		}		
-		for(Folha node : list) {
+		for(Folha node : list){
 			//text = text +"\t"+node.toString() ;
 			text = text +"{"+node.toString()+"}" ;
 		}
