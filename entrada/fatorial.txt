@@ -11,8 +11,10 @@ begin
 	end
 	if(n > 1) then begin
 		k = n*fatorial(n-1);
+		return k;
 	end else begin
 		k = 1;
+		return k;
 	end
 		
 	return k;

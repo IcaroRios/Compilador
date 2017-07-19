@@ -32,14 +32,18 @@
 <MatrixDeclarationOrId> ::= Id <MatrixDeclarationOrIdAux>
 <MatrixDeclarationOrIdAux> ::= '[' ']' <MatrixDeclarationOrIdAux> | 
 
-<Commands> ::= <CommandIf> <Commands> | <CommandWhile> <Commands> | <CommandRead> <Commands> | <CommandWrite> <Commands> | Id <Mat2> | 
-<CommandsReturn> ::= <CommandIf> <CommandsReturn> | <CommandWhile> <CommandsReturn> | <CommandRead> <CommandsReturn> | <CommandWrite> <CommandsReturn> | Id <Mat2> | 'return' <Expression> ';' <CommandsReturn> | 
+<Commands> ::= <CommandIf> <Commands> | <CommandWhile> <Commands> | <CommandRead> <Commands> | <CommandWrite> <Commands> | Id <Mat2> | 'return' <Expression> ';' <Commands> | 
+<CommandsReturn> ::= <CommandIfReturn> <CommandsReturn> | <CommandWhileReturn> <CommandsReturn> | <CommandRead> <CommandsReturn> | <CommandWrite> <CommandsReturn> | Id <Mat2Return> | 'return' <Expression> ';' <CommandsReturn> | 
 <CommandIf> ::= 'if' '(' <Expression> ')' 'then' 'begin' <Commands> 'end' <CommandElse>
 <CommandElse> ::= 'else' 'begin' <Commands> 'end' | 
 <CommandWhile> ::= 'while' '(' <Expression> ')' 'do' 'begin' <Commands> 'end'
+<CommandIfReturn> ::= 'if' '(' <Expression> ')' 'then' 'begin' <CommandsReturn> 'end' <CommandElse>
+!<CommandElseReturn> ::= 'else' 'begin' <CommandsReturn> 'end' | 
+<CommandWhileReturn> ::= 'while' '(' <Expression> ')' 'do' 'begin' <CommandsReturn> 'end'
 <CommandRead> ::= 'read' '(' <IdList2> ')' ';'
 <CommandWrite> ::= 'write' '(' <ExpressionList> ')' ';'
 <Mat2> ::= <MatrixAux> '=' <Expression> ';' <Commands> | Id <Parameters> ';'
+<Mat2Return> ::= <MatrixAux> '=' <Expression> ';' <CommandsReturn> | Id <Parameters> ';'
 
 <IdList2Aux> ::= ',' <Matrix> <IdList2Aux> | 
 <ExpressionList> ::= <Expression> <ExpressionListAux>

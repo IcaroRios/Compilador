@@ -17,10 +17,12 @@ public class AnalisadorSemantico{
 	private boolean hasError;
 	private String errors;
 	private LinkedList<TokenId> declaredVariables;
+	private LinkedList<TokenId> declaredConstants;
 	private LinkedList<TokenFunction> declaredFunctions;
 
 	public AnalisadorSemantico(){
 		this.declaredVariables = new LinkedList<>();
+		this.declaredConstants = new LinkedList<>();
 		this.declaredFunctions = new LinkedList<>();
 	}
 
@@ -46,6 +48,7 @@ public class AnalisadorSemantico{
 	private void preCompile(){
 		String escopo = Constants.ESCOPO_GLOBAL_ID;//escopo de declaracao da variavel
 		for(int i = 0; i < this.tokens.size(); i++){
+			
 			//achou uma funcao, atualiza o escopo
 			if(tokens.get(i).getLexema().equals("function")){
 				i++;				 
