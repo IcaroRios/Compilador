@@ -1,0 +1,6 @@
+program
+
+
+begin
+	write("Programa basico");
+end

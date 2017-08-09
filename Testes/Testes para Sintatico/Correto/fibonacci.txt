@@ -1,0 +1,32 @@
+program
+
+var begin
+	integer fn, fn1, fn2, n;
+end
+
+
+function calculo_fibonacci(integer n) : integer
+begin
+	var begin
+		integer k;
+	end
+	K = 1;
+	fn1 = 1;
+	fn2 = 0;
+
+	while(k <= n) do begin
+	fn = fn1 + fn2;
+	fn2 = fn1;
+	fn1 = fn;      
+	k = k + 1;
+	end
+
+	calculo_fibonacci = fn1;
+end
+
+begin
+	write("Digite o numero do termo que deseja-se obter da sequencia de fibonacci.");
+	read(n);
+	fn = calculo_fibonacci(n);
+
+end

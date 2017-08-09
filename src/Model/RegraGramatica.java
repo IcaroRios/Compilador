@@ -1,7 +1,5 @@
 package Model;
 
-import java.util.LinkedList;
-
 public abstract class RegraGramatica {
 	
 	protected String simbolo;
@@ -18,7 +16,8 @@ public abstract class RegraGramatica {
 	public String getSimbolo(){
 		return simbolo;
 	}
-		
+	
+	@Override
 	public boolean equals(Object other){
 		if(other instanceof RegraGramatica){
 			RegraGramatica a = (RegraGramatica) other;

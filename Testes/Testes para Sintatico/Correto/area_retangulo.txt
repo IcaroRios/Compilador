@@ -1,0 +1,19 @@
+program
+
+var begin
+	real largura, altura;
+end
+
+
+function area(real largura, real altura) : real
+begin
+	area = largura*altura;
+end
+
+begin
+	write("Digite a altura do retangulo");
+	read(altura);
+	write("Digite a largura do retangulo");
+	read(largura);
+	write("A altura do retangulo eh ",area(largura,altura));
+end

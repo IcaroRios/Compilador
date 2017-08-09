@@ -1,0 +1,30 @@
+program
+
+var begin 
+	integer fat, m;
+end
+
+function fatorial( integer n , real a ) : integer
+begin
+	var begin
+		
+		integer k, fat;
+		boolean ferrou = false== false;
+		
+	end
+	if(n>1) then begin
+		//k = n*fatorial(n-1);
+		return k;
+	end else begin
+		//k = 1 ;
+		return k;
+	end
+
+	return k;
+end
+
+begin write("digite um numero para calcular o fatorial.");
+	read(m);
+	fat = fatorial();
+	write(fat);
+end

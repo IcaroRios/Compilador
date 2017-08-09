@@ -8,7 +8,7 @@ public interface ExpressoesRegulares {
     public enum ESTRUTURALEXICA {
         RESERVADA("(program)|(const)|(var)|(function)|(begin)|(end)|(if)|"
                 + "(then)|(else)|(while)|(do)|(read)|(write)|(integer)|(real)|"
-                + "(boolean)|(true)|(false)|(string)|(char)"),//feito
+                + "(boolean)|(true)|(false)|(string)|(char)|(return)"),//feito
         NUMERO("(((\\s))?(\\d)+(\\.\\d+)?)"),
         OPERADOR_ARITMETICO("(\\+)|(\\-)|(\\*)|(\\/)|(\\%)"),//feito
         OPERADOR_RELACIONAL("(<=)|(>=)|(!=)|(<)|(>)|(==)"),//feito

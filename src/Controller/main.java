@@ -1,14 +1,16 @@
 package Controller;
 
-import java.io.File;
-
+import exceptions.GramaticaIsNotSimplified;
+import exceptions.GramaticaTem2FirstNaMesmaRegra;
+import exceptions.RuleHasEmptyFollowException;
 import exceptions.RuleHasNoFirstException;
 import exceptions.RuleHasNoFollowException;
-import lexical.AnalisadorLexico;
 
 public class main {
 
-	public static void main(String[] args) throws RuleHasNoFirstException, RuleHasNoFollowException {
+	public static void main(String[] args) throws RuleHasNoFirstException, RuleHasNoFollowException,
+		RuleHasEmptyFollowException, GramaticaTem2FirstNaMesmaRegra, GramaticaIsNotSimplified {
+		
 		String entrada = "entrada";
 		String gramatica = "gramatica//grammar.txt";
 		Controlador controlador = new Controlador(entrada, gramatica);

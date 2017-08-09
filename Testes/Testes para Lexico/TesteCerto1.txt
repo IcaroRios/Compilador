@@ -1,10 +1,10 @@
 /*****
-COMENTÃRIO DE BLOCO PODE TER QUAQUER COISA....,/30139~Â´	''"]~[~[Â´Â´ ]
+COMENTÁRIO DE BLOCO PODE TER QUAQUER COISA....,/30139~´	''"]~[~[´´ ]
 */
 //PROGRAMA PRA CALCULAR FATORIAL
 begin function fatorial(int num)
 	int cont = 1;
-	//laÃ§o pra calculo do fatorial
+	//laço pra calculo do fatorial
 	while(num>1) begin
 		cont=cont*num;
 		num=num-1;
@@ -25,3 +25,5 @@ begin program
 end program
 
 
+Contact GitHub API Training Shop Blog About
+© 2017 GitHub, Inc. Terms Privacy Security Status Help

@@ -20,4 +20,3 @@ comentario em bloco
 
 */
 / || && >= != //comentario de linha na linha dos operadores
-

@@ -1,0 +1,26 @@
+program
+
+var begin
+	integer fat, n;
+end
+
+function fatorial(integer n) : integer
+begin
+	var begin
+		integer k;
+	end
+	if(n > 1) then begin
+		k = n*fatorial(n-1);
+	end else begin
+		k = 1;
+	end
+	
+	fatorial = k;
+end
+
+begin
+	write("Digite o numero para calcular o fatorial.");
+	read(n);
+	fat = fatorial(n);
+	write(fat);
+end
