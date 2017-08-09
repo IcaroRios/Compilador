@@ -23,7 +23,8 @@ begin
 	return k;
 end
 
-begin write("digite um numero para calcular o fatorial.");
+begin 
+	write("digite um numero para calcular o fatorial.");
 	read(m);
 	fat = fatorial();
 	write(fat);
