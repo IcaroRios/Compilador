@@ -4,6 +4,10 @@ var begin
 	integer fat, m;
 end
 
+const begin
+	integer c1;
+end
+
 function fatorial(integer n, real a) : integer
 begin
 	var begin
@@ -20,7 +24,10 @@ begin
 	return k;
 end
 
-
+function f() : real
+begin
+	return fat;
+end
 
 begin
 	write("Digite o numero para calcular o fatorial.");
@@ -28,3 +35,4 @@ begin
 	fat = fatorial();
 	write(fat);
 end
+

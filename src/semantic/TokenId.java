@@ -8,13 +8,22 @@ public class TokenId{
 	private int tipo;
 	private int nLinha;
 	private boolean isConstant;
+	private boolean isArray;
+	private boolean wasInitialized;
+	private boolean wasUsed;
+	private int size;	
 
-	public TokenId(String nome, String escopo, int tipo, boolean isConstant, int nLinha){
+	public TokenId(String nome, String escopo, int tipo, boolean isConstant, int nLinha,
+			boolean isArray, boolean wasInitialized, int size){
 		this.nome = nome;
 		this.escopo = escopo;
 		this.tipo = tipo;		
 		this.isConstant = isConstant;
 		this.nLinha = nLinha;
+		this.isArray = isArray;
+		this.wasInitialized = wasInitialized;
+		this.size = size;
+		this.wasUsed = false;
 	}
 
 	public TokenId(String nome, String escopo, int nLinha){
@@ -27,6 +36,26 @@ public class TokenId{
 		return nLinha;
 	}
 
+	public int getSize(){
+		return size;
+	}
+	
+	public boolean isArray(){
+		return this.isArray;
+	}
+	
+	public boolean wasUsed(){
+		return this.wasUsed;
+	}
+	
+	public void setWasUsed(){
+		this.wasUsed = true;
+	}
+	
+	public boolean wasInitialized(){
+		return this.wasInitialized;
+	}
+	
 	public void setnLinha(int nLinha) {
 		this.nLinha = nLinha;
 	}
@@ -65,7 +94,8 @@ public class TokenId{
 
 	@Override
 	public String toString(){
-		return "->nome: "+ this.nome + "\t\t->tipo: " + this.tipo(tipo)+" \t\t->escopo: "+this.escopo;
+		return "->nome: "+ this.nome + "\t\t->tipo: " + this.tipo(tipo)+" \t\t->escopo: "+this.escopo
+				+" \t\t->constante: "+this.isConstant;
 	}
 
 	@Override

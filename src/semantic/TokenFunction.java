@@ -10,14 +10,16 @@ public class TokenFunction{
 	private int nLinha;
 	private boolean hasReturn;
 	private int returnType;
+	private int tokenPosition;
 
 	public TokenFunction(String nome,LinkedList<TokenId> parametros, int nLinha,
-			boolean hasReturn, int returnType){
+			boolean hasReturn, int returnType, int tokenPosition){
 		this.nome = nome;
 		this.parametros= parametros;
 		this.nLinha = nLinha;
 		this.hasReturn = hasReturn;
 		this.returnType = returnType;
+		this.tokenPosition = tokenPosition;
 	}
 
 	public TokenFunction(String lexema, int nLinha){
@@ -29,7 +31,10 @@ public class TokenFunction{
 	public int getnLinha(){
 		return nLinha;
 	}
-
+	
+	public int getTokenPosition(){
+		return this.tokenPosition;
+	}
 	public void setnLinha(int nLinha) {
 		this.nLinha = nLinha;
 	}
