@@ -1,29 +1,37 @@
 program
 
-var begin
+var begin 
 	integer fat, m;
 end
 
+<<<<<<< HEAD
 const begin
 	integer c1;
 end
 
 function fatorial(integer n, real a) : integer
+=======
+function fatorial( integer n , real a ) : integer
+>>>>>>> 66b60a27532c8f2bac2f665db440379249d97bb0
 begin
 	var begin
+		
 		integer k, fat;
+		boolean ferrou = false== false;
+		
 	end
-	if(n > 1) then begin
-		k = n*fatorial(n-1);
+	if(n>1) then begin
+		//k = n*fatorial(n-1);
 		return k;
 	end else begin
-		k = 1;
+		//k = 1 ;
 		return k;
 	end
-		
+
 	return k;
 end
 
+<<<<<<< HEAD
 function f() : real
 begin
 	return fat;
@@ -31,6 +39,10 @@ end
 
 begin
 	write("Digite o numero para calcular o fatorial.");
+=======
+begin 
+	write("digite um numero para calcular o fatorial.");
+>>>>>>> 66b60a27532c8f2bac2f665db440379249d97bb0
 	read(m);
 	fat = fatorial();
 	write(fat);

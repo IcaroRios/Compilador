@@ -7,12 +7,15 @@
 <identificador - m>
 <delimitador - ;>
 <reservada - end>
+<<<<<<< HEAD
 <reservada - const>
 <reservada - begin>
 <reservada - integer>
 <identificador - c1>
 <delimitador - ;>
 <reservada - end>
+=======
+>>>>>>> 66b60a27532c8f2bac2f665db440379249d97bb0
 <reservada - function>
 <identificador - fatorial>
 <delimitador - (>
@@ -32,6 +35,16 @@
 <delimitador - ,>
 <identificador - fat>
 <delimitador - ;>
+<<<<<<< HEAD
+=======
+<reservada - boolean>
+<identificador - ferrou>
+<operador_de_atribuicao - =>
+<reservada - false>
+<operador_relacional - ==>
+<reservada - false>
+<delimitador - ;>
+>>>>>>> 66b60a27532c8f2bac2f665db440379249d97bb0
 <reservada - end>
 <reservada - if>
 <delimitador - (>
@@ -41,6 +54,7 @@
 <delimitador - )>
 <reservada - then>
 <reservada - begin>
+<<<<<<< HEAD
 <identificador - k>
 <operador_de_atribuicao - =>
 <identificador - n>
@@ -52,16 +66,21 @@
 <numero - 1>
 <delimitador - )>
 <delimitador - ;>
+=======
+>>>>>>> 66b60a27532c8f2bac2f665db440379249d97bb0
 <reservada - return>
 <identificador - k>
 <delimitador - ;>
 <reservada - end>
 <reservada - else>
 <reservada - begin>
+<<<<<<< HEAD
 <identificador - k>
 <operador_de_atribuicao - =>
 <numero - 1>
 <delimitador - ;>
+=======
+>>>>>>> 66b60a27532c8f2bac2f665db440379249d97bb0
 <reservada - return>
 <identificador - k>
 <delimitador - ;>
@@ -70,6 +89,7 @@
 <identificador - k>
 <delimitador - ;>
 <reservada - end>
+<<<<<<< HEAD
 <reservada - function>
 <identificador - f>
 <delimitador - (>
@@ -85,6 +105,12 @@
 <reservada - write>
 <delimitador - (>
 <cadeia_de_caracteres - "Digite o numero para calcular o fatorial.">
+=======
+<reservada - begin>
+<reservada - write>
+<delimitador - (>
+<cadeia_de_caracteres - "digite um numero para calcular o fatorial.">
+>>>>>>> 66b60a27532c8f2bac2f665db440379249d97bb0
 <delimitador - )>
 <delimitador - ;>
 <reservada - read>
