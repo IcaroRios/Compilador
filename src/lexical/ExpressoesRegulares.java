@@ -14,7 +14,7 @@ public interface ExpressoesRegulares {
         OPERADOR_RELACIONAL("(<=)|(>=)|(!=)|(<)|(>)|(==)"),//feito
         OPERADOR_DE_ATRIBUICAO("(=)"),//feito
         OPERADOR_LOGICO("(!)|(\\&\\&)|(\\|\\|)"),//feito
-		DELIMITADOR("(;)|(,)|(\\(|(\\)))|(\\[)|(\\])|(:)"),        
+		DELIMITADOR("(;)|(,)|(\\()|((\\)))|(\\[)|(\\])|(:)"),        
         IDENTIFICADOR("([a-zA-Z])([a-zA-Z]|(\\d)|(_))*?"),
         CARACTERE("'([[a-zA-Z]\\d ]?)'"), // verificar
         CADEIA_DE_CARACTERES("\"[a-zA-Z]([[ -~&&[^\"]]\\\"])*\"")

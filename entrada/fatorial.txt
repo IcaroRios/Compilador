@@ -1,10 +1,14 @@
 program
 
 var begin
-	integer fat, m;
+	integer fat, m[2] = [2,3,2,4];
 end
 
-function fatorial(integer n, real a) : integer
+const begin
+	integer c1;
+end
+
+function fatorial(integer n) : integer
 begin
 	var begin
 		integer k, fat;
@@ -13,18 +17,25 @@ begin
 		k = n*fatorial(n-1);
 		return k;
 	end else begin
-		k = 1;
+		k = 'a';
 		return k;
 	end
 		
 	return k;
 end
 
-
+function f() : real
+begin
+	return fat;
+end
 
 begin
 	write("Digite o numero para calcular o fatorial.");
 	read(m);
 	fat = fatorial();
+	while((3-1) > (2+1)) do begin
+		
+	end
 	write(fat);
 end
+

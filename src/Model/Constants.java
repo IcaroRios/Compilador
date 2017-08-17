@@ -67,6 +67,15 @@ public final class Constants {
 							OP_LOG_OR		=	3
 							;
 	
+	//tipo delimitadores
+	public static final int DELIMITADOR_PONTO_VIRGULA	= 1,
+							DELIMITADOR_VIRGULA			= 2,
+							DELIMITADOR_PAREN_OPEN 		= 3,
+							DELIMITADOR_PAREN_CLOSE		= 4,
+							DELIMITADOR_COLC_OPEN		= 5,
+							DELIMITADOR_COLC_CLOSE		= 6,
+							DELIMITADOT_DOIS_PONTOS		= 7;
+	
 	//marcadores para gramatica
 	public static final String  PRODUCAO_VAZIA				= "#",
 								PRODUCAO_FIM_DO_ARQUIVO		= "$"
@@ -76,7 +85,27 @@ public final class Constants {
 	public static final String ARQUIVO_EXTENSAO_SIN = ".oSyn";
 	public static final String PASTA_SAIDA_LEX = "entrada";
 	public static final String ARQUIVO_ENTENSAO_LEX = ".oLex";
-	public static final String ESCOPO_GLOBAL_ID = "-1";
+	public static final String ESCOPO_GLOBAL_ID = "program";
 	public static final String ARQUIVO_EXTENSAO_SEM = ".oSem";
 	public static final String PASTA_SAIDA_SEM = "entrada";
+	
+	public static final int  	EXP_NUM_INT				= 0,								
+								EXP_NUM_REAL			= 1,								
+								EXP_BOOLEAN				= 2,
+								EXP_STRING 				= 3,
+								EXP_CHAR				= 4,
+								EXP_OP_LOG_OR			= 5,
+								EXP_OP_LOG_AND			= 6,
+								EXP_OP_REL_IGU_DIF		= 7,
+								EXP_OP_REL_MAI_MEN		= 8,
+								EXP_OP_ARIT_SUM_SUB		= 9,
+								EXP_OP_ARIT_REST_DIV	= 10,
+								EXP_OP_ARIT_DIV			= 11,
+								EXP_OP_ARIT_MUL			= 12,
+								EXP_NEG					= 13,
+								EXP_PAREN_OPEN			= 14,
+								EXP_PAREN_CLOSE			= 15,
+								EXP_ERR_INT_REAL		= -1,
+								EXP_ERR_INT_REAL_CHAR	= -2;
+								
 }

@@ -10,14 +10,16 @@ public class TokenFunction{
 	private int nLinha;
 	private boolean hasReturn;
 	private int returnType;
+	private int tokenPosition;
 
 	public TokenFunction(String nome,LinkedList<TokenId> parametros, int nLinha,
-			boolean hasReturn, int returnType){
+			boolean hasReturn, int returnType, int tokenPosition){
 		this.nome = nome;
 		this.parametros= parametros;
 		this.nLinha = nLinha;
 		this.hasReturn = hasReturn;
 		this.returnType = returnType;
+		this.tokenPosition = tokenPosition;
 	}
 
 	public TokenFunction(String lexema, int nLinha){
@@ -26,10 +28,13 @@ public class TokenFunction{
 		this.nLinha = nLinha;
 	}
 
-	public int getnLinha(){
+	public int getNLinha(){
 		return nLinha;
 	}
-
+	
+	public int getTokenPosition(){
+		return this.tokenPosition;
+	}
 	public void setnLinha(int nLinha) {
 		this.nLinha = nLinha;
 	}
@@ -38,7 +43,7 @@ public class TokenFunction{
 		return nome;
 	}
 
-	public LinkedList<TokenId> getTipo(){
+	public LinkedList<TokenId> getParameters(){
 		return parametros;
 	}
 	
@@ -50,17 +55,17 @@ public class TokenFunction{
 		return this.returnType;
 	}
 	
-	private String tipo(int i){
+	private String tipo(int i){		
 		String a  = "";
-		if(i == 0){
+		if(i == Constants.EXP_NUM_INT){
 			a = "integer";
-		}else if(i == 1){
+		}else if(i == Constants.EXP_NUM_REAL){
 			a = "real";
-		}else if(i == 2){
+		}else if(i == Constants.EXP_BOOLEAN){
 			a = "boolean";
-		}else if(i == 3){
+		}else if(i == Constants.EXP_STRING){
 			a = "string";
-		}else if(i == 4){
+		}else if(i == Constants.EXP_CHAR){
 			a = "char";
 		}
 		return a;
