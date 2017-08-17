@@ -6,9 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.management.RuntimeErrorException;
-
 import exceptions.CantSolveExpression;
 import exceptions.SemanticExpectedError;
 import Model.Constants;
@@ -53,124 +50,118 @@ public class AnalisadorSemantico{
 		//*/
 		System.out.println(hasError);
 		System.out.println("ERRORS:\n"+this.errors);				
-
 	}	
 
 	//lista variaveis e funcoes, verifica se existem variaveis duplicadas
-	private void preCompile(){
-		String escopo = Constants.ESCOPO_GLOBAL_ID;//escopo de declaracao da variavel
-		for(int i = 0; i < this.tokens.size(); i++){
-			//achar variaveis declaradas e seus tipos
-			if(tokens.get(i).getLexema().equals("const")){//achar um bloco de declaracao
-				i++;//pula o var
-				i++;//pula o begin
-				while(!tokens.get(i).getLexema().equals("end")){//ate achar um end
-					String t = tokens.get(i).getLexema();//tipo da declaracao
-					int tipo = this.getTipo(t);
-					i++;//vai para a 1° variavel
-					while(!tokens.get(i).getLexema().equals(";")){//ate achar um ;
-						Token a = tokens.get(i);
-						boolean isArray = false;
-						if(tokens.get(i).getLexema().equals(";")){
+		private void preCompile(){
+			String escopo = Constants.ESCOPO_GLOBAL_ID;//escopo de declaracao da variavel
+			for(int i = 0; i < this.tokens.size(); i++){
+				//achar variaveis declaradas e seus tipos
+				if(tokens.get(i).getLexema().equals("const")){//achar um bloco de declaracao
+					i++;//pula o var
+					i++;//pula o begin
+					while(!tokens.get(i).getLexema().equals("end")){//ate achar um end
+						String t = tokens.get(i).getLexema();//tipo da declaracao
+						int tipo = this.getTipo(t);
+						i++;//vai para a 1° variavel
+						while(!tokens.get(i).getLexema().equals(";")){//ate achar um ;
+							Token a = tokens.get(i);
+							boolean isArray = false;
+							if(tokens.get(i).getLexema().equals(";")){
 
-						}
-						TokenId aux = new TokenId(a.getLexema(), escopo, tipo, true, a.getnLinha(),
-								isArray,false);
-						this.addVariable(aux);
-						i++;
-						if(tokens.get(i).getLexema().equals(",")){
+							}
+							TokenId aux = new TokenId(a.getLexema(), escopo, tipo, true, a.getnLinha(),
+									isArray,false);
+							this.addVariable(aux);
+							//System.out.println(tokens.get(i)+" : "+tipo);
 							i++;
-						}
-					}
-					if(tokens.get(i+1).getLexema().equals("end")){
-						break;
-					}else{
-						i++;
-					}
-				}
-			}
-			//achou uma funcao, atualiza o escopo
-			if(tokens.get(i).getLexema().equals("function")){
-				i++;				 
-				escopo = tokens.get(i).getLexema();			
-				LinkedList<TokenId> parametros = new LinkedList<>();
-				//int c = 2;
-				if(tokens.get(i+2).getLexema().equals(")")){
-					i+=2;
-				}else{
-					i+=3;
-				}				
-				while(!tokens.get(i).getLexema().equals(")")){//enquanto n for ')'
-					boolean isArray = false;
-					if(tokens.get(i+1).getLexema().equals("[")){//se for array
-						isArray = true;
-						i+=2;
-					}
-					TokenId aux = new TokenId(tokens.get(i).getLexema(), escopo,
-							this.getTipo(tokens.get(i-1).getLexema()), false,
-							tokens.get(i).getnLinha(), isArray, true);
-					//System.out.println("aqui...  "+tokens.get(i).getLexema());
-					parametros.add(aux);//add o parametro								
-					this.addVariable(aux);//add o parametro como variavel declarada					
-					if(tokens.get(i+1).getLexema().equals(")")){
-						i++;
-						break;
-					}
-					i+=3;
-				}
-				i++;
-				TokenFunction e = null;
-				//System.out.println(tokens.get(i));
-				if(tokens.get(i).getLexema().equals(":")){//se a funcao possui retorno					
-					int returnType = this.getTipo(tokens.get(i+2).getLexema());
-					e = new TokenFunction(escopo, parametros, tokens.get(i).getnLinha(),
-							true, returnType, i+3);
-				}else{//se nao possui retorno
-					e = new TokenFunction(escopo, parametros, tokens.get(i).getnLinha(),
-							false, -1, i+1);
-				}				
-				this.addFunction(e);
-			}
-			//achar variaveis declaradas e seus tipos
-			if(tokens.get(i).getLexema().equals("var")){//achar um bloco de declaracao
-				i++;//pula o var
-				i++;//pula o begin
-				while(!tokens.get(i).getLexema().equals("end")){//ate achar um end
-					String t = tokens.get(i).getLexema();//tipo da declaracao
-					int tipo = this.getTipo(t);
-					i++;//vai para a 1° variavel
-					while(!tokens.get(i).getLexema().equals(";")){//ate achar um ;
-						Token a = tokens.get(i);
-						TokenId aux = null;
-						if(tokens.get(i+1).getLexema().equals("[")){//se e um array
-							aux = new TokenId(a.getLexema(), escopo, tipo, false, a.getnLinha(),
-									true, true);
-							i++;
-							i = this.verifyArrayParameter(i, tokens.get(i).getnLinha(), escopo);
-							i++;
-							while(!tokens.get(i).getLexema().equals("]")){								
+							if(tokens.get(i).getLexema().equals(",")){
 								i++;
 							}
-						}else{//nao e um array
-							aux = new TokenId(a.getLexema(), escopo, tipo, false, a.getnLinha(),
-									false, true);
-						}						
-						this.addVariable(aux);						
-						//System.out.println(tokens.get(i)+" : "+tipo);
-						i++;
-						if(tokens.get(i).getLexema().equals(",")){
+						}
+						if(tokens.get(i+1).getLexema().equals("end")){
+							break;
+						}else{
 							i++;
 						}
 					}
-					if(tokens.get(i+1).getLexema().equals("end")){
-						break;
+				}
+				//achou uma funcao, atualiza o escopo
+				if(tokens.get(i).getLexema().equals("function")){
+					i++;				 
+					escopo = tokens.get(i).getLexema();			
+					LinkedList<TokenId> parametros = new LinkedList<>();
+					//int c = 2;
+					if(tokens.get(i+2).getLexema().equals(")")){
+						i+=2;
 					}else{
-						i++;
+						i+=3;
+					}				
+					while(!tokens.get(i).getLexema().equals(")")){//enquanto n for ')'
+						boolean isArray = false;
+						if(tokens.get(i+1).getLexema().equals("[")){//se for array
+							isArray = true;
+						}
+						//TODO terminar array aqui
+						TokenId aux = new TokenId(tokens.get(i).getLexema(), escopo,
+								this.getTipo(tokens.get(i-1).getLexema()), false,
+								tokens.get(i).getnLinha(), isArray, true);
+						//System.out.println("aqui...  "+tokens.get(i).getLexema());
+						parametros.add(aux);//add o parametro								
+						this.addVariable(aux);//add o parametro como variavel declarada					
+						if(tokens.get(i+1).getLexema().equals(")")){
+							i++;
+							break;
+						}
+						i+=3;
+					}
+					i++;
+					TokenFunction e = null;
+					//System.out.println(tokens.get(i));
+					if(tokens.get(i).getLexema().equals(":")){//se a funcao possui retorno					
+						int returnType = this.getTipo(tokens.get(i+2).getLexema());
+						e = new TokenFunction(escopo, parametros, tokens.get(i).getnLinha(),
+								true, returnType, i+3);
+					}else{//se nao possui retorno
+						e = new TokenFunction(escopo, parametros, tokens.get(i).getnLinha(),
+								false, -1, i+1);
+					}				
+					this.addFunction(e);
+				}
+				//achar variaveis declaradas e seus tipos
+				if(tokens.get(i).getLexema().equals("var")){//achar um bloco de declaracao
+					i++;//pula o var
+					i++;//pula o begin
+					while(!tokens.get(i).getLexema().equals("end")){//ate achar um end
+						String t = tokens.get(i).getLexema();//tipo da declaracao
+						int tipo = this.getTipo(t);
+						i++;//vai para a 1° variavel
+						while(!tokens.get(i).getLexema().equals(";")){//ate achar um ;
+							Token a = tokens.get(i);
+							TokenId aux = null;
+							if(tokens.get(i+1).getLexema().equals("[")){//se e um array
+								aux = new TokenId(a.getLexema(), escopo, tipo, false, a.getnLinha(),
+										true, true);
+							}else{//nao e um array
+								aux = new TokenId(a.getLexema(), escopo, tipo, false, a.getnLinha(),
+										false, true);
+							}						
+							this.addVariable(aux);						
+							//System.out.println(tokens.get(i)+" : "+tipo);
+							i++;
+							if(tokens.get(i).getLexema().equals(",")){
+								i++;
+							}
+						}
+						if(tokens.get(i+1).getLexema().equals("end")){
+							break;
+						}else{
+							i++;
+						}
 					}
 				}
-			}
-		}		
-	}	
+			}		
+		}	
 
 	//verifica se as variaveis utilizadas foram declaradas e se funcoes utilizadas foram declaradas
 	private void compile(){
@@ -191,6 +182,7 @@ public class AnalisadorSemantico{
 					this.escreverErroFuncaoNaoDeclarada(chamada);
 				}else{//caso exista funcao com esse nome
 					TokenFunction funcao = this.getFuncaoNome(chamada);
+					//TODO VERIFICAR SE A CHAMA COINCIDE COM A FUNCAO
 					this.verificaFuncao(chamada, funcao);
 				}
 			}else if(tokens.get(i).getId()==Constants.ID_IDENTIFICADOR){//achar um id
@@ -228,7 +220,6 @@ public class AnalisadorSemantico{
 				}else{
 					isIf = false;
 				}
-				//System.out.println("achei--- "+tokens.get(i));
 				i+=2;//pula o (
 				int qtdP = 0;	
 				int nLinha = tokens.get(i).getnLinha();
@@ -385,10 +376,8 @@ public class AnalisadorSemantico{
 		
 	}
 	
-	//
 	private int verifyFunction(TokenFunction tkF, int i, String escopo){
 		TokenFunction t = this.getFuncaoNome(tkF);
-		//System.out.println(tkF);
 		int j = 0;
 		if(t == null){//funcao nao declarada
 			this.escreverErroFuncaoNaoDeclarada(tkF);
@@ -512,6 +501,7 @@ public class AnalisadorSemantico{
 		return null;
 	}
 
+
 	private void verificaFuncao(TokenFunction chamada, TokenFunction funcao){
 		//TODO DEVE VERIFICAR SE OS PARAMETROS PASSADOS SAO EQUIVALENTES AOS PARAMETROS ESPERADOS PELO
 		//ESCOPO DA FUNCAO DECLARADA. USAR A ARVORE???
@@ -552,6 +542,21 @@ public class AnalisadorSemantico{
 		}
 	}	
 	
+	private int getTipo(String t){
+ 		int tipo = 0;
+		if(t.equals("boolean")){			
+			tipo = Constants.EXP_BOOLEAN;
+ 		}else if(t.equals("string")){
+			tipo = Constants.EXP_STRING;
+ 		}else if(t.equals("char")){
+			tipo = Constants.EXP_CHAR;
+ 		}else if(t.equals("integer")){
+			tipo = Constants.EXP_NUM_INT;
+ 		}else if(t.equals("real")){
+ 			tipo = Constants.EXP_NUM_REAL;
+ 		}
+ 		return tipo;
+ 	}
 	
 	private void escreverErroExpression(int linha, TokenId id, String recieved){
 		this.hasError = true;
@@ -650,32 +655,18 @@ public class AnalisadorSemantico{
 				"\n\tvariable "+aux.getNome()+" is already declared at line "+b.getnLinha()+"\n";		
 	}
 
+
 	void escreverErroVariavelNaoDeclarada(TokenId aux){
 		this.hasError = true;		
 		this.errors = errors+ "On line "+aux.getnLinha()+
 				"\n\tvariable "+aux.getNome()+" is not declared\n";
 	}
 
+
 	void escreverErroFuncaoNaoDeclarada(TokenFunction aux){
 		this.hasError = true;
 		this.errors = errors+ "On line "+aux.getNLinha()+
 				"\n\tfunction "+aux.getNome()+" is not declared\n";
-	}
-
-	private int getTipo(String t){
-		int tipo = 0;
-		if(t.equals("boolean")){			
-			tipo = Constants.EXP_BOOLEAN;
-		}else if(t.equals("string")){
-			tipo = Constants.EXP_STRING;
-		}else if(t.equals("char")){
-			tipo = Constants.EXP_CHAR;
-		}else if(t.equals("integer")){
-			tipo = Constants.EXP_NUM_INT;
-		}else if(t.equals("real")){
-			tipo = Constants.EXP_NUM_REAL;
-		}
-		return tipo;
 	}
 
 	public void cleanLists(){
@@ -706,4 +697,5 @@ public class AnalisadorSemantico{
 					+ "\nVerifique as permissoes de execucao do codigo.");
 		}
 	}
+
 }

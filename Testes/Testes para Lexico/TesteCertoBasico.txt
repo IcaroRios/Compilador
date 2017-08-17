@@ -4,15 +4,15 @@ TEM QUE DAR CERTO
 //PALAVRAS RESERVADAS
 program const var function begin end if then else while do 
 read write integer real boolean true false string char
-//NÃšMEROS
+//NÚMEROS
 0.9  -0.9    - 0.9   -    0.09   23333.210212
-//OPERADORES ARITMÃ‰TICOS
+//OPERADORES ARITMÉTICOS
 + - * / %
 //OPERADORES RELACIONAIS
 != = < <= > >=
-//OPERADORES ATRIBUIÃ‡ÃƒO
+//OPERADORES ATRIBUIÇÃO
 ==
-//OPERADORES LÃ“GICOS
+//OPERADORES LÓGICOS
 ! && ||
 //TIPO DELIMITADOR
 ; , () [] :

@@ -121,6 +121,5 @@ public class Controlador {
 	
 	private void analiseSemantica(String name) {		
 		this.semantico.executar(name, sintatico.getTree(), lexico.getListTokens());
-		this.semantico.cleanLists();
 	}
 }

@@ -5,7 +5,8 @@ end
 
 function area_circulo(real raio) : real 
 begin
-	area_circulo = 3.14 * (raio * raio);
+	//area_circulo = 3.14 * (raio * raio);
+	return raio;
 end
 
 begin

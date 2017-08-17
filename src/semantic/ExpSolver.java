@@ -154,6 +154,8 @@ public class ExpSolver {
 					this.exp.remove(j);
 					this.exp.remove(j);
 					this.exp.add(j, Constants.EXP_BOOLEAN);
+				}else if(this.exp.get(j+1) == Constants.EXP_PAREN_OPEN){
+					this.solveRec(j);
 				}else{//expected boolean, but recieved -> exp.get(j+1)						
 					throw new SemanticExpectedError(this.nLinha,
 							getNameExpByCons(Constants.EXP_BOOLEAN),
@@ -181,7 +183,7 @@ public class ExpSolver {
 					this.exp.remove(j-1);
 					this.exp.remove(j-1);
 					this.exp.add(j-1, Constants.EXP_NUM_REAL);
-				}else if((this.exp.get(j-1) == Constants.EXP_PAREN_OPEN
+				}else if((this.exp.get(j-1) == Constants.EXP_PAREN_CLOSE
 						|| this.exp.get(j+1) == Constants.EXP_PAREN_OPEN)){
 					this.solveRec(j);
 				}else{
@@ -207,7 +209,7 @@ public class ExpSolver {
 					this.exp.remove(j-1);
 					this.exp.remove(j-1);
 					this.exp.add(j-1, Constants.EXP_NUM_REAL);
-				}else if((this.exp.get(j-1) == Constants.EXP_PAREN_OPEN
+				}else if((this.exp.get(j-1) == Constants.EXP_PAREN_CLOSE
 						|| this.exp.get(j+1) == Constants.EXP_PAREN_OPEN)){
 					this.solveRec(j);
 				}else{						
@@ -232,7 +234,7 @@ public class ExpSolver {
 					this.exp.remove(j-1);
 					this.exp.remove(j-1);
 					this.exp.add(j-1, Constants.EXP_NUM_REAL);
-				}else if((this.exp.get(j-1) == Constants.EXP_PAREN_OPEN
+				}else if((this.exp.get(j-1) == Constants.EXP_PAREN_CLOSE
 						|| this.exp.get(j+1) == Constants.EXP_PAREN_OPEN)){
 					this.solveRec(j);
 				}else{						
@@ -281,9 +283,25 @@ public class ExpSolver {
 					this.exp.remove(j-1);
 					this.exp.remove(j-1);
 					this.exp.add(j-1, Constants.EXP_STRING);
-				}else if((this.exp.get(j-1) == Constants.EXP_PAREN_OPEN
+				}else if(this.exp.get(j+1) == Constants.EXP_NUM_INT){
+					this.exp.remove(j);
+					this.exp.remove(j);
+					this.exp.add(j, Constants.EXP_NUM_INT);
+				}else if(this.exp.get(j+1) == Constants.EXP_NUM_REAL){
+					this.exp.remove(j);
+					this.exp.remove(j);
+					this.exp.add(j, Constants.EXP_NUM_REAL);
+				}else if((this.exp.get(j-1) == Constants.EXP_PAREN_CLOSE
 						|| this.exp.get(j+1) == Constants.EXP_PAREN_OPEN)){
 					this.solveRec(j);
+				}else if(this.exp.get(j+1) == Constants.EXP_NUM_INT){
+					this.exp.remove(j);
+					this.exp.remove(j);
+					this.exp.add(j, Constants.EXP_NUM_INT);
+				}else if(this.exp.get(j+1) == Constants.EXP_NUM_REAL){
+					this.exp.remove(j);
+					this.exp.remove(j);
+					this.exp.add(j, Constants.EXP_NUM_REAL);
 				}else{
 					if(exp.get(j-1)==Constants.EXP_NUM_REAL || exp.get(j-1)==Constants.EXP_NUM_INT
 						|| exp.get(j-1)==Constants.EXP_CHAR || exp.get(j-1)==Constants.EXP_STRING){
@@ -325,10 +343,7 @@ public class ExpSolver {
 					this.exp.remove(j-1);
 					this.exp.remove(j-1);
 					this.exp.add(j-1, Constants.EXP_BOOLEAN);
-				}else if((this.exp.get(j-1) == Constants.EXP_PAREN_OPEN
-						|| this.exp.get(j+1) == Constants.EXP_PAREN_OPEN)){
-					this.solveRec(j);
-				}else if((this.exp.get(j-1) == Constants.EXP_PAREN_OPEN
+				}else if((this.exp.get(j-1) == Constants.EXP_PAREN_CLOSE
 						|| this.exp.get(j+1) == Constants.EXP_PAREN_OPEN)){
 					this.solveRec(j);
 				}else{
@@ -363,7 +378,7 @@ public class ExpSolver {
 					this.exp.remove(j-1);
 					this.exp.remove(j-1);
 					this.exp.add(j-1, Constants.EXP_BOOLEAN);
-				}else if((this.exp.get(j-1) == Constants.EXP_PAREN_OPEN
+				}else if((this.exp.get(j-1) == Constants.EXP_PAREN_CLOSE
 						|| this.exp.get(j+1) == Constants.EXP_PAREN_OPEN)){
 					this.solveRec(j);
 				}else{
@@ -383,7 +398,7 @@ public class ExpSolver {
 					this.exp.remove(j-1);
 					this.exp.remove(j-1);
 					this.exp.add(j-1, Constants.EXP_BOOLEAN);
-				}else if((this.exp.get(j-1) == Constants.EXP_PAREN_OPEN
+				}else if((this.exp.get(j-1) == Constants.EXP_PAREN_CLOSE
 						|| this.exp.get(j+1) == Constants.EXP_PAREN_OPEN)){
 					this.solveRec(j);
 				}else{
@@ -409,7 +424,7 @@ public class ExpSolver {
 					this.exp.remove(j-1);
 					this.exp.remove(j-1);
 					this.exp.add(j-1, Constants.EXP_BOOLEAN);
-				}else if((this.exp.get(j-1) == Constants.EXP_PAREN_OPEN
+				}else if((this.exp.get(j-1) == Constants.EXP_PAREN_CLOSE
 						|| this.exp.get(j+1) == Constants.EXP_PAREN_OPEN)){
 					this.solveRec(j);
 				}else{

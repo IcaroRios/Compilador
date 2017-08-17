@@ -33,7 +33,7 @@ public class TokenId{
 	public int getnLinha(){
 		return nLinha;
 	}
-	
+
 	public boolean isArray(){
 		return this.isArray;
 	}
