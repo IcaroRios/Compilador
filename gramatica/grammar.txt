@@ -1,90 +1,72 @@
-!GRAMÁTICA UTILIZADA PELO GRUPO
-!O ARQUIVO PODE CONTER COMENTÁRIOS
-!A PRIMEIRA REGRA LIDA É CONSIDERADA COMO A REGRA INICIAL DA LINGUAGEM
-<Program> ::= 'program' <VarDeclaration> <ConstDeclaration> <Functions> 'begin' <Commands> 'end'
-
-<VarDeclaration> ::= 'var' 'begin' <TypeList> 'end' | 
-<TypeList> ::= <Type> <IdList> ';' <TypeList> | 
-<IdList> ::= <Declaration> <IdListAux>
-<IdListAux> ::= ',' <IdList> | 
-<Declaration> ::= Id <DeclarationAux>
-<DeclarationAux> ::= '=' <Expression> | '[' <DeclarationAux2> | 
-<DeclarationAux2> ::= ']' <MatrixAux> '=' '[' <ExpressionList> ']' | <Expression> ']' <MatrixAux> <AssignmentOrEmpty>
-<AssignmentOrEmpty> ::= '=' '[' <ExpressionList> ']' | 
-
-<ConstDeclaration> ::= 'const' 'begin' <TypeList2> 'end' | 
-<TypeList2> ::= <Type> <IdList2> ';' <TypeList2> | 
-<IdList2> ::= Id <Mat3>
-<IdListAux2> ::= ',' <IdList2> | 
-!<Declaration2> ::= Id <Declaration2Aux>
-!<Declaration2Aux> ::= '=' <Expression> | '[' <Declaration2Aux2>
-!<Declaration2Aux2> ::= ']' <MatrixAux> '=' '[' <ExpressionList> ']' | <Expression> ']' <MatrixAux> '=' '[' <ExpressionList> ']'
-!<Mat3> ::= '=' <Expression> <IdListAux2> | '[' <Mat4> | <IdList2Aux>
-<Mat3> ::= '=' <Expression> <IdListAux2> | '[' <Mat4> | ',' <Matrix> <IdList2Aux> | 
-<Mat4> ::= ']' <MatrixAux> '=' '[' <ExpressionList> ']' <IdListAux2> | <Expression> ']' <MatrixAux> <Mat5>
-!<Mat5> ::= '=' '[' <ExpressionList> ']' <IdListAux2> |  <IdList2Aux>
-<Mat5> ::= '=' '[' <ExpressionList> ']' <IdListAux2> | ',' <Matrix> <IdList2Aux> | 
-
-<Functions> ::= 'function' Id '(' <ParameterList> ')' <Return> 'begin' <VarDeclaration> <CommandsReturn> 'end' <Functions> | 
-<Return> ::= ':' <Type> <MatrixDeclarationOrIdAux> | 
-<ParameterList> ::= <Type> <MatrixDeclarationOrId> <ParameterListAux> | 
-<ParameterListAux> ::= ',' <ParameterList> | 
-<MatrixDeclarationOrId> ::= Id <MatrixDeclarationOrIdAux>
-<MatrixDeclarationOrIdAux> ::= '[' ']' <MatrixDeclarationOrIdAux> | 
-
-<Commands> ::= <CommandIf> <Commands> | <CommandWhile> <Commands> | <CommandRead> <Commands> | <CommandWrite> <Commands> | Id <Mat2> | 'return' <Expression> ';' <Commands> | 
-<CommandsReturn> ::= <CommandIfReturn> <CommandsReturn> | <CommandWhileReturn> <CommandsReturn> | <CommandRead> <CommandsReturn> | <CommandWrite> <CommandsReturn> | Id <Mat2Return> | 'return' <Expression> ';' <CommandsReturn> | 
-<CommandIf> ::= 'if' '(' <Expression> ')' 'then' 'begin' <Commands> 'end' <CommandElse>
-<CommandElse> ::= 'else' 'begin' <Commands> 'end' | 
-<CommandWhile> ::= 'while' '(' <Expression> ')' 'do' 'begin' <Commands> 'end'
-<CommandIfReturn> ::= 'if' '(' <Expression> ')' 'then' 'begin' <CommandsReturn> 'end' <CommandElse>
-!<CommandElseReturn> ::= 'else' 'begin' <CommandsReturn> 'end' | 
-<CommandWhileReturn> ::= 'while' '(' <Expression> ')' 'do' 'begin' <CommandsReturn> 'end'
-<CommandRead> ::= 'read' '(' <IdList2> ')' ';'
-<CommandWrite> ::= 'write' '(' <ExpressionList> ')' ';'
-<Mat2> ::= <MatrixAux> '=' <Expression> ';' <Commands> | Id <Parameters> ';'
-<Mat2Return> ::= <MatrixAux> '=' <Expression> ';' <CommandsReturn> | Id <Parameters> ';'
-
-<IdList2Aux> ::= ',' <Matrix> <IdList2Aux> | 
-<ExpressionList> ::= <Expression> <ExpressionListAux>
-<ExpressionListOrEmpty> ::= <Expression> <ExpressionListAux> | 
-<ExpressionListAux> ::= ',' <Expression> <ExpressionListAux> | 
-
-!<CommandAssignment> ::= <Matrix> '=' <Expression> ';'
-
-!<Expression> ::= <Matrix> '=' <Expression> | <ExpressionLevel2>
-!<Expression> ::= '=' <Expression1> | <ExpressionLevel3> <ExpressionLevel2NoLeftRec>
-!<Expression1> ::= '(' <Expression> ')' <Ex2> | Number <Ex2> | AritmeticOpSum <Negative> <Ex2> | Char <Ex2> | CharChain <Ex2> | <Boolean> <Ex2> | Id <Mat> <Ex2>
-!<Ex2> ::=  '=' <Ex2> | 
-!<Expression> ::= '=' <Expression> | <ExpressionLevel3> <ExpressionLevel2NoLeftRec>
-<Expression> ::= <ExpressionLevel3> <ExpressionLevel2NoLeftRec>
-!<ExpressionLevel2> ::= <ExpressionLevel3> <ExpressionLevel2NoLeftRec>
-<ExpressionLevel2NoLeftRec> ::= '||' <ExpressionLevel3> <ExpressionLevel2NoLeftRec> | 
-<ExpressionLevel3> ::= <ExpressionLevel4> <ExpressionLevel3NoLeftRec>
-<ExpressionLevel3NoLeftRec> ::= '&&' <ExpressionLevel4> <ExpressionLevel3NoLeftRec> | 
-<ExpressionLevel4> ::= <ExpressionLevel5> <ExpressionLevel4NoLeftRec>
-<ExpressionLevel4NoLeftRec> ::= RelationalOpEqual <ExpressionLevel5> <ExpressionLevel4NoLeftRec> | 
-<ExpressionLevel5> ::= <ExpressionLevel6> <ExpressionLevel5NoLeftRec>
-<ExpressionLevel5NoLeftRec> ::= RelationalOpComp <ExpressionLevel6> <ExpressionLevel5NoLeftRec> | 
-<ExpressionLevel6> ::= <ExpressionLevel7> <ExpressionLevel6NoLeftRec>
-<ExpressionLevel6NoLeftRec> ::= AritmeticOpSum <ExpressionLevel7Aux> <ExpressionLevel6NoLeftRec> | 
-<ExpressionLevel7> ::= <ExpressionLevel8> <ExpressionLevel7NoLeftRec>
-<ExpressionLevel7NoLeftRec> ::= AritmeticOpMult <ExpressionLevel8> <ExpressionLevel7NoLeftRec> | 
-<ExpressionLevel7Aux> ::= <ExpressionLevel8Aux> <ExpressionLevel7AuxNoLeftRec>
-<ExpressionLevel7AuxNoLeftRec> ::= AritmeticOpMult <ExpressionLevel8> <ExpressionLevel7AuxNoLeftRec> | 
-<ExpressionLevel8> ::= LogicOpSimple <DeniableTerminals> | '(' <Expression> ')' | Number | AritmeticOpSum <Negative> | Char | CharChain | 'true' | 'false' | Id <Mat>
-<ExpressionLevel8Aux> ::= LogicOpSimple <DeniableTerminals> | '(' <Expression> ')' | Number | Char | CharChain | 'true' | 'faalse' | Id <Mat>
-
-!<Terminals> ::= '(' <Expression> ')' | Number | AritmeticOpSum <Negative> | Char | CharChain | <Boolean> | Id <Mat>
-!<TerminalsNoNegative> ::= '(' <Expression> ')' | Number | Char | CharChain | <Boolean> | Id <Mat>
-<DeniableTerminals> ::= '(' <Expression> ')' <Boolean> | Id <Mat>
-<Negative> ::= Id <Mat> | Number 
-!<Mat> ::= <MatrixAux> | <Parameters>
-<Mat> ::= '[' <Expression> ']' <MatrixAux> | '(' <ExpressionListOrEmpty> ')' | 
-
-<Parameters> ::= '(' <ExpressionListOrEmpty> ')'
-
-<Matrix> ::= Id <MatrixAux>
-<MatrixAux> ::= '[' <Expression> ']' <MatrixAux> | 
-<Type> ::= 'integer' | 'real' | 'boolean' | 'string' | 'char'
-<Boolean> ::= 'true' | 'false'
+<S> ::= <GlobalDeclaration> <S1>    
+<S1> ::= <GlobalDeclaration> <S1> |
+<GlobalDeclaration> ::= <StartDef> | <VarDef> | <ConstDef> | <StructDef> | <FunctionDef> | <ProcedureDef> | <TypedefDef>
+<FunctionDef> ::= 'function' <Type> <Declarator> '(' <ParameterList> ')' '{' <StmtOrDeclarationList> '}' 
+<ProcedureDef> ::= 'procedure' 'Identifier' '(' <ParameterList> ')' '{' <StmtOrDeclarationList> '}' 
+<TypedefDef> ::= 'typedef' <TypedefDeflf>              
+<TypedefDeflf> ::= <Type> 'Identifier' ';' | <StructDef> 'Identifier' ';'
+<VarDef> ::= 'var' '{' <DeclarationList> '}'
+<ConstDef> ::= 'const' '{' <DeclarationList> '}'
+<StructDef> ::= 'struct' 'Identifier' <StructDeflf>             
+<StructDeflf> ::= '{' <DeclarationList> '}' | 'extends' 'Identifier' '{' <DeclarationList> '}'
+<ParameterList> ::= <ParameterDeclaration> <ParameterList1>            
+<ParameterList1> ::= ',' <ParameterDeclaration> <ParameterList1> |
+<ParameterDeclaration> ::= <Type> <Declarator>
+<DeclarationList> ::= <Declaration> <DeclarationList1>                    
+<DeclarationList1> ::= <Declaration> <DeclarationList1> |
+<Declaration> ::= <Type> <InitDeclaratorList> ';'
+<InitDeclaratorList> ::= <InitDeclarator> <InitDeclaratorList1>                        
+<InitDeclaratorList1> ::= ',' <InitDeclarator> <InitDeclaratorList1> |
+<InitDeclarator> ::= <Declarator> <InitDeclaratorlf>
+<InitDeclaratorlf> ::= '=' <Initializer> |     
+<Initializer> ::= <AssignExpr> | '{' <InitializerList> <Initializerlf>
+<Initializerlf> ::= '}' | ',' '}'              
+<InitializerList> ::= <Initializer> <InitializerList1>                 
+<InitializerList1> ::= ',' <Initializer> <InitializerList1> |
+<Declarator> ::= 'Identifier' <Declarator1>           
+<Declarator1> ::= '[' <Declarator1lf> |               
+<Declarator1lf> ::= <CondExpr> ']' <Declarator1> | ']' <Declarator1>
+<Stmt> ::= <IterationStmt> | <ExprStmt> | <CompoundStmt>  | <PrintStmt> | <ScanStmt> | <IfStmt> | <ReturnStmt>
+<StmtOrDeclarationList> ::= <Stmt> <StmtOrDeclarationList1> | <VarDef> <StmtOrDeclarationList1>                    
+<StmtOrDeclarationList1> ::= <Stmt> <StmtOrDeclarationList1> | <VarDef> <StmtOrDeclarationList1> | 
+<StartDef> ::= 'start' '(' ')' '{' <StmtOrDeclarationList> '}'
+<PrintStmt> ::= 'print' '(' <ArgumentList> ')' ';'              
+<ScanStmt> ::= 'scan' '(' <ArgumentList> ')' ';'
+<IterationStmt> ::= 'while' '(' <Expr> ')' <Stmt>
+<IfStmt> ::= 'if' <Expr> 'then' <Stmt> <IfStmtlf>    
+<IfStmtlf> ::= 'else' <Stmt> |                      
+<ReturnStmt> ::= 'return' <Expr> ';'
+<CompoundStmt> ::= '{' <CompoundStmtlf>              
+<CompoundStmtlf> ::= '}' | <StmtOrDeclarationList> '}'
+<ExprStmt> ::= ';' | <Expr> ';'
+<Expr> ::= <AssignExpr> <Expr1>     
+<Expr1> ::= ',' <AssignExpr> <Expr1> | 
+<AssignExpr> ::= <CondExpr> <AssignExpr1>                    
+<AssignExpr1> ::= '=' <CondExpr> <AssignExpr1> |             
+<CondExpr> ::= <LogicalOrExpr>            
+<LogicalOrExpr> ::= <LogicalAndExpr> <LogicalOrExpr1>       
+<LogicalOrExpr1> ::= '||' <LogicalAndExpr> <LogicalOrExpr1> |
+<LogicalAndExpr> ::= <EqualExpr> <LogicalAndExpr1>
+<LogicalAndExpr1> ::= '&&' <EqualExpr> <LogicalAndExpr1> |     
+<EqualExpr> ::= <RelationalExpr> <EqualExpr1>
+<EqualExpr1> ::= <EqualOp> <RelationalExpr> <EqualExpr1> |       
+<RelationalExpr> ::= <AdditiveExpr> <RelationalExpr1>           
+<RelationalExpr1> ::= <RelationalOp> <AdditiveExpr> <RelationalExpr1> |          
+<AdditiveExpr> ::= <MultExpr> <AdditiveExpr1>          
+<AdditiveExpr1> ::= <AdditiveOp> <MultExpr> <AdditiveExpr1> |
+<MultExpr> ::= <UnaryExpr> <MultExpr1>          
+<MultExpr1> ::= <MultOp> <UnaryExpr> <MultExpr1> |        
+<UnaryExpr> ::= <UnaryOp> <UnaryExpr> | <PostfixExpr>              
+<PostfixExpr> ::= <PrimaryExpr> <PostfixExpr1>               
+<PostfixExpr1> ::= <PostfixOp> <PostfixExpr1> |
+<PrimaryExpr> ::= 'Identifier' | 'Number' | 'Literal' | 'true' | 'false' | '(' <Expr> ')' 
+<EqualOp> ::= '==' | '!='
+<RelationalOp> ::= '<' | '>' | '<=' | '>='       
+<AdditiveOp> ::= '+' | '-'     
+<MultOp> ::= '*' | '/'          
+<UnaryOp> ::= '++' | '--' | '!'
+<PostfixOp> ::= '++' | '--' | '[' <Expr> ']' | '(' <PostfixOplf> | '.' 'Identifier'              
+<PostfixOplf> ::= ')' | <ArgumentList> ')'
+<ArgumentList> ::= <AssignExpr> <ArgumentList1>            
+<ArgumentList1> ::= ',' <AssignExpr> <ArgumentList1> |
+<Type> ::=  'int' | 'string' | 'float' | 'bool'  | 'Identifier'

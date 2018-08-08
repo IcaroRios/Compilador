@@ -68,7 +68,7 @@ public class AnalisadorSemantico{
 							Token a = tokens.get(i);
 							boolean isArray = false;
 							if(tokens.get(i).getLexema().equals(";")){
-
+								
 							}
 							TokenId aux = new TokenId(a.getLexema(), escopo, tipo, true, a.getnLinha(),
 									isArray,false);
